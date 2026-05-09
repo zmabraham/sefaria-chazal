@@ -1,0 +1,1474 @@
+{
+  "categories": {
+    "bavli": {
+      "label_he": "תלמוד בבלי",
+      "sedarim": {
+        "Zeraim": [
+          "Berakhot"
+        ],
+        "Moed": [
+          "Shabbat",
+          "Eruvin",
+          "Pesachim",
+          "Shekalim",
+          "Yoma",
+          "Sukkah",
+          "Beitzah",
+          "Rosh_Hashanah",
+          "Taanit",
+          "Megillah",
+          "Moed_Katan",
+          "Chagigah"
+        ],
+        "Nashim": [
+          "Yevamot",
+          "Ketubot",
+          "Nedarim",
+          "Nazir",
+          "Sotah",
+          "Gittin",
+          "Kiddushin"
+        ],
+        "Nezikin": [
+          "Bava_Kamma",
+          "Bava_Metzia",
+          "Bava_Batra",
+          "Sanhedrin",
+          "Makkot",
+          "Shevuot",
+          "Avodah_Zarah",
+          "Horayot"
+        ],
+        "Kodashim": [
+          "Zevachim",
+          "Menachot",
+          "Chullin",
+          "Bekhorot",
+          "Arakhin",
+          "Temurah",
+          "Keritot",
+          "Meilah"
+        ],
+        "Taharot": [
+          "Niddah"
+        ]
+      },
+      "books": {
+        "Berakhot": {
+          "title_he": "ברכות",
+          "seder": "Zeraim",
+          "section_type": "daf",
+          "total_sections": 64,
+          "segment_count": 2736,
+          "complete": true
+        },
+        "Shabbat": {
+          "title_he": "שבת",
+          "seder": "Moed",
+          "section_type": "daf",
+          "total_sections": 157,
+          "segment_count": 3778,
+          "complete": true
+        },
+        "Eruvin": {
+          "title_he": "עירובין",
+          "seder": "Moed",
+          "section_type": "daf",
+          "total_sections": 105,
+          "segment_count": 3636,
+          "complete": true
+        },
+        "Pesachim": {
+          "title_he": "פסחים",
+          "seder": "Moed",
+          "section_type": "daf",
+          "total_sections": 121,
+          "segment_count": 3519,
+          "complete": true
+        },
+        "Shekalim": {
+          "title_he": "שקלים",
+          "seder": "Moed",
+          "section_type": "daf",
+          "total_sections": 22,
+          "segment_count": 0,
+          "complete": true
+        },
+        "Yoma": {
+          "title_he": "יומא",
+          "seder": "Moed",
+          "section_type": "daf",
+          "total_sections": 88,
+          "segment_count": 2261,
+          "complete": true
+        },
+        "Sukkah": {
+          "title_he": "סוכה",
+          "seder": "Moed",
+          "section_type": "daf",
+          "total_sections": 56,
+          "segment_count": 1361,
+          "complete": true
+        },
+        "Beitzah": {
+          "title_he": "ביצה",
+          "seder": "Moed",
+          "section_type": "daf",
+          "total_sections": 40,
+          "segment_count": 1151,
+          "complete": true
+        },
+        "Rosh_Hashanah": {
+          "title_he": "ראש השנה",
+          "seder": "Moed",
+          "section_type": "daf",
+          "total_sections": 35,
+          "segment_count": 1014,
+          "complete": true
+        },
+        "Taanit": {
+          "title_he": "תענית",
+          "seder": "Moed",
+          "section_type": "daf",
+          "total_sections": 31,
+          "segment_count": 887,
+          "complete": true
+        },
+        "Megillah": {
+          "title_he": "מגילה",
+          "seder": "Moed",
+          "section_type": "daf",
+          "total_sections": 32,
+          "segment_count": 1197,
+          "complete": true
+        },
+        "Moed_Katan": {
+          "title_he": "מועד קטן",
+          "seder": "Moed",
+          "section_type": "daf",
+          "total_sections": 29,
+          "segment_count": 1021,
+          "complete": true
+        },
+        "Chagigah": {
+          "title_he": "חגיגה",
+          "seder": "Moed",
+          "section_type": "daf",
+          "total_sections": 27,
+          "segment_count": 728,
+          "complete": true
+        },
+        "Yevamot": {
+          "title_he": "יבמות",
+          "seder": "Nashim",
+          "section_type": "daf",
+          "total_sections": 122,
+          "segment_count": 3869,
+          "complete": true
+        },
+        "Ketubot": {
+          "title_he": "כתובות",
+          "seder": "Nashim",
+          "section_type": "daf",
+          "total_sections": 112,
+          "segment_count": 3038,
+          "complete": true
+        },
+        "Nedarim": {
+          "title_he": "נדרים",
+          "seder": "Nashim",
+          "section_type": "daf",
+          "total_sections": 91,
+          "segment_count": 1509,
+          "complete": true
+        },
+        "Nazir": {
+          "title_he": "נזיר",
+          "seder": "Nashim",
+          "section_type": "daf",
+          "total_sections": 66,
+          "segment_count": 1299,
+          "complete": true
+        },
+        "Sotah": {
+          "title_he": "סוטה",
+          "seder": "Nashim",
+          "section_type": "daf",
+          "total_sections": 49,
+          "segment_count": 1635,
+          "complete": true
+        },
+        "Gittin": {
+          "title_he": "גיטין",
+          "seder": "Nashim",
+          "section_type": "daf",
+          "total_sections": 90,
+          "segment_count": 2992,
+          "complete": true
+        },
+        "Kiddushin": {
+          "title_he": "קידושין",
+          "seder": "Nashim",
+          "section_type": "daf",
+          "total_sections": 82,
+          "segment_count": 2406,
+          "complete": true
+        },
+        "Bava_Kamma": {
+          "title_he": "בבא קמא",
+          "seder": "Nezikin",
+          "section_type": "daf",
+          "total_sections": 119,
+          "segment_count": 4314,
+          "complete": true
+        },
+        "Bava_Metzia": {
+          "title_he": "בבא מציעא",
+          "seder": "Nezikin",
+          "section_type": "daf",
+          "total_sections": 119,
+          "segment_count": 3656,
+          "complete": true
+        },
+        "Bava_Batra": {
+          "title_he": "בבא בתרא",
+          "seder": "Nezikin",
+          "section_type": "daf",
+          "total_sections": 176,
+          "segment_count": 3804,
+          "complete": true
+        },
+        "Sanhedrin": {
+          "title_he": "סנהדרין",
+          "seder": "Nezikin",
+          "section_type": "daf",
+          "total_sections": 113,
+          "segment_count": 4171,
+          "complete": true
+        },
+        "Makkot": {
+          "title_he": "מכות",
+          "seder": "Nezikin",
+          "section_type": "daf",
+          "total_sections": 24,
+          "segment_count": 709,
+          "complete": true
+        },
+        "Shevuot": {
+          "title_he": "שבועות",
+          "seder": "Nezikin",
+          "section_type": "daf",
+          "total_sections": 49,
+          "segment_count": 1555,
+          "complete": true
+        },
+        "Avodah_Zarah": {
+          "title_he": "עבודה זרה",
+          "seder": "Nezikin",
+          "section_type": "daf",
+          "total_sections": 76,
+          "segment_count": 2131,
+          "complete": true
+        },
+        "Horayot": {
+          "title_he": "הוריות",
+          "seder": "Nezikin",
+          "section_type": "daf",
+          "total_sections": 14,
+          "segment_count": 446,
+          "complete": true
+        },
+        "Zevachim": {
+          "title_he": "זבחים",
+          "seder": "Kodashim",
+          "section_type": "daf",
+          "total_sections": 120,
+          "segment_count": 3817,
+          "complete": true
+        },
+        "Menachot": {
+          "title_he": "מנחות",
+          "seder": "Kodashim",
+          "section_type": "daf",
+          "total_sections": 110,
+          "segment_count": 3761,
+          "complete": true
+        },
+        "Chullin": {
+          "title_he": "חולין",
+          "seder": "Kodashim",
+          "section_type": "daf",
+          "total_sections": 142,
+          "segment_count": 4385,
+          "complete": true
+        },
+        "Bekhorot": {
+          "title_he": "בכורות",
+          "seder": "Kodashim",
+          "section_type": "daf",
+          "total_sections": 61,
+          "segment_count": 1945,
+          "complete": true
+        },
+        "Arakhin": {
+          "title_he": "ערכין",
+          "seder": "Kodashim",
+          "section_type": "daf",
+          "total_sections": 34,
+          "segment_count": 1176,
+          "complete": true
+        },
+        "Temurah": {
+          "title_he": "תמורה",
+          "seder": "Kodashim",
+          "section_type": "daf",
+          "total_sections": 34,
+          "segment_count": 1131,
+          "complete": true
+        },
+        "Keritot": {
+          "title_he": "כריתות",
+          "seder": "Kodashim",
+          "section_type": "daf",
+          "total_sections": 28,
+          "segment_count": 1211,
+          "complete": true
+        },
+        "Meilah": {
+          "title_he": "מעילה",
+          "seder": "Kodashim",
+          "section_type": "daf",
+          "total_sections": 22,
+          "segment_count": 513,
+          "complete": true
+        },
+        "Niddah": {
+          "title_he": "נידה",
+          "seder": "Taharot",
+          "section_type": "daf",
+          "total_sections": 73,
+          "segment_count": 2651,
+          "complete": true
+        }
+      }
+    },
+    "midrash": {
+      "label_he": "מדרשים",
+      "sedarim": {
+        "Rabbah": [
+          "Bereshit_Rabbah",
+          "Shemot_Rabbah",
+          "Vayikra_Rabbah",
+          "Bamidbar_Rabbah",
+          "Devarim_Rabbah",
+          "Shir_HaShirim_Rabbah",
+          "Ruth_Rabbah",
+          "Eichah_Rabbah",
+          "Kohelet_Rabbah",
+          "Esther_Rabbah"
+        ],
+        "Tanchuma": [
+          "Midrash_Tanchuma"
+        ],
+        "Mekhilta": [
+          "Mekhilta_DeRabbi_Yishmael"
+        ],
+        "Sifra": [
+          "Sifra"
+        ],
+        "Sifrei": [
+          "Sifrei_Bamidbar",
+          "Sifrei_Devarim"
+        ],
+        "Other": [
+          "Pirkei_DeRabbi_Eliezer"
+        ]
+      },
+      "books": {
+        "Bereshit_Rabbah": {
+          "title_he": "בראשית רבה",
+          "seder": "Rabbah",
+          "section_type": "chapter",
+          "total_sections": 100,
+          "segment_count": 1036,
+          "complete": true
+        },
+        "Shemot_Rabbah": {
+          "title_he": "שמות רבה",
+          "seder": "Rabbah",
+          "section_type": "chapter",
+          "total_sections": 52,
+          "segment_count": 464,
+          "complete": true
+        },
+        "Vayikra_Rabbah": {
+          "title_he": "ויקרא רבה",
+          "seder": "Rabbah",
+          "section_type": "chapter",
+          "total_sections": 37,
+          "segment_count": 330,
+          "complete": true
+        },
+        "Bamidbar_Rabbah": {
+          "title_he": "במדבר רבה",
+          "seder": "Rabbah",
+          "section_type": "chapter",
+          "total_sections": 23,
+          "segment_count": 444,
+          "complete": true
+        },
+        "Devarim_Rabbah": {
+          "title_he": "דברים רבה",
+          "seder": "Rabbah",
+          "section_type": "chapter",
+          "total_sections": 11,
+          "segment_count": 160,
+          "complete": true
+        },
+        "Shir_HaShirim_Rabbah": {
+          "title_he": "שיר השירים רבה",
+          "seder": "Rabbah",
+          "section_type": "chapter",
+          "total_sections": 8,
+          "segment_count": 264,
+          "complete": true
+        },
+        "Ruth_Rabbah": {
+          "title_he": "רות רבה",
+          "seder": "Rabbah",
+          "section_type": "chapter",
+          "total_sections": 8,
+          "segment_count": 81,
+          "complete": true
+        },
+        "Eichah_Rabbah": {
+          "title_he": "איכה רבה",
+          "seder": "Rabbah",
+          "section_type": "chapter",
+          "total_sections": 5,
+          "segment_count": 152,
+          "complete": true
+        },
+        "Kohelet_Rabbah": {
+          "title_he": "קהלת רבה",
+          "seder": "Rabbah",
+          "section_type": "chapter",
+          "total_sections": 12,
+          "segment_count": 271,
+          "complete": true
+        },
+        "Esther_Rabbah": {
+          "title_he": "אסתר רבה",
+          "seder": "Rabbah",
+          "section_type": "chapter",
+          "total_sections": 10,
+          "segment_count": 124,
+          "complete": true
+        },
+        "Midrash_Tanchuma": {
+          "title_he": "מדרש תנחומא",
+          "seder": "Tanchuma",
+          "section_type": "nodes",
+          "total_sections": null,
+          "segment_count": 1997,
+          "complete": false
+        },
+        "Mekhilta_DeRabbi_Yishmael": {
+          "title_he": "מכילתא דרבי ישמעאל",
+          "seder": "Mekhilta",
+          "section_type": "nodes",
+          "total_sections": null,
+          "segment_count": 0,
+          "complete": false
+        },
+        "Sifra": {
+          "title_he": "ספרא",
+          "seder": "Sifra",
+          "section_type": "nodes",
+          "total_sections": null,
+          "segment_count": 0,
+          "complete": false
+        },
+        "Sifrei_Bamidbar": {
+          "title_he": "ספרי במדבר",
+          "seder": "Sifrei",
+          "section_type": "chapter",
+          "total_sections": 161,
+          "segment_count": 295,
+          "complete": true
+        },
+        "Sifrei_Devarim": {
+          "title_he": "ספרי דברים",
+          "seder": "Sifrei",
+          "section_type": "chapter",
+          "total_sections": 357,
+          "segment_count": 2357,
+          "complete": true
+        },
+        "Pirkei_DeRabbi_Eliezer": {
+          "title_he": "פרקי דרבי אליעזר",
+          "seder": "Other",
+          "section_type": "chapter",
+          "total_sections": 54,
+          "segment_count": 656,
+          "complete": true
+        }
+      }
+    },
+    "mishnah": {
+      "label_he": "משנה",
+      "sedarim": {
+        "Zeraim": [
+          "Mishnah_Berakhot",
+          "Mishnah_Peah",
+          "Mishnah_Demai",
+          "Mishnah_Kilayim",
+          "Mishnah_Sheviit",
+          "Mishnah_Terumot",
+          "Mishnah_Maasrot",
+          "Mishnah_Maaser_Sheni",
+          "Mishnah_Challah",
+          "Mishnah_Orlah",
+          "Mishnah_Bikkurim"
+        ],
+        "Moed": [
+          "Mishnah_Shabbat",
+          "Mishnah_Eruvin",
+          "Mishnah_Pesachim",
+          "Mishnah_Shekalim",
+          "Mishnah_Yoma",
+          "Mishnah_Sukkah",
+          "Mishnah_Beitzah",
+          "Mishnah_Rosh_Hashanah",
+          "Mishnah_Taanit",
+          "Mishnah_Megillah",
+          "Mishnah_Moed_Katan",
+          "Mishnah_Chagigah"
+        ],
+        "Nashim": [
+          "Mishnah_Yevamot",
+          "Mishnah_Ketubot",
+          "Mishnah_Nedarim",
+          "Mishnah_Nazir",
+          "Mishnah_Sotah",
+          "Mishnah_Gittin",
+          "Mishnah_Kiddushin"
+        ],
+        "Nezikin": [
+          "Mishnah_Bava_Kamma",
+          "Mishnah_Bava_Metzia",
+          "Mishnah_Bava_Batra",
+          "Mishnah_Sanhedrin",
+          "Mishnah_Makkot",
+          "Mishnah_Shevuot",
+          "Mishnah_Eduyot",
+          "Mishnah_Avodah_Zarah",
+          "Mishnah_Avot",
+          "Mishnah_Horayot"
+        ],
+        "Kodashim": [
+          "Mishnah_Zevachim",
+          "Mishnah_Menachot",
+          "Mishnah_Chullin",
+          "Mishnah_Bekhorot",
+          "Mishnah_Arakhin",
+          "Mishnah_Temurah",
+          "Mishnah_Keritot",
+          "Mishnah_Meilah",
+          "Mishnah_Tamid",
+          "Mishnah_Middot",
+          "Mishnah_Kinnim"
+        ],
+        "Taharot": [
+          "Mishnah_Kelim",
+          "Mishnah_Oholot",
+          "Mishnah_Negaim",
+          "Mishnah_Parah",
+          "Mishnah_Tahorot",
+          "Mishnah_Mikvaot",
+          "Mishnah_Niddah",
+          "Mishnah_Makhshirin",
+          "Mishnah_Zavim",
+          "Mishnah_Tevul_Yom",
+          "Mishnah_Yadayim",
+          "Mishnah_Oktzin"
+        ]
+      },
+      "books": {
+        "Mishnah_Berakhot": {
+          "title_he": "ברכות",
+          "seder": "Zeraim",
+          "section_type": "chapter",
+          "total_sections": 9,
+          "segment_count": 57,
+          "complete": true
+        },
+        "Mishnah_Peah": {
+          "title_he": "פאה",
+          "seder": "Zeraim",
+          "section_type": "chapter",
+          "total_sections": 8,
+          "segment_count": 69,
+          "complete": true
+        },
+        "Mishnah_Demai": {
+          "title_he": "דמאי",
+          "seder": "Zeraim",
+          "section_type": "chapter",
+          "total_sections": 7,
+          "segment_count": 53,
+          "complete": true
+        },
+        "Mishnah_Kilayim": {
+          "title_he": "כלאים",
+          "seder": "Zeraim",
+          "section_type": "chapter",
+          "total_sections": 9,
+          "segment_count": 77,
+          "complete": true
+        },
+        "Mishnah_Sheviit": {
+          "title_he": "שביעית",
+          "seder": "Zeraim",
+          "section_type": "chapter",
+          "total_sections": 10,
+          "segment_count": 89,
+          "complete": true
+        },
+        "Mishnah_Terumot": {
+          "title_he": "תרומות",
+          "seder": "Zeraim",
+          "section_type": "chapter",
+          "total_sections": 11,
+          "segment_count": 101,
+          "complete": true
+        },
+        "Mishnah_Maasrot": {
+          "title_he": "מעשרות",
+          "seder": "Zeraim",
+          "section_type": "chapter",
+          "total_sections": 5,
+          "segment_count": 40,
+          "complete": true
+        },
+        "Mishnah_Maaser_Sheni": {
+          "title_he": "מעשר שני",
+          "seder": "Zeraim",
+          "section_type": "chapter",
+          "total_sections": 5,
+          "segment_count": 57,
+          "complete": true
+        },
+        "Mishnah_Challah": {
+          "title_he": "חלה",
+          "seder": "Zeraim",
+          "section_type": "chapter",
+          "total_sections": 4,
+          "segment_count": 38,
+          "complete": true
+        },
+        "Mishnah_Orlah": {
+          "title_he": "ערלה",
+          "seder": "Zeraim",
+          "section_type": "chapter",
+          "total_sections": 3,
+          "segment_count": 35,
+          "complete": true
+        },
+        "Mishnah_Bikkurim": {
+          "title_he": "בכורים",
+          "seder": "Zeraim",
+          "section_type": "chapter",
+          "total_sections": 4,
+          "segment_count": 39,
+          "complete": true
+        },
+        "Mishnah_Shabbat": {
+          "title_he": "שבת",
+          "seder": "Moed",
+          "section_type": "chapter",
+          "total_sections": 24,
+          "segment_count": 139,
+          "complete": true
+        },
+        "Mishnah_Eruvin": {
+          "title_he": "עירובין",
+          "seder": "Moed",
+          "section_type": "chapter",
+          "total_sections": 10,
+          "segment_count": 96,
+          "complete": true
+        },
+        "Mishnah_Pesachim": {
+          "title_he": "פסחים",
+          "seder": "Moed",
+          "section_type": "chapter",
+          "total_sections": 10,
+          "segment_count": 89,
+          "complete": true
+        },
+        "Mishnah_Shekalim": {
+          "title_he": "שקלים",
+          "seder": "Moed",
+          "section_type": "chapter",
+          "total_sections": 8,
+          "segment_count": 52,
+          "complete": true
+        },
+        "Mishnah_Yoma": {
+          "title_he": "יומא",
+          "seder": "Moed",
+          "section_type": "chapter",
+          "total_sections": 8,
+          "segment_count": 61,
+          "complete": true
+        },
+        "Mishnah_Sukkah": {
+          "title_he": "סוכה",
+          "seder": "Moed",
+          "section_type": "chapter",
+          "total_sections": 5,
+          "segment_count": 53,
+          "complete": true
+        },
+        "Mishnah_Beitzah": {
+          "title_he": "ביצה",
+          "seder": "Moed",
+          "section_type": "chapter",
+          "total_sections": 5,
+          "segment_count": 42,
+          "complete": true
+        },
+        "Mishnah_Rosh_Hashanah": {
+          "title_he": "ראש השנה",
+          "seder": "Moed",
+          "section_type": "chapter",
+          "total_sections": 4,
+          "segment_count": 35,
+          "complete": true
+        },
+        "Mishnah_Taanit": {
+          "title_he": "תענית",
+          "seder": "Moed",
+          "section_type": "chapter",
+          "total_sections": 4,
+          "segment_count": 34,
+          "complete": true
+        },
+        "Mishnah_Megillah": {
+          "title_he": "מגילה",
+          "seder": "Moed",
+          "section_type": "chapter",
+          "total_sections": 4,
+          "segment_count": 33,
+          "complete": true
+        },
+        "Mishnah_Moed_Katan": {
+          "title_he": "מועד קטן",
+          "seder": "Moed",
+          "section_type": "chapter",
+          "total_sections": 3,
+          "segment_count": 24,
+          "complete": true
+        },
+        "Mishnah_Chagigah": {
+          "title_he": "חגיגה",
+          "seder": "Moed",
+          "section_type": "chapter",
+          "total_sections": 3,
+          "segment_count": 23,
+          "complete": true
+        },
+        "Mishnah_Yevamot": {
+          "title_he": "יבמות",
+          "seder": "Nashim",
+          "section_type": "chapter",
+          "total_sections": 16,
+          "segment_count": 128,
+          "complete": true
+        },
+        "Mishnah_Ketubot": {
+          "title_he": "כתובות",
+          "seder": "Nashim",
+          "section_type": "chapter",
+          "total_sections": 13,
+          "segment_count": 111,
+          "complete": true
+        },
+        "Mishnah_Nedarim": {
+          "title_he": "נדרים",
+          "seder": "Nashim",
+          "section_type": "chapter",
+          "total_sections": 11,
+          "segment_count": 90,
+          "complete": true
+        },
+        "Mishnah_Nazir": {
+          "title_he": "נזיר",
+          "seder": "Nashim",
+          "section_type": "chapter",
+          "total_sections": 9,
+          "segment_count": 60,
+          "complete": true
+        },
+        "Mishnah_Sotah": {
+          "title_he": "סוטה",
+          "seder": "Nashim",
+          "section_type": "chapter",
+          "total_sections": 9,
+          "segment_count": 67,
+          "complete": true
+        },
+        "Mishnah_Gittin": {
+          "title_he": "גיטין",
+          "seder": "Nashim",
+          "section_type": "chapter",
+          "total_sections": 9,
+          "segment_count": 75,
+          "complete": true
+        },
+        "Mishnah_Kiddushin": {
+          "title_he": "קידושין",
+          "seder": "Nashim",
+          "section_type": "chapter",
+          "total_sections": 4,
+          "segment_count": 47,
+          "complete": true
+        },
+        "Mishnah_Bava_Kamma": {
+          "title_he": "בבא קמא",
+          "seder": "Nezikin",
+          "section_type": "chapter",
+          "total_sections": 10,
+          "segment_count": 79,
+          "complete": true
+        },
+        "Mishnah_Bava_Metzia": {
+          "title_he": "בבא מציעא",
+          "seder": "Nezikin",
+          "section_type": "chapter",
+          "total_sections": 10,
+          "segment_count": 101,
+          "complete": true
+        },
+        "Mishnah_Bava_Batra": {
+          "title_he": "בבא בתרא",
+          "seder": "Nezikin",
+          "section_type": "chapter",
+          "total_sections": 10,
+          "segment_count": 86,
+          "complete": true
+        },
+        "Mishnah_Sanhedrin": {
+          "title_he": "סנהדרין",
+          "seder": "Nezikin",
+          "section_type": "chapter",
+          "total_sections": 11,
+          "segment_count": 71,
+          "complete": true
+        },
+        "Mishnah_Makkot": {
+          "title_he": "מכות",
+          "seder": "Nezikin",
+          "section_type": "chapter",
+          "total_sections": 3,
+          "segment_count": 34,
+          "complete": true
+        },
+        "Mishnah_Shevuot": {
+          "title_he": "שבועות",
+          "seder": "Nezikin",
+          "section_type": "chapter",
+          "total_sections": 8,
+          "segment_count": 62,
+          "complete": true
+        },
+        "Mishnah_Eduyot": {
+          "title_he": "עדויות",
+          "seder": "Nezikin",
+          "section_type": "chapter",
+          "total_sections": 8,
+          "segment_count": 74,
+          "complete": true
+        },
+        "Mishnah_Avodah_Zarah": {
+          "title_he": "עבודה זרה",
+          "seder": "Nezikin",
+          "section_type": "chapter",
+          "total_sections": 5,
+          "segment_count": 50,
+          "complete": true
+        },
+        "Mishnah_Avot": {
+          "title_he": "אבות",
+          "seder": "Nezikin",
+          "section_type": "chapter",
+          "total_sections": 5,
+          "segment_count": 97,
+          "complete": true
+        },
+        "Mishnah_Horayot": {
+          "title_he": "הוריות",
+          "seder": "Nezikin",
+          "section_type": "chapter",
+          "total_sections": 3,
+          "segment_count": 20,
+          "complete": true
+        },
+        "Mishnah_Zevachim": {
+          "title_he": "זבחים",
+          "seder": "Kodashim",
+          "section_type": "chapter",
+          "total_sections": 14,
+          "segment_count": 101,
+          "complete": true
+        },
+        "Mishnah_Menachot": {
+          "title_he": "מנחות",
+          "seder": "Kodashim",
+          "section_type": "chapter",
+          "total_sections": 13,
+          "segment_count": 93,
+          "complete": true
+        },
+        "Mishnah_Chullin": {
+          "title_he": "חולין",
+          "seder": "Kodashim",
+          "section_type": "chapter",
+          "total_sections": 12,
+          "segment_count": 74,
+          "complete": true
+        },
+        "Mishnah_Bekhorot": {
+          "title_he": "בכורות",
+          "seder": "Kodashim",
+          "section_type": "chapter",
+          "total_sections": 9,
+          "segment_count": 73,
+          "complete": true
+        },
+        "Mishnah_Arakhin": {
+          "title_he": "ערכין",
+          "seder": "Kodashim",
+          "section_type": "chapter",
+          "total_sections": 9,
+          "segment_count": 50,
+          "complete": true
+        },
+        "Mishnah_Temurah": {
+          "title_he": "תמורה",
+          "seder": "Kodashim",
+          "section_type": "chapter",
+          "total_sections": 7,
+          "segment_count": 35,
+          "complete": true
+        },
+        "Mishnah_Keritot": {
+          "title_he": "כריתות",
+          "seder": "Kodashim",
+          "section_type": "chapter",
+          "total_sections": 6,
+          "segment_count": 43,
+          "complete": true
+        },
+        "Mishnah_Meilah": {
+          "title_he": "מעילה",
+          "seder": "Kodashim",
+          "section_type": "chapter",
+          "total_sections": 6,
+          "segment_count": 38,
+          "complete": true
+        },
+        "Mishnah_Tamid": {
+          "title_he": "תמיד",
+          "seder": "Kodashim",
+          "section_type": "chapter",
+          "total_sections": 7,
+          "segment_count": 34,
+          "complete": true
+        },
+        "Mishnah_Middot": {
+          "title_he": "מידות",
+          "seder": "Kodashim",
+          "section_type": "chapter",
+          "total_sections": 5,
+          "segment_count": 34,
+          "complete": true
+        },
+        "Mishnah_Kinnim": {
+          "title_he": "קינים",
+          "seder": "Kodashim",
+          "section_type": "chapter",
+          "total_sections": 3,
+          "segment_count": 15,
+          "complete": true
+        },
+        "Mishnah_Kelim": {
+          "title_he": "כלים",
+          "seder": "Taharot",
+          "section_type": "chapter",
+          "total_sections": 30,
+          "segment_count": 254,
+          "complete": true
+        },
+        "Mishnah_Oholot": {
+          "title_he": "אהלות",
+          "seder": "Taharot",
+          "section_type": "chapter",
+          "total_sections": 18,
+          "segment_count": 134,
+          "complete": true
+        },
+        "Mishnah_Negaim": {
+          "title_he": "נגעים",
+          "seder": "Taharot",
+          "section_type": "chapter",
+          "total_sections": 14,
+          "segment_count": 115,
+          "complete": true
+        },
+        "Mishnah_Parah": {
+          "title_he": "פרה",
+          "seder": "Taharot",
+          "section_type": "chapter",
+          "total_sections": 12,
+          "segment_count": 96,
+          "complete": true
+        },
+        "Mishnah_Tahorot": {
+          "title_he": "טהרות",
+          "seder": "Taharot",
+          "section_type": "chapter",
+          "total_sections": 10,
+          "segment_count": 92,
+          "complete": true
+        },
+        "Mishnah_Mikvaot": {
+          "title_he": "מקוואות",
+          "seder": "Taharot",
+          "section_type": "chapter",
+          "total_sections": 10,
+          "segment_count": 71,
+          "complete": true
+        },
+        "Mishnah_Niddah": {
+          "title_he": "נידה",
+          "seder": "Taharot",
+          "section_type": "chapter",
+          "total_sections": 10,
+          "segment_count": 79,
+          "complete": true
+        },
+        "Mishnah_Makhshirin": {
+          "title_he": "מכשירין",
+          "seder": "Taharot",
+          "section_type": "chapter",
+          "total_sections": 6,
+          "segment_count": 54,
+          "complete": true
+        },
+        "Mishnah_Zavim": {
+          "title_he": "זבים",
+          "seder": "Taharot",
+          "section_type": "chapter",
+          "total_sections": 5,
+          "segment_count": 32,
+          "complete": true
+        },
+        "Mishnah_Tevul_Yom": {
+          "title_he": "טבול יום",
+          "seder": "Taharot",
+          "section_type": "chapter",
+          "total_sections": 4,
+          "segment_count": 26,
+          "complete": true
+        },
+        "Mishnah_Yadayim": {
+          "title_he": "ידים",
+          "seder": "Taharot",
+          "section_type": "chapter",
+          "total_sections": 4,
+          "segment_count": 22,
+          "complete": true
+        },
+        "Mishnah_Oktzin": {
+          "title_he": "עוקצין",
+          "seder": "Taharot",
+          "section_type": "chapter",
+          "total_sections": 3,
+          "segment_count": 28,
+          "complete": true
+        }
+      }
+    },
+    "yerushalmi": {
+      "label_he": "תלמוד ירושלמי",
+      "sedarim": {
+        "Zeraim": [
+          "Jerusalem_Talmud_Berakhot",
+          "Jerusalem_Talmud_Peah",
+          "Jerusalem_Talmud_Demai",
+          "Jerusalem_Talmud_Kilayim",
+          "Jerusalem_Talmud_Sheviit",
+          "Jerusalem_Talmud_Terumot",
+          "Jerusalem_Talmud_Maasrot",
+          "Jerusalem_Talmud_Maaser_Sheni",
+          "Jerusalem_Talmud_Challah",
+          "Jerusalem_Talmud_Orlah",
+          "Jerusalem_Talmud_Bikkurim"
+        ],
+        "Moed": [
+          "Jerusalem_Talmud_Shabbat",
+          "Jerusalem_Talmud_Eruvin",
+          "Jerusalem_Talmud_Pesachim",
+          "Jerusalem_Talmud_Shekalim",
+          "Jerusalem_Talmud_Yoma",
+          "Jerusalem_Talmud_Sukkah",
+          "Jerusalem_Talmud_Beitzah",
+          "Jerusalem_Talmud_Rosh_Hashanah",
+          "Jerusalem_Talmud_Taanit",
+          "Jerusalem_Talmud_Megillah",
+          "Jerusalem_Talmud_Moed_Katan",
+          "Jerusalem_Talmud_Chagigah"
+        ],
+        "Nashim": [
+          "Jerusalem_Talmud_Yevamot",
+          "Jerusalem_Talmud_Ketubot",
+          "Jerusalem_Talmud_Nedarim",
+          "Jerusalem_Talmud_Nazir",
+          "Jerusalem_Talmud_Sotah",
+          "Jerusalem_Talmud_Gittin",
+          "Jerusalem_Talmud_Kiddushin"
+        ],
+        "Nezikin": [
+          "Jerusalem_Talmud_Bava_Kamma",
+          "Jerusalem_Talmud_Bava_Metzia",
+          "Jerusalem_Talmud_Bava_Batra",
+          "Jerusalem_Talmud_Sanhedrin",
+          "Jerusalem_Talmud_Makkot",
+          "Jerusalem_Talmud_Shevuot",
+          "Jerusalem_Talmud_Avodah_Zarah",
+          "Jerusalem_Talmud_Horayot"
+        ],
+        "Taharot": [
+          "Jerusalem_Talmud_Niddah"
+        ]
+      },
+      "books": {
+        "Jerusalem_Talmud_Berakhot": {
+          "title_he": "ברכות",
+          "seder": "Zeraim",
+          "section_type": "chapter",
+          "total_sections": 9,
+          "segment_count": 655,
+          "complete": true
+        },
+        "Jerusalem_Talmud_Peah": {
+          "title_he": "פאה",
+          "seder": "Zeraim",
+          "section_type": "chapter",
+          "total_sections": 8,
+          "segment_count": 402,
+          "complete": true
+        },
+        "Jerusalem_Talmud_Demai": {
+          "title_he": "דמאי",
+          "seder": "Zeraim",
+          "section_type": "chapter",
+          "total_sections": 7,
+          "segment_count": 300,
+          "complete": true
+        },
+        "Jerusalem_Talmud_Kilayim": {
+          "title_he": "כלאים",
+          "seder": "Zeraim",
+          "section_type": "chapter",
+          "total_sections": 9,
+          "segment_count": 322,
+          "complete": true
+        },
+        "Jerusalem_Talmud_Sheviit": {
+          "title_he": "שביעית",
+          "seder": "Zeraim",
+          "section_type": "chapter",
+          "total_sections": 10,
+          "segment_count": 390,
+          "complete": true
+        },
+        "Jerusalem_Talmud_Terumot": {
+          "title_he": "תרומות",
+          "seder": "Zeraim",
+          "section_type": "chapter",
+          "total_sections": 11,
+          "segment_count": 418,
+          "complete": true
+        },
+        "Jerusalem_Talmud_Maasrot": {
+          "title_he": "מעשרות",
+          "seder": "Zeraim",
+          "section_type": "chapter",
+          "total_sections": 5,
+          "segment_count": 186,
+          "complete": true
+        },
+        "Jerusalem_Talmud_Maaser_Sheni": {
+          "title_he": "מעשר שני",
+          "seder": "Zeraim",
+          "section_type": "chapter",
+          "total_sections": 5,
+          "segment_count": 241,
+          "complete": true
+        },
+        "Jerusalem_Talmud_Challah": {
+          "title_he": "חלה",
+          "seder": "Zeraim",
+          "section_type": "chapter",
+          "total_sections": 4,
+          "segment_count": 179,
+          "complete": true
+        },
+        "Jerusalem_Talmud_Orlah": {
+          "title_he": "ערלה",
+          "seder": "Zeraim",
+          "section_type": "chapter",
+          "total_sections": 3,
+          "segment_count": 176,
+          "complete": true
+        },
+        "Jerusalem_Talmud_Bikkurim": {
+          "title_he": "בכורים",
+          "seder": "Zeraim",
+          "section_type": "chapter",
+          "total_sections": 4,
+          "segment_count": 143,
+          "complete": true
+        },
+        "Jerusalem_Talmud_Shabbat": {
+          "title_he": "שבת",
+          "seder": "Moed",
+          "section_type": "chapter",
+          "total_sections": 24,
+          "segment_count": 772,
+          "complete": true
+        },
+        "Jerusalem_Talmud_Eruvin": {
+          "title_he": "עירובין",
+          "seder": "Moed",
+          "section_type": "chapter",
+          "total_sections": 10,
+          "segment_count": 415,
+          "complete": true
+        },
+        "Jerusalem_Talmud_Pesachim": {
+          "title_he": "פסחים",
+          "seder": "Moed",
+          "section_type": "chapter",
+          "total_sections": 10,
+          "segment_count": 515,
+          "complete": true
+        },
+        "Jerusalem_Talmud_Shekalim": {
+          "title_he": "שקלים",
+          "seder": "Moed",
+          "section_type": "chapter",
+          "total_sections": 8,
+          "segment_count": 226,
+          "complete": true
+        },
+        "Jerusalem_Talmud_Yoma": {
+          "title_he": "יומא",
+          "seder": "Moed",
+          "section_type": "chapter",
+          "total_sections": 8,
+          "segment_count": 362,
+          "complete": true
+        },
+        "Jerusalem_Talmud_Sukkah": {
+          "title_he": "סוכה",
+          "seder": "Moed",
+          "section_type": "chapter",
+          "total_sections": 5,
+          "segment_count": 205,
+          "complete": true
+        },
+        "Jerusalem_Talmud_Beitzah": {
+          "title_he": "ביצה",
+          "seder": "Moed",
+          "section_type": "chapter",
+          "total_sections": 5,
+          "segment_count": 195,
+          "complete": true
+        },
+        "Jerusalem_Talmud_Rosh_Hashanah": {
+          "title_he": "ראש השנה",
+          "seder": "Moed",
+          "section_type": "chapter",
+          "total_sections": 4,
+          "segment_count": 160,
+          "complete": true
+        },
+        "Jerusalem_Talmud_Taanit": {
+          "title_he": "תענית",
+          "seder": "Moed",
+          "section_type": "chapter",
+          "total_sections": 4,
+          "segment_count": 245,
+          "complete": true
+        },
+        "Jerusalem_Talmud_Megillah": {
+          "title_he": "מגילה",
+          "seder": "Moed",
+          "section_type": "chapter",
+          "total_sections": 4,
+          "segment_count": 232,
+          "complete": true
+        },
+        "Jerusalem_Talmud_Moed_Katan": {
+          "title_he": "מועד קטן",
+          "seder": "Moed",
+          "section_type": "chapter",
+          "total_sections": 3,
+          "segment_count": 161,
+          "complete": true
+        },
+        "Jerusalem_Talmud_Chagigah": {
+          "title_he": "חגיגה",
+          "seder": "Moed",
+          "section_type": "chapter",
+          "total_sections": 3,
+          "segment_count": 149,
+          "complete": true
+        },
+        "Jerusalem_Talmud_Yevamot": {
+          "title_he": "יבמות",
+          "seder": "Nashim",
+          "section_type": "chapter",
+          "total_sections": 16,
+          "segment_count": 638,
+          "complete": true
+        },
+        "Jerusalem_Talmud_Ketubot": {
+          "title_he": "כתובות",
+          "seder": "Nashim",
+          "section_type": "chapter",
+          "total_sections": 13,
+          "segment_count": 516,
+          "complete": true
+        },
+        "Jerusalem_Talmud_Nedarim": {
+          "title_he": "נדרים",
+          "seder": "Nashim",
+          "section_type": "chapter",
+          "total_sections": 11,
+          "segment_count": 346,
+          "complete": true
+        },
+        "Jerusalem_Talmud_Nazir": {
+          "title_he": "נזיר",
+          "seder": "Nashim",
+          "section_type": "chapter",
+          "total_sections": 9,
+          "segment_count": 305,
+          "complete": true
+        },
+        "Jerusalem_Talmud_Sotah": {
+          "title_he": "סוטה",
+          "seder": "Nashim",
+          "section_type": "chapter",
+          "total_sections": 9,
+          "segment_count": 381,
+          "complete": true
+        },
+        "Jerusalem_Talmud_Gittin": {
+          "title_he": "גיטין",
+          "seder": "Nashim",
+          "section_type": "chapter",
+          "total_sections": 9,
+          "segment_count": 349,
+          "complete": true
+        },
+        "Jerusalem_Talmud_Kiddushin": {
+          "title_he": "קידושין",
+          "seder": "Nashim",
+          "section_type": "chapter",
+          "total_sections": 4,
+          "segment_count": 329,
+          "complete": true
+        },
+        "Jerusalem_Talmud_Bava_Kamma": {
+          "title_he": "בבא קמא",
+          "seder": "Nezikin",
+          "section_type": "chapter",
+          "total_sections": 10,
+          "segment_count": 275,
+          "complete": true
+        },
+        "Jerusalem_Talmud_Bava_Metzia": {
+          "title_he": "בבא מציעא",
+          "seder": "Nezikin",
+          "section_type": "chapter",
+          "total_sections": 10,
+          "segment_count": 273,
+          "complete": true
+        },
+        "Jerusalem_Talmud_Bava_Batra": {
+          "title_he": "בבא בתרא",
+          "seder": "Nezikin",
+          "section_type": "chapter",
+          "total_sections": 10,
+          "segment_count": 260,
+          "complete": true
+        },
+        "Jerusalem_Talmud_Sanhedrin": {
+          "title_he": "סנהדרין",
+          "seder": "Nezikin",
+          "section_type": "chapter",
+          "total_sections": 11,
+          "segment_count": 587,
+          "complete": true
+        },
+        "Jerusalem_Talmud_Makkot": {
+          "title_he": "מכות",
+          "seder": "Nezikin",
+          "section_type": "chapter",
+          "total_sections": 2,
+          "segment_count": 58,
+          "complete": true
+        },
+        "Jerusalem_Talmud_Shevuot": {
+          "title_he": "שבועות",
+          "seder": "Nezikin",
+          "section_type": "chapter",
+          "total_sections": 8,
+          "segment_count": 291,
+          "complete": true
+        },
+        "Jerusalem_Talmud_Avodah_Zarah": {
+          "title_he": "עבודה זרה",
+          "seder": "Nezikin",
+          "section_type": "chapter",
+          "total_sections": 5,
+          "segment_count": 352,
+          "complete": true
+        },
+        "Jerusalem_Talmud_Horayot": {
+          "title_he": "הוריות",
+          "seder": "Nezikin",
+          "section_type": "chapter",
+          "total_sections": 3,
+          "segment_count": 122,
+          "complete": true
+        },
+        "Jerusalem_Talmud_Niddah": {
+          "title_he": "נידה",
+          "seder": "Taharot",
+          "section_type": "chapter",
+          "total_sections": 4,
+          "segment_count": 104,
+          "complete": true
+        }
+      }
+    }
+  },
+  "generated": "2026-05-08T19:51:19.127660Z"
+}

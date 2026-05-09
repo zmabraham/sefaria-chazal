@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ספרי חז"ל — ספריית חב"ד</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@300;400;500;700;900&family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --gold:       #c9a84c;
+      --gold-light: #e8c96e;
+      --gold-dim:   #a07830;
+      --dark:       #0f1117;
+      --surface:    #161b27;
+      --surface2:   #1e2435;
+      --surface3:   #252d40;
+      --border:     #2e3650;
+      --text:       #e8e8f0;
+      --text-muted: #7a859e;
+      --text-dim:   #4a5568;
+      --accent:     #4a90d9;
+      --accent2:    #6eb5ff;
+      --green:      #48bb78;
+      --radius:     10px;
+      --radius-sm:  6px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--dark);
+      color: var(--text);
+      font-family: 'Heebo', 'Frank Ruhl Libre', sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    .header {
+      background: linear-gradient(135deg, #0d1120 0%, #161b2e 50%, #0d1120 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 28px 24px 20px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .header::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .header h1 {
+      font-family: 'Frank Ruhl Libre', serif;
+      font-size: clamp(26px, 4vw, 44px);
+      font-weight: 700;
+      color: var(--gold-light);
+      line-height: 1.2;
+      margin-bottom: 4px;
+    }
+    .header h2 {
+      font-family: 'Frank Ruhl Libre', serif;
+      font-size: clamp(13px, 2vw, 18px);
+      font-weight: 300;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+    .header-meta {
+      display: inline-flex;
+      gap: 24px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 5px 18px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .header-meta span { color: var(--gold); font-weight: 600; }
+
+    /* ── Site nav ── */
+    .site-nav {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .nav-pill {
+      text-decoration: none;
+      padding: 5px 16px;
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 500;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      transition: all 0.2s;
+    }
+    .nav-pill:hover { color: var(--text); border-color: var(--gold-dim); }
+    .nav-pill.active {
+      background: rgba(201,168,76,0.12);
+      border-color: var(--gold);
+      color: var(--gold-light);
+    }
+
+    /* ── Main layout ── */
+    .layout {
+      display: flex;
+      max-width: 1500px;
+      margin: 0 auto;
+      height: calc(100vh - 160px);
+    }
+
+    /* ── Category sidebar ── */
+    .cat-sidebar {
+      width: 160px;
+      flex-shrink: 0;
+      border-left: 1px solid var(--border);
+      overflow-y: auto;
+      padding: 16px 8px;
+      background: var(--surface);
+    }
+    .cat-btn {
+      display: block;
+      width: 100%;
+      text-align: right;
+      padding: 9px 12px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-family: 'Frank Ruhl Libre', serif;
+      font-size: 14px;
+      cursor: pointer;
+      border-radius: var(--radius-sm);
+      margin-bottom: 2px;
+      transition: all 0.15s;
+    }
+    .cat-btn:hover { background: var(--surface2); color: var(--text); }
+    .cat-btn.active { background: rgba(201,168,76,0.1); color: var(--gold-light); }
+    .cat-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--text-dim);
+      padding: 12px 12px 4px;
+    }
+
+    /* ── Book list panel ── */
+    .book-panel {
+      width: 220px;
+      flex-shrink: 0;
+      border-left: 1px solid var(--border);
+      overflow-y: auto;
+      padding: 12px 8px;
+      background: var(--surface);
+    }
+    .seder-header {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--gold-dim);
+      padding: 10px 10px 4px;
+      border-top: 1px solid var(--border);
+      margin-top: 8px;
+    }
+    .seder-header:first-child { border-top: none; margin-top: 0; }
+    .book-btn {
+      display: block;
+      width: 100%;
+      text-align: right;
+      padding: 7px 10px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-family: 'Frank Ruhl Libre', serif;
+      font-size: 14px;
+      cursor: pointer;
+      border-radius: var(--radius-sm);
+      transition: all 0.15s;
+    }
+    .book-btn:hover { background: var(--surface2); color: var(--text); }
+    .book-btn.active { background: rgba(74,144,217,0.12); color: var(--accent2); }
+    .book-btn.incomplete { opacity: 0.45; }
+
+    /* ── Section nav (chapters/dafim) ── */
+    .section-panel {
+      width: 110px;
+      flex-shrink: 0;
+      border-left: 1px solid var(--border);
+      overflow-y: auto;
+      padding: 12px 6px;
+      background: var(--surface);
+    }
+    .sec-btn {
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 5px 4px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 13px;
+      cursor: pointer;
+      border-radius: var(--radius-sm);
+      margin-bottom: 1px;
+      transition: all 0.15s;
+    }
+    .sec-btn:hover { background: var(--surface2); color: var(--text); }
+    .sec-btn.active { background: rgba(74,144,217,0.15); color: var(--accent2); font-weight: 600; }
+
+    /* ── Reader panel ── */
+    .reader {
+      flex: 1;
+      overflow-y: auto;
+      padding: 28px 36px;
+      background: var(--dark);
+    }
+    .reader-header {
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    .reader-title {
+      font-family: 'Frank Ruhl Libre', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--gold-light);
+    }
+    .reader-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+    .reader-search {
+      margin-top: 12px;
+      display: flex;
+      gap: 8px;
+    }
+    .reader-search input {
+      flex: 1;
+      padding: 7px 12px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text);
+      font-family: 'Heebo', sans-serif;
+      font-size: 14px;
+      direction: rtl;
+    }
+    .reader-search input:focus { outline: none; border-color: var(--gold-dim); }
+    .search-count { font-size: 12px; color: var(--text-muted); align-self: center; }
+
+    /* ── Daf / Chapter heading ── */
+    .section-heading {
+      font-family: 'Frank Ruhl Libre', serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--gold);
+      margin: 24px 0 12px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-heading:first-child { margin-top: 0; }
+    .amud-heading {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin: 14px 0 6px;
+      letter-spacing: 0.5px;
+    }
+
+    /* ── Text segments ── */
+    .segment {
+      font-family: 'Frank Ruhl Libre', serif;
+      font-size: 17px;
+      line-height: 1.9;
+      color: var(--text);
+      margin-bottom: 8px;
+      padding: 8px 12px;
+      border-radius: var(--radius-sm);
+      transition: background 0.1s;
+    }
+    .segment:hover { background: var(--surface); }
+    .segment.highlight { background: rgba(201,168,76,0.12); }
+    .segment-num {
+      font-size: 11px;
+      color: var(--text-dim);
+      font-family: 'Heebo', sans-serif;
+      float: left;
+      margin-right: 8px;
+      padding-top: 3px;
+      min-width: 24px;
+    }
+
+    /* ── Mishnah paragraph marker ── */
+    .mishna-marker {
+      display: inline-block;
+      background: rgba(201,168,76,0.15);
+      color: var(--gold);
+      font-size: 11px;
+      font-family: 'Heebo', sans-serif;
+      padding: 1px 7px;
+      border-radius: 100px;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+
+    /* ── Halakhah divider (Yerushalmi) ── */
+    .halakhah-heading {
+      font-size: 13px;
+      color: var(--accent);
+      font-family: 'Heebo', sans-serif;
+      margin: 12px 0 4px;
+    }
+
+    /* ── Empty / loading states ── */
+    .state-msg {
+      text-align: center;
+      padding: 80px 24px;
+      color: var(--text-muted);
+    }
+    .state-msg .icon { font-size: 40px; margin-bottom: 12px; }
+    .state-msg h3 { font-size: 18px; color: var(--text); margin-bottom: 6px; }
+    .state-msg p { font-size: 14px; }
+    .spinner {
+      width: 36px; height: 36px;
+      border: 3px solid var(--border);
+      border-top-color: var(--gold);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      margin: 40px auto;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    mark { background: rgba(201,168,76,0.3); color: inherit; border-radius: 2px; }
+
+    /* ── Scrollbar ── */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+    @media (max-width: 768px) {
+      .cat-sidebar, .book-panel, .section-panel { width: 100%; height: auto; border-left: none; border-bottom: 1px solid var(--border); }
+      .layout { flex-direction: column; height: auto; }
+      .reader { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Header ── -->
+<div class="header">
+  <div style="color:var(--gold);font-size:12px;letter-spacing:4px;opacity:0.7;margin-bottom:6px">
+    ספריית חב"ד
+  </div>
+  <h1>ספרי חז"ל</h1>
+  <h2>משנה · תלמוד בבלי · תלמוד ירושלמי · מדרשים</h2>
+  <div class="header-meta" id="headerMeta">
+    <span id="metaBooks">—</span> ספרים
+    <span id="metaSegs">—</span> קטעים
+  </div>
+  <nav class="site-nav">
+    <a href="index.html" class="nav-pill">מאמרים</a>
+    <a href="chazal.html" class="nav-pill active">ספרי חז"ל</a>
+  </nav>
+</div>
+
+<!-- ── Main layout ── -->
+<div class="layout">
+
+  <!-- Category sidebar -->
+  <div class="cat-sidebar" id="catSidebar">
+    <div class="cat-label">קטגוריה</div>
+    <button class="cat-btn" data-cat="mishnah" onclick="selectCat('mishnah')">משנה</button>
+    <button class="cat-btn" data-cat="bavli" onclick="selectCat('bavli')">תלמוד בבלי</button>
+    <button class="cat-btn" data-cat="yerushalmi" onclick="selectCat('yerushalmi')">תלמוד ירושלמי</button>
+    <button class="cat-btn" data-cat="midrash" onclick="selectCat('midrash')">מדרשים</button>
+  </div>
+
+  <!-- Book list -->
+  <div class="book-panel" id="bookPanel">
+    <div class="state-msg" style="padding:40px 8px;font-size:13px">
+      בחר קטגוריה
+    </div>
+  </div>
+
+  <!-- Section nav (chapters / dafim) -->
+  <div class="section-panel" id="sectionPanel">
+    <div class="state-msg" style="padding:40px 4px;font-size:12px">
+      בחר ספר
+    </div>
+  </div>
+
+  <!-- Reader -->
+  <div class="reader" id="reader">
+    <div class="state-msg">
+      <div class="icon">📖</div>
+      <h3>ספריית חז"ל</h3>
+      <p>בחר קטגוריה, ספר ופרק<br>כדי להתחיל לקרוא</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ── State ──────────────────────────────────────────────────────────────────
+let manifest = null;
+let currentCat = null;
+let currentBookKey = null;
+let bookDataCache = {};   // key → {meta, sections}
+let currentBookData = null;
+let currentSection = null;
+let searchQuery = '';
+const SEDARIM_ORDER = ['Zeraim','Moed','Nashim','Nezikin','Kodashim','Taharot',
+                       'Rabbah','Tanchuma','Mekhilta','Sifra','Sifrei','Other'];
+
+// ── Init ───────────────────────────────────────────────────────────────────
+async function init() {
+  try {
+    const r = await fetch('chazal_data/index.json');
+    if (!r.ok) throw new Error('index.json not found');
+    manifest = await r.json();
+    updateHeaderMeta();
+    // Restore last position
+    const last = localStorage.getItem('chazal_state');
+    if (last) {
+      const {cat, book, sec} = JSON.parse(last);
+      if (manifest.categories[cat]) {
+        await selectCat(cat, false);
+        if (book) await openBook(cat, book, false);
+        if (sec) renderSection(sec);
+      }
+    }
+  } catch(e) {
+    document.getElementById('reader').innerHTML = `
+      <div class="state-msg">
+        <div class="icon">⚠️</div>
+        <h3>הנתונים עדיין לא מוכנים</h3>
+        <p>יש להפעיל את ה-scraper תחילה:<br>
+        <code style="font-size:12px;color:var(--gold)">python3 fetch_chazal.py && python3 build_chazal_json.py</code></p>
+      </div>`;
+  }
+}
+
+function updateHeaderMeta() {
+  if (!manifest) return;
+  let totalBooks = 0, totalSegs = 0;
+  for (const cat of Object.values(manifest.categories)) {
+    for (const b of Object.values(cat.books)) {
+      totalBooks++;
+      totalSegs += (b.segment_count || 0);
+    }
+  }
+  document.getElementById('metaBooks').textContent = totalBooks.toLocaleString('he');
+  document.getElementById('metaSegs').textContent = totalSegs.toLocaleString('he');
+}
+
+// ── Category selection ─────────────────────────────────────────────────────
+async function selectCat(cat, doSave=true) {
+  currentCat = cat;
+  currentBookKey = null;
+  currentBookData = null;
+  currentSection = null;
+
+  // Highlight button
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.toggle('active', b.dataset.cat === cat));
+
+  // Build book list
+  const catData = manifest.categories[cat];
+  if (!catData) return;
+
+  const panel = document.getElementById('bookPanel');
+  let html = '';
+  const sedarimSorted = SEDARIM_ORDER.filter(s => catData.sedarim[s]);
+  for (const seder of sedarimSorted) {
+    const keys = catData.sedarim[seder] || [];
+    if (!keys.length) continue;
+    html += `<div class="seder-header">${sederLabel(seder, cat)}</div>`;
+    for (const key of keys) {
+      const b = catData.books[key];
+      if (!b) continue;
+      const cls = b.complete ? '' : ' incomplete';
+      html += `<button class="book-btn${cls}" data-key="${key}" onclick="openBook('${cat}','${key}')">${b.title_he}</button>`;
+    }
+  }
+  panel.innerHTML = html;
+
+  document.getElementById('sectionPanel').innerHTML = '<div class="state-msg" style="padding:40px 4px;font-size:12px">בחר ספר</div>';
+  document.getElementById('reader').innerHTML = '<div class="state-msg"><div class="icon">📚</div><h3>בחר ספר</h3></div>';
+
+  if (doSave) saveState();
+}
+
+function sederLabel(seder, cat) {
+  const labels = {
+    Zeraim:'זרעים', Moed:'מועד', Nashim:'נשים', Nezikin:'נזיקין',
+    Kodashim:'קדשים', Taharot:'טהרות',
+    Rabbah:'מדרש רבה', Tanchuma:'מדרש תנחומא', Mekhilta:'מכילתא',
+    Sifra:'ספרא', Sifrei:'ספרי', Other:'אחר',
+  };
+  return labels[seder] || seder;
+}
+
+// ── Book loading ───────────────────────────────────────────────────────────
+async function openBook(cat, key, doRender=true) {
+  currentBookKey = key;
+
+  // Highlight book button
+  document.querySelectorAll('.book-btn').forEach(b => b.classList.toggle('active', b.dataset.key === key));
+
+  // Load data (cached)
+  if (!bookDataCache[key]) {
+    document.getElementById('reader').innerHTML = '<div class="spinner"></div>';
+    try {
+      const r = await fetch(`chazal_data/${cat}/${key}.json`);
+      if (!r.ok) throw new Error('not found');
+      bookDataCache[key] = await r.json();
+    } catch(e) {
+      document.getElementById('reader').innerHTML = `
+        <div class="state-msg"><div class="icon">😕</div>
+        <h3>הספר לא נמצא</h3><p>ייתכן שהנתונים עדיין לא הורדו</p></div>`;
+      return;
+    }
+  }
+  currentBookData = bookDataCache[key];
+
+  // Build section nav
+  buildSectionNav(currentBookData);
+
+  // Render first section
+  const firstSec = Object.keys(currentBookData.sections)[0];
+  if (doRender && firstSec) renderSection(firstSec);
+  saveState();
+}
+
+function buildSectionNav(data) {
+  const panel = document.getElementById('sectionPanel');
+  const secType = data.meta.section_type;
+  const sections = Object.keys(data.sections).sort((a,b) => {
+    const na = parseInt(a), nb = parseInt(b);
+    return na - nb;
+  });
+
+  let html = '';
+  for (const s of sections) {
+    const label = secType === 'daf' ? `דף ${hebrewNum(parseInt(s))}` : `${sectionWord(secType)} ${hebrewNum(parseInt(s))}`;
+    html += `<button class="sec-btn" data-sec="${s}" onclick="renderSection('${s}')">${label}</button>`;
+  }
+  panel.innerHTML = html;
+}
+
+function sectionWord(secType) {
+  return secType === 'daf' ? 'דף' : 'פרק';
+}
+
+// ── Render one section ─────────────────────────────────────────────────────
+function renderSection(secKey) {
+  currentSection = secKey;
+  document.querySelectorAll('.sec-btn').forEach(b => b.classList.toggle('active', b.dataset.sec === secKey));
+
+  const data = currentBookData;
+  if (!data) return;
+
+  const meta = data.meta;
+  const secData = data.sections[secKey];
+  const secNum = parseInt(secKey);
+  const reader = document.getElementById('reader');
+
+  let secLabel = '';
+  if (meta.section_type === 'daf') {
+    secLabel = `דף ${hebrewNum(secNum)}`;
+  } else {
+    secLabel = `פרק ${hebrewNum(secNum)}`;
+  }
+
+  let html = `
+    <div class="reader-header">
+      <div class="reader-title">${meta.title_he}</div>
+      <div class="reader-subtitle">${secLabel}</div>
+      <div class="reader-search">
+        <input type="text" id="searchInput" placeholder="חיפוש בפרק..." dir="rtl"
+               oninput="doSearch(this.value)" value="${searchQuery}" />
+        <span class="search-count" id="searchCount"></span>
+      </div>
+    </div>`;
+
+  html += renderSectionContent(meta.section_type, secData, secNum, secKey);
+  reader.innerHTML = html;
+
+  if (searchQuery) doSearch(searchQuery);
+
+  // Scroll top
+  reader.scrollTop = 0;
+  saveState();
+}
+
+function renderSectionContent(secType, secData, secNum, secKey) {
+  if (!secData) return '<div class="state-msg"><p>אין תוכן לפרק זה</p></div>';
+
+  let html = '';
+
+  if (secType === 'daf') {
+    // Bavli: secData = {a: [...], b: [...]}
+    html += `<div class="section-heading">דף ${hebrewNum(secNum)}</div>`;
+    for (const side of ['a', 'b']) {
+      const lines = secData[side] || [];
+      if (!lines.length) continue;
+      html += `<div class="amud-heading">עמוד ${side === 'a' ? 'א' : 'ב'}</div>`;
+      lines.forEach((text, i) => {
+        html += `<div class="segment" data-text="${esc(text)}">
+          <span class="segment-num">${i+1}</span>${text}
+        </div>`;
+      });
+    }
+  } else if (secType === 'chapter' || secType === 'nodes') {
+    // Check if Yerushalmi depth-3 (values are objects, not arrays)
+    const firstVal = Array.isArray(secData) ? null : (secData && typeof secData === 'object' && !Array.isArray(Object.values(secData)[0]) ? null : secData);
+    const isYerushalmi = secData && typeof secData === 'object' && !Array.isArray(secData);
+
+    if (isYerushalmi) {
+      // secData = {halakhah: [segs], ...}
+      html += `<div class="section-heading">פרק ${hebrewNum(secNum)}</div>`;
+      const halakhot = Object.keys(secData).sort((a,b) => parseInt(a)-parseInt(b));
+      for (const hal of halakhot) {
+        const segs = secData[hal];
+        html += `<div class="halakhah-heading">הלכה ${hebrewNum(parseInt(hal))}</div>`;
+        if (Array.isArray(segs)) {
+          segs.forEach((text, i) => {
+            html += `<div class="segment" data-text="${esc(text)}">
+              <span class="segment-num">${i+1}</span>${text}
+            </div>`;
+          });
+        } else if (typeof segs === 'string') {
+          html += `<div class="segment">${segs}</div>`;
+        }
+      }
+    } else {
+      // Mishnah / Midrash: secData = [text1, text2, ...]
+      html += `<div class="section-heading">פרק ${hebrewNum(secNum)}</div>`;
+      const items = Array.isArray(secData) ? secData : [];
+      items.forEach((text, i) => {
+        html += `<div class="segment" data-text="${esc(text)}">
+          <span class="segment-num">${i+1}</span>
+          <span class="mishna-marker">מ${hebrewNum(i+1)}</span>
+          ${text}
+        </div>`;
+      });
+    }
+  }
+
+  return html;
+}
+
+// ── Search ─────────────────────────────────────────────────────────────────
+function doSearch(query) {
+  searchQuery = query;
+  const segments = document.querySelectorAll('.segment');
+  let matchCount = 0;
+
+  if (!query.trim()) {
+    segments.forEach(el => {
+      el.classList.remove('highlight');
+      // Restore original text
+      const orig = el.getAttribute('data-text');
+      if (orig) el.innerHTML = el.innerHTML; // keep as-is, just unhighlight
+    });
+    document.getElementById('searchCount').textContent = '';
+    return;
+  }
+
+  segments.forEach(el => {
+    const text = el.getAttribute('data-text') || el.textContent;
+    if (text.includes(query)) {
+      el.classList.add('highlight');
+      matchCount++;
+    } else {
+      el.classList.remove('highlight');
+    }
+  });
+
+  const countEl = document.getElementById('searchCount');
+  if (countEl) countEl.textContent = matchCount ? `${matchCount} תוצאות` : 'לא נמצא';
+
+  // Scroll to first match
+  const first = document.querySelector('.segment.highlight');
+  if (first) first.scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+// ── Helpers ────────────────────────────────────────────────────────────────
+function esc(str) {
+  return (str || '').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+const HEB_NUMS = ['','א','ב','ג','ד','ה','ו','ז','ח','ט','י','יא','יב','יג','יד','טו',
+  'טז','יז','יח','יט','כ','כא','כב','כג','כד','כה','כו','כז','כח','כט','ל',
+  'לא','לב','לג','לד','לה','לו','לז','לח','לט','מ','מא','מב','מג','מד','מה',
+  'מו','מז','מח','מט','נ','נא','נב','נג','נד','נה','נו','נז','נח','נט','ס',
+  'סא','סב','סג','סד','סה','סו','סז','סח','סט','ע','עא','עב','עג','עד','עה',
+  'עו','עז','עח','עט','פ','פא','פב','פג','פד','פה','פו','פז','פח','פט','צ',
+  'צא','צב','צג','צד','צה','צו','צז','צח','צט','ק','קא','קב','קג','קד','קה',
+  'קו','קז','קח','קט','קי','קיא','קיב','קיג','קיד','קטו','קטז','קיז','קיח','קיט','קכ',
+  'קכא','קכב','קכג','קכד','קכה','קכו','קכז','קכח','קכט','קל','קלא','קלב','קלג','קלד','קלה',
+  'קלו','קלז','קלח','קלט','קמ','קמא','קמב','קמג','קמד','קמה','קמו','קמז','קמח','קמט','קנ',
+  'קנא','קנב','קנג','קנד','קנה','קנו','קנז','קנח','קנט','קס','קסא','קסב','קסג','קסד','קסה',
+  'קסו','קסז','קסח','קסט','קע','קעא','קעב','קעג','קעד','קעה','קעו'];
+
+function hebrewNum(n) {
+  return HEB_NUMS[n] || String(n);
+}
+
+function saveState() {
+  if (currentCat) {
+    localStorage.setItem('chazal_state', JSON.stringify({
+      cat: currentCat, book: currentBookKey, sec: currentSection
+    }));
+  }
+}
+
+// ── Boot ───────────────────────────────────────────────────────────────────
+init();
+</script>
+</body>
+</html>
