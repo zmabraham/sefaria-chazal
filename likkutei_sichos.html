@@ -249,6 +249,34 @@ async function init() {
   TOC = await r.json();
   buildVolFilter();
   renderList();
+
+  // Handle deep-link URL params: ?s=page_vol&fn=N
+  const params = new URLSearchParams(window.location.search);
+  const sParam = params.get('s');
+  const fnParam = params.get('fn');
+  if (sParam) {
+    const [page, vol] = sParam.split('_');
+    if (vol && TOC[vol]) {
+      const sicha = TOC[vol].find(s => String(s.page) === page);
+      if (sicha) {
+        // Find and click the sidebar item
+        setVol(vol);
+        await new Promise(r => setTimeout(r, 50));
+        const items = document.querySelectorAll('.sicha-item');
+        for (const el of items) {
+          if (el.querySelector('.spage')?.textContent === `עמ' ${page}`) {
+            el.click();
+            break;
+          }
+        }
+        // Wait for render, then scroll to footnote ref
+        if (fnParam) {
+          await new Promise(r => setTimeout(r, 800));
+          scrollToFn(parseInt(fnParam));
+        }
+      }
+    }
+  }
 }
 
 function buildVolFilter() {
@@ -312,6 +340,12 @@ async function openSicha(vol, sicha, el) {
   el.classList.add('active');
   activeSichaKey = `${sicha.page}_${vol}`;
 
+  // Update URL without reload
+  const url = new URL(window.location);
+  url.searchParams.set('s', `${sicha.page}_${vol}`);
+  url.searchParams.delete('fn');
+  window.history.replaceState({}, '', url);
+
   const content = document.getElementById('contentArea');
   content.innerHTML = '<div class="loading">טוען...</div>';
 
@@ -340,7 +374,7 @@ function renderSicha(vol, toc, data, container) {
   if (data && data.mainText) {
     mainHtml = data.mainText.replace(
       /<sup>(\d+)<\/sup>/g,
-      (_, n) => `<sup onclick="goFn(${n})" title="הערה ${n}">${n}</sup>`
+      (_, n) => `<sup id="fn-ref-${n}" onclick="goFn(${n})" title="הערה ${n}">${n}</sup>`
     );
     fnHtml = data.footnotes || '';
   }
@@ -364,6 +398,18 @@ function renderSicha(vol, toc, data, container) {
            </div>` : ''}
     </div>`;
   container.scrollTop = 0;
+}
+
+function scrollToFn(n) {
+  // Scroll content area to the superscript with id="fn-ref-N" and highlight it
+  const sup = document.getElementById(`fn-ref-${n}`);
+  if (!sup) return;
+  // Scroll within the content area
+  const content = document.getElementById('contentArea');
+  const supTop = sup.getBoundingClientRect().top - content.getBoundingClientRect().top + content.scrollTop;
+  content.scrollTo({ top: supTop - 80, behavior: 'smooth' });
+  sup.classList.add('hl');
+  setTimeout(() => sup.classList.remove('hl'), 3500);
 }
 
 function goFn(n) {

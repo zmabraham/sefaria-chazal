@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>מפתח מקורות — ליקוטי שיחות</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #fdfaf5;
+    --surface: #ffffff;
+    --border: #e0d8c8;
+    --accent: #8b5e3c;
+    --accent-light: #f5ede0;
+    --text: #2c1a0e;
+    --text-muted: #7a6655;
+    --radius: 8px;
+  }
+
+  body {
+    font-family: 'David Libre', 'Frank Ruhl Libre', 'Times New Roman', serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  header {
+    background: var(--accent);
+    color: white;
+    padding: 16px 24px;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+  header h1 { font-size: 1.5rem; font-weight: 700; }
+  header p { font-size: 0.8rem; opacity: 0.85; margin-top: 3px; }
+
+  .toolbar {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 10px 20px;
+    background: var(--accent-light);
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+  .search-box {
+    flex: 1;
+    min-width: 180px;
+    padding: 7px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 14px;
+    font-family: inherit;
+    background: white;
+    color: var(--text);
+    direction: rtl;
+  }
+  .search-box:focus { outline: 2px solid var(--accent); border-color: transparent; }
+
+  .cat-filter {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+  .cat-btn {
+    padding: 4px 10px;
+    font-size: 12px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: white;
+    cursor: pointer;
+    color: var(--text-muted);
+    font-family: inherit;
+    transition: all 0.12s;
+  }
+  .cat-btn:hover { background: var(--accent-light); border-color: var(--accent); }
+  .cat-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+
+  .stats-bar {
+    padding: 6px 20px;
+    font-size: 12px;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border);
+    background: white;
+  }
+
+  .main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  /* Category section */
+  .cat-section {
+    margin-bottom: 36px;
+  }
+  .cat-header {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--accent);
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 6px;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .cat-count {
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: var(--text-muted);
+    background: var(--accent-light);
+    border-radius: 10px;
+    padding: 2px 8px;
+  }
+
+  /* Work block */
+  .work-block {
+    margin-bottom: 20px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .work-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 14px;
+    background: var(--accent-light);
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    user-select: none;
+  }
+  .work-header:hover { background: #ede0cc; }
+  .work-name { font-weight: 700; font-size: 15px; }
+  .work-meta { font-size: 12px; color: var(--text-muted); }
+  .work-toggle { font-size: 12px; color: var(--text-muted); }
+
+  .work-body { padding: 10px 14px; display: block; }
+  .work-body.collapsed { display: none; }
+
+  /* Ref row */
+  .ref-row {
+    display: flex;
+    gap: 12px;
+    padding: 6px 0;
+    border-bottom: 1px solid #f0ebe0;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .ref-row:last-child { border-bottom: none; }
+  .ref-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    min-width: 120px;
+    flex-shrink: 0;
+    direction: ltr;
+  }
+  .ref-citations {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    flex: 1;
+  }
+  .cit-chip {
+    display: inline-block;
+    padding: 2px 8px;
+    font-size: 12px;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--accent);
+    text-decoration: none;
+    transition: all 0.12s;
+    direction: rtl;
+    cursor: pointer;
+  }
+  .cit-chip:hover {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+  }
+  .cit-chip .raw-text {
+    font-size: 11px;
+    color: var(--text-muted);
+    display: block;
+  }
+  .cit-chip:hover .raw-text { color: rgba(255,255,255,0.8); }
+
+  .loading { text-align: center; padding: 60px; color: var(--text-muted); font-size: 1.1rem; }
+  .error { text-align: center; padding: 60px; color: #c0392b; }
+
+  @media (max-width: 600px) {
+    .main { padding: 12px; }
+    .ref-label { min-width: 80px; font-size: 11px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>מפתח מקורות — ליקוטי שיחות</h1>
+  <p>כל המקורות המצוטטים בכל הערות השוליים • מסודרים לפי סדר קדושה</p>
+</header>
+
+<div class="toolbar">
+  <input type="text" class="search-box" id="searchBox"
+         placeholder="🔍 חפש מקור, ספר, פסוק..." oninput="applyFilters()">
+  <div class="cat-filter" id="catFilter"></div>
+</div>
+<div class="stats-bar" id="statsBar">טוען...</div>
+
+<div class="main" id="mainContent">
+  <div class="loading" id="loadingMsg">טוען מאגר מקורות...</div>
+</div>
+
+<script>
+// ── Canonical order ──────────────────────────────────────────────────────────
+
+const TANACH_ORDER = [
+  'Genesis','Exodus','Leviticus','Numbers','Deuteronomy',
+  'Joshua','Judges','I Samuel','II Samuel','I Kings','II Kings',
+  'Isaiah','Jeremiah','Ezekiel','Hosea','Joel','Amos','Obadiah',
+  'Jonah','Micah','Nahum','Habakkuk','Zephaniah','Haggai','Zechariah','Malachi',
+  'Psalms','Proverbs','Job','Song of Songs','Ruth','Lamentations',
+  'Ecclesiastes','Esther','Daniel','Ezra','Nehemiah','I Chronicles','II Chronicles'
+];
+const MISHNAH_SEDER_ORDER = ['Zeraim','Moed','Nashim','Nezikin','Kodashim','Tahorot'];
+const BAVLI_ORDER = [
+  'Berakhot',
+  'Shabbat','Eruvin','Pesachim','Shekalim','Yoma','Sukkah','Beitzah',
+  'Rosh Hashanah','Taanit','Megillah','Moed Katan','Chagigah',
+  'Yevamot','Ketubot','Nedarim','Nazir','Sotah','Gittin','Kiddushin',
+  'Bava Kamma','Bava Metzia','Bava Batra','Sanhedrin','Makkot',
+  'Shevuot','Avodah Zarah','Horayot',
+  'Zevachim','Menachot','Chullin','Bekhorot','Arakhin','Temurah',
+  'Keritot','Meilah','Niddah'
+];
+
+const CAT_ORDER = ['tanach','mishnah','bavli','yerushalmi','midrash','zohar','rambam','tanya','other'];
+const CAT_LABELS = {
+  tanach: 'תנ"ך',
+  mishnah: 'משנה',
+  bavli: 'תלמוד בבלי',
+  yerushalmi: 'תלמוד ירושלמי',
+  midrash: 'מדרשים',
+  zohar: 'זוהר',
+  rambam: 'רמב"ם',
+  tanya: 'תניא',
+  other: 'אחר',
+};
+
+// ── State ────────────────────────────────────────────────────────────────────
+let allCitations = [];
+let grouped = {};     // cat → work → ref → [citations]
+let activeCat = 'all';
+let searchQ = '';
+
+// ── Load data ────────────────────────────────────────────────────────────────
+async function init() {
+  try {
+    const r = await fetch('citations.json');
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    allCitations = await r.json();
+    buildGrouped();
+    buildCatFilter();
+    renderAll();
+    document.getElementById('loadingMsg')?.remove();
+  } catch(e) {
+    document.getElementById('loadingMsg').innerHTML =
+      `<div class="error">שגיאה בטעינת המקורות: ${e.message}<br>
+       <small>ייתכן שקובץ citations.json עדיין לא מוכן</small></div>`;
+  }
+}
+
+function buildGrouped() {
+  grouped = {};
+  for (const c of allCitations) {
+    const cat = c.category || 'other';
+    const work = c.work || 'Unknown';
+    const ref  = c.ref  || work;
+    if (!grouped[cat]) grouped[cat] = {};
+    if (!grouped[cat][work]) grouped[cat][work] = {};
+    if (!grouped[cat][work][ref]) grouped[cat][work][ref] = [];
+    grouped[cat][work][ref].push(c);
+  }
+}
+
+// ── Sort helpers ─────────────────────────────────────────────────────────────
+function sortWorks(cat, works) {
+  if (cat === 'tanach') {
+    return works.sort((a, b) => {
+      const ia = TANACH_ORDER.indexOf(a), ib = TANACH_ORDER.indexOf(b);
+      if (ia < 0 && ib < 0) return a.localeCompare(b);
+      if (ia < 0) return 1;
+      if (ib < 0) return -1;
+      return ia - ib;
+    });
+  }
+  if (cat === 'bavli') {
+    return works.sort((a, b) => {
+      const ia = BAVLI_ORDER.indexOf(a), ib = BAVLI_ORDER.indexOf(b);
+      if (ia < 0 && ib < 0) return a.localeCompare(b);
+      if (ia < 0) return 1;
+      if (ib < 0) return -1;
+      return ia - ib;
+    });
+  }
+  return works.sort();
+}
+
+function sortRefs(cat, refs) {
+  // Sort refs by numeric portion
+  return refs.sort((a, b) => {
+    const numA = extractNums(a), numB = extractNums(b);
+    for (let i = 0; i < Math.max(numA.length, numB.length); i++) {
+      const da = numA[i] ?? 0, db = numB[i] ?? 0;
+      if (da !== db) return da - db;
+    }
+    return a.localeCompare(b);
+  });
+}
+
+function extractNums(ref) {
+  return ref.match(/\d+/g)?.map(Number) || [];
+}
+
+// ── Filter ───────────────────────────────────────────────────────────────────
+function applyFilters() {
+  searchQ = document.getElementById('searchBox').value.trim().toLowerCase();
+  renderAll();
+}
+
+function buildCatFilter() {
+  const c = document.getElementById('catFilter');
+  const allBtn = document.createElement('button');
+  allBtn.className = 'cat-btn active';
+  allBtn.textContent = 'הכל';
+  allBtn.id = 'cat-all';
+  allBtn.onclick = () => setCat('all');
+  c.appendChild(allBtn);
+
+  for (const cat of CAT_ORDER) {
+    if (!grouped[cat]) continue;
+    const btn = document.createElement('button');
+    btn.className = 'cat-btn';
+    btn.textContent = CAT_LABELS[cat] || cat;
+    btn.id = `cat-${cat}`;
+    btn.onclick = () => setCat(cat);
+    c.appendChild(btn);
+  }
+}
+
+function setCat(cat) {
+  activeCat = cat;
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(`cat-${cat}`)?.classList.add('active');
+  renderAll();
+}
+
+// ── Render ───────────────────────────────────────────────────────────────────
+function renderAll() {
+  const container = document.getElementById('mainContent');
+  const cats = activeCat === 'all' ? CAT_ORDER : [activeCat];
+  let html = '';
+  let totalRefs = 0, totalCits = 0;
+
+  for (const cat of cats) {
+    if (!grouped[cat]) continue;
+    const catBlock = renderCat(cat);
+    if (catBlock.refs > 0) {
+      html += catBlock.html;
+      totalRefs += catBlock.refs;
+      totalCits += catBlock.cits;
+    }
+  }
+
+  container.innerHTML = html || '<p style="text-align:center;padding:40px;color:var(--text-muted)">לא נמצאו תוצאות</p>';
+  document.getElementById('statsBar').textContent =
+    `${allCitations.length.toLocaleString()} ציטוטים • ${totalRefs.toLocaleString()} מקומות מצוטטים • ${Object.keys(grouped).length} קטגוריות`;
+
+  // Re-attach toggle listeners
+  document.querySelectorAll('.work-header').forEach(h => {
+    h.onclick = () => {
+      const body = h.nextElementSibling;
+      body.classList.toggle('collapsed');
+      h.querySelector('.work-toggle').textContent = body.classList.contains('collapsed') ? '▼' : '▲';
+    };
+  });
+}
+
+function renderCat(cat) {
+  const works = sortWorks(cat, Object.keys(grouped[cat]));
+  let html = '';
+  let totalRefs = 0, totalCits = 0;
+
+  for (const work of works) {
+    const refsObj = grouped[cat][work];
+    const refs = sortRefs(cat, Object.keys(refsObj));
+
+    // Search filter
+    let matchedRefs = refs.filter(ref => {
+      if (!searchQ) return true;
+      if (work.toLowerCase().includes(searchQ)) return true;
+      if (ref.toLowerCase().includes(searchQ)) return true;
+      return refsObj[ref].some(c =>
+        (c.raw||'').toLowerCase().includes(searchQ) ||
+        (c.title||'').toLowerCase().includes(searchQ)
+      );
+    });
+
+    if (!matchedRefs.length) continue;
+
+    const citCount = matchedRefs.reduce((s, r) => s + refsObj[r].length, 0);
+    totalRefs += matchedRefs.length;
+    totalCits += citCount;
+
+    html += `
+      <div class="work-block" id="work-${cat}-${work.replace(/\s/g,'_')}">
+        <div class="work-header">
+          <span class="work-name">${work}</span>
+          <span>
+            <span class="work-meta">${matchedRefs.length} מקומות • ${citCount} ציטוטים</span>
+            <span class="work-toggle">▲</span>
+          </span>
+        </div>
+        <div class="work-body">
+          ${matchedRefs.map(ref => renderRef(ref, refsObj[ref])).join('')}
+        </div>
+      </div>`;
+  }
+
+  if (!html) return { html: '', refs: 0, cits: 0 };
+
+  const catHtml = `
+    <div class="cat-section" id="cat-section-${cat}">
+      <div class="cat-header">
+        ${CAT_LABELS[cat] || cat}
+        <span class="cat-count">${totalCits} ציטוטים</span>
+      </div>
+      ${html}
+    </div>`;
+
+  return { html: catHtml, refs: totalRefs, cits: totalCits };
+}
+
+function renderRef(ref, citations) {
+  const chips = citations.map(c => {
+    const href = `likkutei_sichos.html?s=${c.sicha_id}&fn=${c.fn}`;
+    const label = `כרך ${c.volume} עמ' ${c.page}`;
+    const tooltip = c.title || '';
+    return `<a class="cit-chip" href="${href}" title="${tooltip} — הערה ${c.fn}">
+      ${label}
+      <span class="raw-text">${escHtml(c.raw||'')}</span>
+    </a>`;
+  }).join('');
+
+  return `
+    <div class="ref-row">
+      <span class="ref-label" dir="ltr">${escHtml(ref)}</span>
+      <div class="ref-citations">${chips}</div>
+    </div>`;
+}
+
+function escHtml(s) {
+  return String(s)
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;');
+}
+
+init();
+</script>
+</body>
+</html>
