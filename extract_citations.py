@@ -41,32 +41,31 @@ def make_client():
     import anthropic
     return anthropic.Anthropic(api_key=get_api_key(), base_url=BASE_URL)
 
-SYSTEM_PROMPT = """You are an expert in rabbinic literature. Extract all source citations from Hebrew/Yiddish footnotes.
+SYSTEM_PROMPT = """You are an expert in rabbinic literature. Extract ALL source citations from Hebrew/Yiddish footnotes.
 
-For each footnote paragraph, identify every citable source — texts the author is pointing to.
 Return ONLY a JSON array. Each element:
-{
-  "fn": <footnote number as integer>,
-  "raw": "<exact substring from footnote text that is the citation>",
-  "work": "<English Sefaria book name, e.g. Kiddushin, Genesis, Psalms, Zohar, Tanya, Torah Ohr, Likkutei Torah>",
-  "ref": "<Sefaria-style ref, e.g. Kiddushin.40b, Genesis.1.1, Zohar.2.161a, Tanya.2.2, Torah Ohr, Lech Lecha 11, Likkutei Torah, Vayikra 41>",
-  "category": "<one of: tanach|mishnah|bavli|yerushalmi|midrash|zohar|rambam|tanya|chassidus|other>"
-}
+{"fn":<int>,"raw":"<exact span from input>","work":"<English book name>","ref":"<Sefaria ref>","category":"<see below>"}
 
-RULES:
-- Include: Tanach, Talmud, Mishnah, Zohar, Rambam, Tanya, Torah Ohr (תורה אור), Likkutei Torah (לקוטי תורה), Siddur
-- Exclude: ספר המאמרים, מאמרים, Likkutei Sichos itself, footnote cross-references (like "ראה הערה X"), responsa
-- For Talmud Bavli: ref = BookName.Xb (e.g. Kiddushin.40b, Berakhot.2a)
-- For Tanach: ref = Book.chapter.verse (e.g. Genesis.1.1, Psalms.119.89)
-- For Mishnah: ref = Mishnah_BookName.chapter.mishnah (e.g. Mishnah_Avot.3.1)
-- For Zohar: זח"א = Zohar.1, זח"ב = Zohar.2, זח"ג = Zohar.3; ref = Zohar.volume.page (e.g. Zohar.2.161a)
-- For Tanya: ח"א/ליקוטי אמרים = Tanya part 1; ref = Tanya.part.chapter (e.g. Tanya.1.3)
-- For Torah Ohr (ת"א/תורה אור): category=chassidus; ref = "Torah Ohr, Parsha PageNum" (e.g. "Torah Ohr, Lech Lecha 11")
-- For Likkutei Torah (לקו"ת/ל"ת): category=chassidus; ref = "Likkutei Torah, Parsha PageNum" (e.g. "Likkutei Torah, Vayikra 41")
-- For Rambam/Mishneh Torah: ref = "Mishneh Torah, Hilchot X.chapter.law"
-- "raw" must be the EXACT text span from the input that contains the citation
-- Return one element per citation; return [] if none
-- Return ONLY the JSON array, no explanation"""
+CATEGORIES and REF FORMATS (use exact formats shown):
+tanach: "Genesis.1.1", "Psalms.119.89", "Exodus.20.2", "Isaiah.6.3"
+mishnah: "Mishnah_Avot.3.1", "Mishnah_Berakhot.1.1"
+bavli: "Kiddushin.40b", "Berakhot.2a", "Bava Metzia.59b"
+yerushalmi: "Jerusalem Talmud Berakhot.1.1"
+midrash: "Bereishit Rabbah.1.1", "Tanchuma.Bereshit.1", "Yalkut Shimoni on Torah.1"
+zohar: "Zohar.1.1a" (זח"א=vol1, זח"ב=vol2, זח"ג=vol3); Tikkunei Zohar="Tikkunei Zohar.1"
+rambam: "Mishneh Torah, Hilchot Yesodei HaTorah.1.1"
+tanya: ALL Tanya parts — ליקוטי אמרים/ח"א="Tanya, Likkutei Amarim.3"; שער היחוד="Tanya, Shaar HaYichud VehaEmunah.1"; אגרת התשובה="Tanya, Iggeret HaTeshuvah.1"; אגרת הקודש/אגה"ק="Tanya, Iggeret HaKodesh.19"; קונטרס אחרון="Tanya, Kuntres Acharon.1"
+chassidus: Torah Ohr/ת"א="Torah Ohr, Parsha Page" e.g. "Torah Ohr, Lech Lecha 11"; Likkutei Torah/לקו"ת="Likkutei Torah, Parsha Page" e.g. "Likkutei Torah, Vayikra 41"; Hayom Yom="Hayom Yom, Kislev 15"; Or HaTorah="Or HaTorah, Bereshit 1"; Derech Mitzvotecha="Derech Mitzvotecha, Tzitzit 1"; Sefer HaMaamarim (any year)="Sefer HaMaamarim 5710.1"
+kabbalah: Etz Chaim="Sefer Etz Chaim.1.1"; Pardes="Pardes Rimmonim.12.2"; SheLaH="Shenei Luchot HaBerit, Toldot Adam.1"; Sha'ar HaGilgulim="Sha'ar HaGilgulim.17.1"; Mevo Shearim; Peri Etz Chaim
+halacha: Shulchan Arukh HaRav="Shulchan Arukh HaRav, Orach Chayim 630:1"; Shulchan Arukh="Shulchan Arukh, Orach Chaim.630.5"; Tur="Tur, Orach Chaim.630"; Sefer HaChinukh="Sefer HaChinukh.31"; Aruch HaShulchan
+commentary: Rashi on Torah="Rashi on Genesis 1:1"; Rashi on Talmud="Rashi on Berakhot 2a:1"; Ramban="Ramban on Genesis 1:1"; Tosafot="Tosafot on Berakhot 2a:1"; Radak, Ibn Ezra, Sforno, Maharsha, Ritva, Ran, etc.
+other: anything not fitting above categories
+
+INCLUDE everything above. EXCLUDE ONLY:
+- Likkutei Sichos itself (לקו"ש, ל"ש) — self-reference
+- Bare cross-refs with no source ("ראה הערה X", "כנ"ל" alone, "שם" alone)
+
+"raw" = EXACT text span from input. One object per citation. Return [] if none. ONLY JSON array."""
 
 def extract_citations_for_sicha(client, sicha):
     """Call Haiku to extract citations from this sicha's footnotes."""
