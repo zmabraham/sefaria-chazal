@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ליקוטי שיחות — כל הכרכים</title>
+  <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@300;400;500;700;900&family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --gold: #c9a84c; --gold-light: #e8c96e; --gold-dim: #a07830;
+      --dark: #0f1117; --surface: #161b27; --surface2: #1e2435;
+      --surface3: #252d40; --border: #2e3650;
+      --text: #e8e8f0; --text-muted: #7a859e; --text-dim: #4a5568;
+      --radius: 10px; --radius-sm: 6px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--dark); color: var(--text); font-family: 'Heebo', sans-serif; min-height: 100vh; }
+
+    header { background: linear-gradient(135deg, #0d1020 0%, #1a2040 100%); border-bottom: 1px solid var(--border); padding: 28px 24px 20px; text-align: center; }
+    header h1 { font-family: 'Frank Ruhl Libre', serif; font-size: 2rem; color: var(--gold-light); margin-bottom: 6px; }
+    header p { color: var(--text-muted); font-size: .9rem; }
+    .stats { display: flex; gap: 24px; justify-content: center; margin-top: 14px; }
+    .stat { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 6px 16px; font-size: .8rem; color: var(--text-muted); }
+    .stat span { color: var(--gold); font-weight: 600; }
+
+    nav { background: var(--surface); border-bottom: 1px solid var(--border); padding: 12px 24px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+    nav input { flex: 1; min-width: 200px; background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text); padding: 8px 14px; font-size: .9rem; font-family: 'Heebo', sans-serif; }
+    nav input:focus { outline: none; border-color: var(--gold-dim); }
+    nav input::placeholder { color: var(--text-dim); }
+    .vol-filter { display: flex; gap: 6px; flex-wrap: wrap; }
+    .vol-btn { background: var(--surface2); border: 1px solid var(--border); border-radius: 20px; color: var(--text-muted); padding: 4px 12px; font-size: .8rem; cursor: pointer; transition: all .15s; }
+    .vol-btn:hover, .vol-btn.active { background: var(--gold-dim); border-color: var(--gold); color: var(--gold-light); }
+
+    main { max-width: 1100px; margin: 0 auto; padding: 24px; }
+
+    .volume-section { margin-bottom: 32px; }
+    .vol-header { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius) var(--radius) 0 0; padding: 14px 20px; display: flex; align-items: center; gap: 12px; cursor: pointer; }
+    .vol-header:hover { background: var(--surface2); }
+    .vol-badge { background: var(--gold-dim); color: var(--gold-light); border-radius: 20px; padding: 3px 12px; font-size: .8rem; font-weight: 600; }
+    .vol-title { font-family: 'Frank Ruhl Libre', serif; font-size: 1.1rem; color: var(--gold-light); flex: 1; }
+    .vol-count { color: var(--text-dim); font-size: .8rem; }
+    .vol-toggle { color: var(--text-muted); font-size: 1.2rem; transition: transform .2s; }
+    .vol-header.collapsed .vol-toggle { transform: rotate(-90deg); }
+
+    .sicha-table { width: 100%; border-collapse: collapse; border: 1px solid var(--border); border-top: none; border-radius: 0 0 var(--radius) var(--radius); overflow: hidden; }
+    .sicha-table tr:nth-child(even) { background: var(--surface2); }
+    .sicha-table tr:nth-child(odd) { background: var(--surface); }
+    .sicha-table tr:hover { background: var(--surface3); }
+    .sicha-table td { padding: 10px 16px; font-size: .88rem; vertical-align: top; border-bottom: 1px solid var(--border); }
+    .sicha-table td:first-child { width: 120px; white-space: nowrap; }
+    .sicha-table td a { color: var(--gold-light); text-decoration: none; font-weight: 500; }
+    .sicha-table td a:hover { text-decoration: underline; }
+    .sicha-table td.page { color: var(--text-dim); font-size: .8rem; width: 60px; text-align: center; }
+    .sicha-table td.summary { color: var(--text-muted); line-height: 1.6; font-size: .84rem; }
+    .sicha-table.hidden { display: none; }
+
+    .no-results { text-align: center; color: var(--text-dim); padding: 60px; font-size: 1.1rem; }
+    footer { text-align: center; color: var(--text-dim); font-size: .78rem; padding: 32px; border-top: 1px solid var(--border); margin-top: 40px; }
+    footer a { color: var(--gold-dim); text-decoration: none; }
+    .nav-bar { background: var(--surface); border-bottom: 1px solid var(--border); padding: 10px 24px; display: flex; gap: 16px; }
+    .nav-bar a { color: var(--text-muted); text-decoration: none; font-size: .85rem; }
+    .nav-bar a:hover, .nav-bar a.active { color: var(--gold-light); }
+  </style>
+</head>
+<body>
+
+<div class="nav-bar">
+  <a href="index.html">ראשי</a>
+  <a href="chazal.html">מאגר חז"ל</a>
+  <a href="likkutei_sichos.html" class="active">ליקוטי שיחות</a>
+</div>
+
+<header>
+  <h1>ליקוטי שיחות</h1>
+  <p>כ"ק אדמו"ר מליובאוויטש — כל ל"ט הכרכים</p>
+  <div class="stats">
+    <div class="stat">כרכים: <span>39</span></div>
+    <div class="stat">שיחות: <span id="total-count">1,193</span></div>
+    <div class="stat">מקור: <span><a href="https://dach.dev" style="color:var(--gold);text-decoration:none">dach.dev</a></span></div>
+  </div>
+</header>
+
+<nav>
+  <input type="text" id="search" placeholder="חפש שיחה, פרשה, או תוכן..." />
+  <div class="vol-filter" id="vol-filter"></div>
+</nav>
+
+<main id="main"></main>
+
+<footer>
+  נתונים מ־<a href="https://dach.dev" target="_blank">dach.dev</a> · חלק מ<a href="index.html">מאגר ספרי חב"ד</a>
+</footer>
+
+<script>
+const DATA_URL = 'likkutei_sichos_data.json';
+let allData = {};
+let activeVol = null;
+
+async function init() {
+  const res = await fetch(DATA_URL);
+  allData = await res.json();
+
+  // Build vol filter buttons
+  const vf = document.getElementById('vol-filter');
+  for (let v = 1; v <= 39; v++) {
+    const btn = document.createElement('button');
+    btn.className = 'vol-btn';
+    btn.textContent = `ח' ${toHebNum(v)}`;
+    btn.dataset.vol = v;
+    btn.onclick = () => toggleVol(v, btn);
+    vf.appendChild(btn);
+  }
+
+  renderAll(allData);
+
+  document.getElementById('search').addEventListener('input', e => {
+    filterAndRender(e.target.value.trim());
+  });
+}
+
+function toggleVol(vol, btn) {
+  if (activeVol === vol) {
+    activeVol = null;
+    btn.classList.remove('active');
+  } else {
+    document.querySelectorAll('.vol-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeVol = vol;
+  }
+  filterAndRender(document.getElementById('search').value.trim());
+}
+
+function filterAndRender(query) {
+  const q = query.toLowerCase();
+  const filtered = {};
+  for (const [vol, sichos] of Object.entries(allData)) {
+    if (activeVol && parseInt(vol) !== activeVol) continue;
+    const matching = q ? sichos.filter(s =>
+      s.title.includes(query) || s.summary.includes(query)
+    ) : sichos;
+    if (matching.length) filtered[vol] = matching;
+  }
+  renderAll(filtered);
+  const total = Object.values(filtered).reduce((s, a) => s + a.length, 0);
+  document.getElementById('total-count').textContent = total.toLocaleString();
+}
+
+function renderAll(data) {
+  const main = document.getElementById('main');
+  main.innerHTML = '';
+  const vols = Object.keys(data).map(Number).sort((a,b) => a-b);
+  if (!vols.length) {
+    main.innerHTML = '<div class="no-results">לא נמצאו תוצאות</div>';
+    return;
+  }
+  for (const vol of vols) {
+    main.appendChild(buildVolSection(vol, data[vol]));
+  }
+}
+
+function buildVolSection(vol, sichos) {
+  const sec = document.createElement('div');
+  sec.className = 'volume-section';
+  sec.dataset.vol = vol;
+
+  const hdr = document.createElement('div');
+  hdr.className = 'vol-header';
+  hdr.innerHTML = `
+    <span class="vol-badge">כרך ${toHebNum(vol)}</span>
+    <span class="vol-title">ליקוטי שיחות — חלק ${vol}</span>
+    <span class="vol-count">${sichos.length} שיחות</span>
+    <span class="vol-toggle">▾</span>
+  `;
+
+  const tbl = document.createElement('table');
+  tbl.className = 'sicha-table';
+  tbl.innerHTML = sichos.map(s => `
+    <tr>
+      <td><a href="${s.url}" target="_blank">${s.title}</a></td>
+      <td class="page">${s.page}</td>
+      <td class="summary">${s.summary || ''}</td>
+    </tr>
+  `).join('');
+
+  hdr.onclick = () => {
+    hdr.classList.toggle('collapsed');
+    tbl.classList.toggle('hidden');
+  };
+
+  sec.appendChild(hdr);
+  sec.appendChild(tbl);
+  return sec;
+}
+
+const HEB = ['', 'א','ב','ג','ד','ה','ו','ז','ח','ט','י','יא','יב','יג','יד','טו','טז','יז','יח','יט','כ','כא','כב','כג','כד','כה','כו','כז','כח','כט','ל','לא','לב','לג','לד','לה','לו','לז','לח','לט'];
+function toHebNum(n) { return HEB[n] || n; }
+
+init();
+</script>
+</body>
+</html>
