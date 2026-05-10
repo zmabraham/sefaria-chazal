@@ -1,199 +1,392 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ליקוטי שיחות — כל הכרכים</title>
-  <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@300;400;500;700;900&family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --gold: #c9a84c; --gold-light: #e8c96e; --gold-dim: #a07830;
-      --dark: #0f1117; --surface: #161b27; --surface2: #1e2435;
-      --surface3: #252d40; --border: #2e3650;
-      --text: #e8e8f0; --text-muted: #7a859e; --text-dim: #4a5568;
-      --radius: 10px; --radius-sm: 6px;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: var(--dark); color: var(--text); font-family: 'Heebo', sans-serif; min-height: 100vh; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ליקוטי שיחות — לייבשע ספרייה</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    header { background: linear-gradient(135deg, #0d1020 0%, #1a2040 100%); border-bottom: 1px solid var(--border); padding: 28px 24px 20px; text-align: center; }
-    header h1 { font-family: 'Frank Ruhl Libre', serif; font-size: 2rem; color: var(--gold-light); margin-bottom: 6px; }
-    header p { color: var(--text-muted); font-size: .9rem; }
-    .stats { display: flex; gap: 24px; justify-content: center; margin-top: 14px; }
-    .stat { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 6px 16px; font-size: .8rem; color: var(--text-muted); }
-    .stat span { color: var(--gold); font-weight: 600; }
+  :root {
+    --bg: #fdfaf5;
+    --surface: #ffffff;
+    --border: #e0d8c8;
+    --accent: #8b5e3c;
+    --accent-light: #f5ede0;
+    --text: #2c1a0e;
+    --text-muted: #7a6655;
+    --footnote-bg: #faf5ec;
+    --sup-color: #8b5e3c;
+    --radius: 8px;
+  }
 
-    nav { background: var(--surface); border-bottom: 1px solid var(--border); padding: 12px 24px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
-    nav input { flex: 1; min-width: 200px; background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text); padding: 8px 14px; font-size: .9rem; font-family: 'Heebo', sans-serif; }
-    nav input:focus { outline: none; border-color: var(--gold-dim); }
-    nav input::placeholder { color: var(--text-dim); }
-    .vol-filter { display: flex; gap: 6px; flex-wrap: wrap; }
-    .vol-btn { background: var(--surface2); border: 1px solid var(--border); border-radius: 20px; color: var(--text-muted); padding: 4px 12px; font-size: .8rem; cursor: pointer; transition: all .15s; }
-    .vol-btn:hover, .vol-btn.active { background: var(--gold-dim); border-color: var(--gold); color: var(--gold-light); }
+  body {
+    font-family: 'David Libre', 'Frank Ruhl Libre', 'Times New Roman', serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    font-size: 17px;
+    line-height: 1.75;
+  }
 
-    main { max-width: 1100px; margin: 0 auto; padding: 24px; }
+  header {
+    background: var(--accent);
+    color: white;
+    padding: 18px 24px;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+  header h1 { font-size: 1.6rem; font-weight: 700; }
+  header p { font-size: 0.82rem; opacity: 0.85; margin-top: 2px; }
 
-    .volume-section { margin-bottom: 32px; }
-    .vol-header { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius) var(--radius) 0 0; padding: 14px 20px; display: flex; align-items: center; gap: 12px; cursor: pointer; }
-    .vol-header:hover { background: var(--surface2); }
-    .vol-badge { background: var(--gold-dim); color: var(--gold-light); border-radius: 20px; padding: 3px 12px; font-size: .8rem; font-weight: 600; }
-    .vol-title { font-family: 'Frank Ruhl Libre', serif; font-size: 1.1rem; color: var(--gold-light); flex: 1; }
-    .vol-count { color: var(--text-dim); font-size: .8rem; }
-    .vol-toggle { color: var(--text-muted); font-size: 1.2rem; transition: transform .2s; }
-    .vol-header.collapsed .vol-toggle { transform: rotate(-90deg); }
+  .layout {
+    display: flex;
+    height: calc(100vh - 68px);
+  }
 
-    .sicha-table { width: 100%; border-collapse: collapse; border: 1px solid var(--border); border-top: none; border-radius: 0 0 var(--radius) var(--radius); overflow: hidden; }
-    .sicha-table tr:nth-child(even) { background: var(--surface2); }
-    .sicha-table tr:nth-child(odd) { background: var(--surface); }
-    .sicha-table tr:hover { background: var(--surface3); }
-    .sicha-table td { padding: 10px 16px; font-size: .88rem; vertical-align: top; border-bottom: 1px solid var(--border); }
-    .sicha-table td:first-child { width: 120px; white-space: nowrap; }
-    .sicha-table td a { color: var(--gold-light); text-decoration: none; font-weight: 500; }
-    .sicha-table td a:hover { text-decoration: underline; }
-    .sicha-table td.page { color: var(--text-dim); font-size: .8rem; width: 60px; text-align: center; }
-    .sicha-table td.summary { color: var(--text-muted); line-height: 1.6; font-size: .84rem; }
-    .sicha-table.hidden { display: none; }
+  /* ── Sidebar ── */
+  .sidebar {
+    width: 300px;
+    min-width: 200px;
+    background: var(--surface);
+    border-left: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .sidebar-controls {
+    padding: 10px;
+    border-bottom: 1px solid var(--border);
+    background: var(--accent-light);
+  }
+  .search-box {
+    width: 100%;
+    padding: 7px 11px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 14px;
+    font-family: inherit;
+    background: white;
+    color: var(--text);
+    direction: rtl;
+    margin-bottom: 7px;
+  }
+  .search-box:focus { outline: 2px solid var(--accent); border-color: transparent; }
+  .vol-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+    max-height: 80px;
+    overflow-y: auto;
+  }
+  .vol-btn {
+    padding: 2px 7px;
+    font-size: 11px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: white;
+    cursor: pointer;
+    color: var(--text-muted);
+    font-family: inherit;
+    transition: all 0.12s;
+  }
+  .vol-btn:hover { background: var(--accent-light); border-color: var(--accent); }
+  .vol-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+  .vol-btn.all-btn { font-weight: 700; }
 
-    .no-results { text-align: center; color: var(--text-dim); padding: 60px; font-size: 1.1rem; }
-    footer { text-align: center; color: var(--text-dim); font-size: .78rem; padding: 32px; border-top: 1px solid var(--border); margin-top: 40px; }
-    footer a { color: var(--gold-dim); text-decoration: none; }
-    .nav-bar { background: var(--surface); border-bottom: 1px solid var(--border); padding: 10px 24px; display: flex; gap: 16px; }
-    .nav-bar a { color: var(--text-muted); text-decoration: none; font-size: .85rem; }
-    .nav-bar a:hover, .nav-bar a.active { color: var(--gold-light); }
-  </style>
+  .sicha-list { overflow-y: auto; flex: 1; padding: 6px 0; }
+  .vol-group-header {
+    padding: 5px 13px 3px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+    background: var(--accent-light);
+    border-bottom: 1px solid var(--border);
+  }
+  .sicha-item {
+    padding: 8px 13px;
+    cursor: pointer;
+    border-bottom: 1px solid #f5f0e8;
+    font-size: 15px;
+    line-height: 1.35;
+    transition: background 0.1s;
+  }
+  .sicha-item:hover { background: var(--accent-light); }
+  .sicha-item.active { background: var(--accent); color: white; }
+  .sicha-item .stitle { font-weight: 600; }
+  .sicha-item .spage { font-size: 11px; opacity: 0.6; }
+
+  /* ── Content ── */
+  .content-area {
+    flex: 1;
+    overflow-y: auto;
+    padding: 32px 44px;
+    max-width: 860px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .empty-state { text-align: center; margin-top: 80px; color: var(--text-muted); }
+  .empty-state h2 { font-size: 1.4rem; color: var(--accent); margin-bottom: 8px; }
+
+  .sicha-view { animation: fadeIn 0.18s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(3px); } to { opacity: 1; } }
+
+  .sicha-header {
+    margin-bottom: 26px;
+    padding-bottom: 14px;
+    border-bottom: 2px solid var(--border);
+  }
+  .sicha-header h2 { font-size: 1.75rem; color: var(--accent); }
+  .sicha-meta {
+    display: flex; gap: 14px; flex-wrap: wrap; align-items: center;
+    font-size: 13px; color: var(--text-muted); margin-top: 5px;
+  }
+  .sicha-meta a {
+    color: var(--accent); text-decoration: none; font-size: 12px;
+    border: 1px solid var(--accent); padding: 2px 8px; border-radius: 4px;
+    transition: all 0.12s; direction: ltr;
+  }
+  .sicha-meta a:hover { background: var(--accent); color: white; }
+
+  .main-text { font-size: 17.5px; line-height: 1.9; margin-bottom: 36px; }
+  .main-text p { margin-bottom: 0.95em; text-align: justify; }
+  .main-text sup {
+    font-size: 0.63em;
+    color: var(--sup-color);
+    cursor: pointer;
+    font-weight: 700;
+    vertical-align: super;
+    line-height: 1;
+    transition: color 0.1s;
+  }
+  .main-text sup:hover { color: #c0392b; text-decoration: underline; }
+  .main-text sup.hl { background: #ffe58a; padding: 0 2px; border-radius: 2px; }
+
+  .footnotes-section {
+    border-top: 2px solid var(--border);
+    padding-top: 22px;
+  }
+  .fn-label {
+    font-size: 12px; font-weight: 700; color: var(--text-muted);
+    letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 12px;
+  }
+  .fn-content {
+    background: var(--footnote-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    font-size: 14px;
+    line-height: 1.7;
+  }
+  .fn-content p { margin-bottom: 0.55em; }
+  .fn-content p:last-child { margin-bottom: 0; }
+  .fn-hl { background: #fff3cd; border-radius: 3px; padding: 1px 3px; transition: background 0.5s; }
+
+  .no-text {
+    color: var(--text-muted); font-style: italic; text-align: center;
+    padding: 36px; border: 1px dashed var(--border); border-radius: var(--radius); margin: 16px 0;
+  }
+  .no-text a { color: var(--accent); }
+  .loading { text-align: center; padding: 60px; color: var(--text-muted); font-size: 1.1rem; }
+
+  @media (max-width: 768px) {
+    .sidebar { width: 240px; }
+    .content-area { padding: 20px 16px; }
+    .main-text { font-size: 16px; }
+  }
+  @media (max-width: 560px) {
+    .layout { flex-direction: column; }
+    .sidebar { width: 100%; height: 200px; min-width: unset; }
+    .content-area { max-width: 100%; }
+  }
+  .sicha-list::-webkit-scrollbar, .content-area::-webkit-scrollbar { width: 5px; }
+  .sicha-list::-webkit-scrollbar-thumb, .content-area::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+</style>
 </head>
 <body>
 
-<div class="nav-bar">
-  <a href="index.html">ראשי</a>
-  <a href="chazal.html">מאגר חז"ל</a>
-  <a href="likkutei_sichos.html" class="active">ליקוטי שיחות</a>
-</div>
-
 <header>
   <h1>ליקוטי שיחות</h1>
-  <p>כ"ק אדמו"ר מליובאוויטש — כל ל"ט הכרכים</p>
-  <div class="stats">
-    <div class="stat">כרכים: <span>39</span></div>
-    <div class="stat">שיחות: <span id="total-count">1,193</span></div>
-    <div class="stat">מקור: <span><a href="https://dach.dev" style="color:var(--gold);text-decoration:none">dach.dev</a></span></div>
-  </div>
+  <p>כ"ק אדמו"ר — 39 כרכים • 1,193 שיחות</p>
 </header>
 
-<nav>
-  <input type="text" id="search" placeholder="חפש שיחה, פרשה, או תוכן..." />
-  <div class="vol-filter" id="vol-filter"></div>
-</nav>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-controls">
+      <input type="text" class="search-box" id="searchBox"
+             placeholder="🔍 חפש שיחה..." oninput="filterSichos()">
+      <div class="vol-filter" id="volFilter"></div>
+    </div>
+    <div class="sicha-list" id="sichaList"></div>
+  </aside>
 
-<main id="main"></main>
-
-<footer>
-  נתונים מ־<a href="https://dach.dev" target="_blank">dach.dev</a> · חלק מ<a href="index.html">מאגר ספרי חב"ד</a>
-</footer>
+  <main class="content-area" id="contentArea">
+    <div class="empty-state">
+      <h2>ליקוטי שיחות</h2>
+      <p>בחר שיחה מהרשימה משמאל</p>
+    </div>
+  </main>
+</div>
 
 <script>
-const DATA_URL = 'likkutei_sichos_data.json';
-let allData = {};
-let activeVol = null;
+let TOC = {};
+let activeVol = 'all';
+let activeSichaKey = null;
+const volCache = {};
+
+const HE_NUMS = ['א','ב','ג','ד','ה','ו','ז','ח','ט','י',
+  'יא','יב','יג','יד','טו','טז','יז','יח','יט','כ',
+  'כא','כב','כג','כד','כה','כו','כז','כח','כט','ל',
+  'לא','לב','לג','לד','לה','לו','לז','לח','לט'];
 
 async function init() {
-  const res = await fetch(DATA_URL);
-  allData = await res.json();
+  const r = await fetch('likkutei_sichos_data.json');
+  TOC = await r.json();
+  buildVolFilter();
+  renderList();
+}
 
-  // Build vol filter buttons
-  const vf = document.getElementById('vol-filter');
-  for (let v = 1; v <= 39; v++) {
+function buildVolFilter() {
+  const c = document.getElementById('volFilter');
+  const allBtn = document.createElement('button');
+  allBtn.className = 'vol-btn all-btn active';
+  allBtn.textContent = 'הכל'; allBtn.id = 'vol-all';
+  allBtn.onclick = () => setVol('all');
+  c.appendChild(allBtn);
+  Object.keys(TOC).sort((a,b) => +a - +b).forEach(v => {
     const btn = document.createElement('button');
     btn.className = 'vol-btn';
-    btn.textContent = `ח' ${toHebNum(v)}`;
-    btn.dataset.vol = v;
-    btn.onclick = () => toggleVol(v, btn);
-    vf.appendChild(btn);
-  }
-
-  renderAll(allData);
-
-  document.getElementById('search').addEventListener('input', e => {
-    filterAndRender(e.target.value.trim());
+    btn.textContent = HE_NUMS[+v-1] || v;
+    btn.title = `כרך ${v}`; btn.id = `vol-${v}`;
+    btn.onclick = () => setVol(v);
+    c.appendChild(btn);
   });
 }
 
-function toggleVol(vol, btn) {
-  if (activeVol === vol) {
-    activeVol = null;
-    btn.classList.remove('active');
-  } else {
-    document.querySelectorAll('.vol-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    activeVol = vol;
-  }
-  filterAndRender(document.getElementById('search').value.trim());
+function setVol(v) {
+  activeVol = v;
+  document.querySelectorAll('.vol-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(`vol-${v}`)?.classList.add('active');
+  renderList();
 }
 
-function filterAndRender(query) {
-  const q = query.toLowerCase();
-  const filtered = {};
-  for (const [vol, sichos] of Object.entries(allData)) {
-    if (activeVol && parseInt(vol) !== activeVol) continue;
-    const matching = q ? sichos.filter(s =>
-      s.title.includes(query) || s.summary.includes(query)
-    ) : sichos;
-    if (matching.length) filtered[vol] = matching;
-  }
-  renderAll(filtered);
-  const total = Object.values(filtered).reduce((s, a) => s + a.length, 0);
-  document.getElementById('total-count').textContent = total.toLocaleString();
+function filterSichos() { renderList(); }
+
+function renderList() {
+  const q = document.getElementById('searchBox').value.trim().toLowerCase();
+  const c = document.getElementById('sichaList');
+  c.innerHTML = '';
+  const vols = activeVol === 'all'
+    ? Object.keys(TOC).sort((a,b) => +a - +b) : [activeVol];
+
+  vols.forEach(vol => {
+    const filtered = TOC[vol].filter(s =>
+      !q || s.title.toLowerCase().includes(q) || (s.summary||'').toLowerCase().includes(q));
+    if (!filtered.length) return;
+
+    const grp = document.createElement('div');
+    const hdr = document.createElement('div');
+    hdr.className = 'vol-group-header';
+    hdr.textContent = `כרך ${vol}`;
+    grp.appendChild(hdr);
+
+    filtered.forEach(sicha => {
+      const key = `${sicha.page}_${vol}`;
+      const el = document.createElement('div');
+      el.className = 'sicha-item' + (key === activeSichaKey ? ' active' : '');
+      el.innerHTML = `<div class="stitle">${sicha.title}</div><div class="spage">עמ' ${sicha.page}</div>`;
+      el.onclick = () => openSicha(vol, sicha, el);
+      grp.appendChild(el);
+    });
+    c.appendChild(grp);
+  });
 }
 
-function renderAll(data) {
-  const main = document.getElementById('main');
-  main.innerHTML = '';
-  const vols = Object.keys(data).map(Number).sort((a,b) => a-b);
-  if (!vols.length) {
-    main.innerHTML = '<div class="no-results">לא נמצאו תוצאות</div>';
-    return;
-  }
-  for (const vol of vols) {
-    main.appendChild(buildVolSection(vol, data[vol]));
-  }
+async function openSicha(vol, sicha, el) {
+  document.querySelectorAll('.sicha-item').forEach(i => i.classList.remove('active'));
+  el.classList.add('active');
+  activeSichaKey = `${sicha.page}_${vol}`;
+
+  const content = document.getElementById('contentArea');
+  content.innerHTML = '<div class="loading">טוען...</div>';
+
+  let textData = null;
+  try { textData = await loadText(vol, sicha.page); } catch(e) {}
+  renderSicha(vol, sicha, textData, content);
 }
 
-function buildVolSection(vol, sichos) {
-  const sec = document.createElement('div');
-  sec.className = 'volume-section';
-  sec.dataset.vol = vol;
-
-  const hdr = document.createElement('div');
-  hdr.className = 'vol-header';
-  hdr.innerHTML = `
-    <span class="vol-badge">כרך ${toHebNum(vol)}</span>
-    <span class="vol-title">ליקוטי שיחות — חלק ${vol}</span>
-    <span class="vol-count">${sichos.length} שיחות</span>
-    <span class="vol-toggle">▾</span>
-  `;
-
-  const tbl = document.createElement('table');
-  tbl.className = 'sicha-table';
-  tbl.innerHTML = sichos.map(s => `
-    <tr>
-      <td><a href="${s.url}" target="_blank">${s.title}</a></td>
-      <td class="page">${s.page}</td>
-      <td class="summary">${s.summary || ''}</td>
-    </tr>
-  `).join('');
-
-  hdr.onclick = () => {
-    hdr.classList.toggle('collapsed');
-    tbl.classList.toggle('hidden');
-  };
-
-  sec.appendChild(hdr);
-  sec.appendChild(tbl);
-  return sec;
+async function loadText(vol, page) {
+  if (!volCache[vol]) {
+    const r = await fetch(`ls_data/vol_${vol}.json`);
+    if (!r.ok) throw new Error('not found');
+    const arr = await r.json();
+    volCache[vol] = {};
+    arr.forEach(s => { volCache[vol][s.page] = s; });
+  }
+  return volCache[vol][page] || null;
 }
 
-const HEB = ['', 'א','ב','ג','ד','ה','ו','ז','ח','ט','י','יא','יב','יג','יד','טו','טז','יז','יח','יט','כ','כא','כב','כג','כד','כה','כו','כז','כח','כט','ל','לא','לב','לג','לד','לה','לו','לז','לח','לט'];
-function toHebNum(n) { return HEB[n] || n; }
+function renderSicha(vol, toc, data, container) {
+  const dachUrl = `https://dach.dev/book/likkutei-sichos/viewer/${toc.page}_${vol}`;
+
+  let mainHtml = '';
+  let fnHtml = '';
+
+  if (data && data.mainText) {
+    mainHtml = data.mainText.replace(
+      /<sup>(\d+)<\/sup>/g,
+      (_, n) => `<sup onclick="goFn(${n})" title="הערה ${n}">${n}</sup>`
+    );
+    fnHtml = data.footnotes || '';
+  }
+
+  container.innerHTML = `
+    <div class="sicha-view">
+      <div class="sicha-header">
+        <h2>${toc.title}</h2>
+        <div class="sicha-meta">
+          <span>כרך ${vol} • עמ' ${toc.page}</span>
+          <a href="${dachUrl}" target="_blank">↗ dach.dev</a>
+        </div>
+      </div>
+      ${mainHtml
+        ? `<div class="main-text">${mainHtml}</div>`
+        : `<div class="no-text"><p>הטקסט אינו זמין</p><p><a href="${dachUrl}" target="_blank">פתח ב-dach.dev →</a></p></div>`}
+      ${fnHtml
+        ? `<div class="footnotes-section" id="fnSec">
+             <div class="fn-label">הערות</div>
+             <div class="fn-content" id="fnContent">${fnHtml}</div>
+           </div>` : ''}
+    </div>`;
+  container.scrollTop = 0;
+}
+
+function goFn(n) {
+  const sec = document.getElementById('fnSec');
+  const cnt = document.getElementById('fnContent');
+  if (!sec) return;
+  sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  cnt.querySelectorAll('p').forEach(p => p.classList.remove('fn-hl'));
+  cnt.querySelectorAll('p').forEach(p => {
+    if (/^(\d+)[).]/.test(p.textContent.trim()) &&
+        p.textContent.trim().match(/^(\d+)/)?.[1] === String(n)) {
+      p.classList.add('fn-hl');
+      setTimeout(() => p.classList.remove('fn-hl'), 3000);
+    }
+  });
+  document.querySelectorAll('.main-text sup').forEach(s => s.classList.remove('hl'));
+  document.querySelectorAll('.main-text sup').forEach(s => {
+    if (s.textContent === String(n)) {
+      s.classList.add('hl');
+      setTimeout(() => s.classList.remove('hl'), 3000);
+    }
+  });
+}
 
 init();
 </script>
