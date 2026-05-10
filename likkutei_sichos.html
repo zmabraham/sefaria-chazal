@@ -176,8 +176,23 @@
     vertical-align: super;
   }
   .main-text sup.has-src .sup-fn:hover { opacity: 1; color: #c0392b; }
-  .main-text sup.has-src.multi { color: #7a3a8a; cursor: pointer; }
+  .main-text sup.has-src.multi { color: #7a3a8a; cursor: pointer; position: relative; }
   .main-text sup.has-src.multi:hover { color: #c0392b; }
+
+  /* Multi-citation popover */
+  .cit-pop {
+    display: none; position: absolute; bottom: 100%; right: 0;
+    background: white; border: 1px solid #c5cfe8; border-radius: 7px;
+    padding: 5px 7px; z-index: 200; box-shadow: 0 3px 12px rgba(0,0,0,0.18);
+    flex-wrap: wrap; gap: 4px; min-width: 120px; max-width: 320px;
+    white-space: nowrap; margin-bottom: 3px;
+  }
+  .cit-pop.open { display: flex; }
+  .cit-pop .sup-fn {
+    font-size: 10px; cursor: pointer; color: #888; padding: 2px 5px;
+    border: 1px solid #ddd; border-radius: 4px; background: #f7f7f7;
+  }
+  .cit-pop .sup-fn:hover { color: #c0392b; background: #fff0f0; }
 
   /* Source link chips in footnotes */
   .fn-sources { margin-top: 5px; display: flex; flex-wrap: wrap; gap: 4px; }
@@ -491,8 +506,15 @@ function renderSicha(vol, toc, data, container) {
           const url = citationUrl(linked[0].category, linked[0].ref, linked[0].work);
           return `<sup id="fn-ref-${n}" class="has-src"><a href="${url}" target="_blank" title="${linked[0].work||linked[0].ref}">${n}</a><span class="sup-fn" onclick="goFn(${n})">↓</span></sup>`;
         } else if (linked.length > 1) {
-          // Multiple sources: show scroll arrow; sources appear in footnote
-          return `<sup id="fn-ref-${n}" class="has-src multi" onclick="goFn(${n})" title="${linked.length} מקורות">${n}</sup>`;
+          // Multiple sources: click opens inline popover with individual chips
+          const chipHtml = linked.map(c => {
+            const u = citationUrl(c.category, c.ref, c.work);
+            const isLocal = u.startsWith('chazal.html');
+            const lbl = (c.work || c.ref || '').replace(/</g,'&lt;').replace(/"/g,'&quot;');
+            return `<a href="${u}" target="_blank" class="src-chip${isLocal?' local':''}" onclick="event.stopPropagation()" title="${(c.ref||'').replace(/"/g,'')}">${lbl}</a>`;
+          }).join('');
+          const fnArrow = `<span class="sup-fn" onclick="event.stopPropagation();goFn(${n})">↓הערה</span>`;
+          return `<sup id="fn-ref-${n}" class="has-src multi" onclick="toggleCitPop(event,${n})" title="${linked.length} מקורות">${n}<span class="cit-pop" id="cit-pop-${n}">${chipHtml}${fnArrow}</span></sup>`;
         }
         return `<sup id="fn-ref-${n}" onclick="goFn(${n})" title="הערה ${n}">${n}</sup>`;
       }
@@ -522,6 +544,18 @@ function renderSicha(vol, toc, data, container) {
     </div>`;
   container.scrollTop = 0;
 }
+
+function toggleCitPop(e, n) {
+  e.stopPropagation();
+  const pop = document.getElementById(`cit-pop-${n}`);
+  if (!pop) { goFn(n); return; }
+  const wasOpen = pop.classList.contains('open');
+  document.querySelectorAll('.cit-pop.open').forEach(p => p.classList.remove('open'));
+  if (!wasOpen) pop.classList.add('open');
+}
+document.addEventListener('click', () => {
+  document.querySelectorAll('.cit-pop.open').forEach(p => p.classList.remove('open'));
+});
 
 function scrollToFn(n) {
   // Scroll content area to the superscript with id="fn-ref-N" and highlight it
