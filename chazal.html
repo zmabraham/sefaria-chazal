@@ -420,6 +420,23 @@ async function init() {
     if (!r.ok) throw new Error('index.json not found');
     manifest = await r.json();
     updateHeaderMeta();
+
+    // Handle deep-link URL params: ?cat=bavli&book=Kiddushin&ref=Kiddushin.40b
+    const params = new URLSearchParams(window.location.search);
+    const pCat = params.get('cat'), pBook = params.get('book'), pRef = params.get('ref');
+    if (pCat && manifest.categories[pCat]) {
+      await selectCat(pCat, false);
+      if (pBook && manifest.categories[pCat].books[pBook]) {
+        await openBook(pCat, pBook, false);
+        if (pRef) {
+          // Try to scroll to the section matching the ref
+          await new Promise(res => setTimeout(res, 200));
+          deepLinkToRef(pRef);
+        }
+      }
+      return;
+    }
+
     // Restore last position
     const last = localStorage.getItem('chazal_state');
     if (last) {
@@ -553,6 +570,37 @@ function sectionWord(secType) {
 }
 
 // ── Render one section ─────────────────────────────────────────────────────
+function deepLinkToRef(ref) {
+  // Try to find the right section for a Sefaria-style ref and scroll to it
+  if (!currentBookData) return;
+  const meta = currentBookData.meta;
+
+  // Extract page/chapter from ref: "Kiddushin.40b" → "40b", "Mishnah_Avot.3.1" → "3"
+  // "Bereishit Rabbah.34.14" → section 34
+  const parts = ref.replace(/^[^.]+\./, '').split('.');
+  let secKey = null;
+
+  if (meta.section_type === 'daf') {
+    // Bavli daf: extract number from e.g. "40b" → 40
+    const daf = parts[0] || '';
+    const num = parseInt(daf);
+    if (!isNaN(num)) secKey = String(num);
+  } else {
+    // Chapter-based: first part is chapter number
+    const num = parseInt(parts[0]);
+    if (!isNaN(num)) secKey = String(num);
+  }
+
+  if (secKey && currentBookData.sections[secKey]) {
+    renderSection(secKey);
+    // Highlight matching verse/amud if possible
+    setTimeout(() => {
+      const reader = document.getElementById('reader');
+      if (reader) reader.scrollTop = 0;
+    }, 100);
+  }
+}
+
 function renderSection(secKey) {
   currentSection = secKey;
   document.querySelectorAll('.sec-btn').forEach(b => b.classList.toggle('active', b.dataset.sec === secKey));

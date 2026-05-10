@@ -164,8 +164,32 @@
     line-height: 1;
     transition: color 0.1s;
   }
-  .main-text sup:hover { color: #c0392b; text-decoration: underline; }
+  .main-text sup:hover { color: #c0392b; }
   .main-text sup.hl { background: #ffe58a; padding: 0 2px; border-radius: 2px; }
+
+  /* Superscripts with known sources */
+  .main-text sup.has-src { color: #1a6e8a; }
+  .main-text sup.has-src a { color: inherit; text-decoration: none; font-weight: 700; }
+  .main-text sup.has-src a:hover { text-decoration: underline; color: #c0392b; }
+  .main-text sup.has-src .sup-fn {
+    font-size: 8px; cursor: pointer; opacity: 0.55; margin-right: 1px;
+    vertical-align: super;
+  }
+  .main-text sup.has-src .sup-fn:hover { opacity: 1; color: #c0392b; }
+  .main-text sup.has-src.multi { color: #7a3a8a; cursor: pointer; }
+  .main-text sup.has-src.multi:hover { color: #c0392b; }
+
+  /* Source link chips in footnotes */
+  .fn-sources { margin-top: 5px; display: flex; flex-wrap: wrap; gap: 4px; }
+  .src-chip {
+    display: inline-block; padding: 2px 8px; font-size: 11px;
+    background: #eef2ff; border: 1px solid #c5cfe8; border-radius: 4px;
+    color: #2255aa; text-decoration: none; font-family: sans-serif;
+    transition: all 0.12s; white-space: nowrap;
+  }
+  .src-chip:hover { background: #2255aa; color: white; border-color: #2255aa; }
+  .src-chip.local { background: #eefff4; border-color: #a0d8b0; color: #1a7a3a; }
+  .src-chip.local:hover { background: #1a7a3a; color: white; border-color: #1a7a3a; }
 
   .footnotes-section {
     border-top: 2px solid var(--border);
@@ -238,6 +262,86 @@ let TOC = {};
 let activeVol = 'all';
 let activeSichaKey = null;
 const volCache = {};
+let citLookup = {};   // sicha_id → {fn → [{work,ref,category,raw}]}
+let citationsLoaded = false;
+
+// ── Citation source URLs ─────────────────────────────────────────────────────
+// Categories we have in our local chazal.html DB
+const LOCAL_CATS = new Set(['bavli','mishnah','yerushalmi','midrash']);
+
+// Map Sefaria-style book names to our chazal book keys (camelCase/underscore)
+function sefToChazalKey(work) {
+  return work.replace(/ /g,'_')
+             .replace(/Bereishit_Rabbah/,'Bereshit_Rabbah')
+             .replace(/Midrash_Tanchuma/,'Midrash_Tanchuma')
+             .replace(/Jerusalem_Talmud_/,'Jerusalem_Talmud_');
+}
+
+function citationUrl(cat, ref, work) {
+  // Normalize category (handle compound like "bavli; midrash")
+  const c = (cat||'').split(';')[0].trim();
+  if (LOCAL_CATS.has(c)) {
+    // Map to chazal.html deep link
+    // ref examples: "Kiddushin.40b", "Mishnah_Avot.3.1", "Bereishit Rabbah.34.14",
+    //               "Jerusalem Talmud Berakhot.1.1"
+    let bookKey = work || ref.split('.')[0];
+    bookKey = sefToChazalKey(bookKey);
+    const catKey = c === 'yerushalmi' ? 'yerushalmi'
+                 : c === 'mishnah'    ? 'mishnah'
+                 : c === 'midrash'    ? 'midrash' : 'bavli';
+    return `chazal.html?cat=${catKey}&book=${encodeURIComponent(bookKey)}&ref=${encodeURIComponent(ref)}`;
+  }
+  // Sefaria fallback for everything else
+  // Convert dot-notation to Sefaria URL: "Genesis.1.1" → "Genesis 1:1"
+  const sefRef = ref.replace(/\.(\d)/g, ' $1').replace(/ (\d+) /, ' $1:').trim();
+  return `https://www.sefaria.org/${encodeURIComponent(sefRef)}`;
+}
+
+async function loadCitations() {
+  if (citationsLoaded) return;
+  try {
+    const r = await fetch('citations.json');
+    if (!r.ok) return;
+    const cits = await r.json();
+    for (const c of cits) {
+      const sid = c.sicha_id || `${c.page}_${c.volume}`;
+      if (!citLookup[sid]) citLookup[sid] = {};
+      const fn = c.fn;
+      if (!citLookup[sid][fn]) citLookup[sid][fn] = [];
+      citLookup[sid][fn].push(c);
+    }
+    citationsLoaded = true;
+  } catch(e) { /* citations not ready yet */ }
+}
+
+function annotateFnContent(fnHtml, sichaId) {
+  // After rendering footnotes, inject source links for each footnote paragraph
+  const div = document.createElement('div');
+  div.innerHTML = fnHtml;
+  const fns = citLookup[sichaId] || {};
+  div.querySelectorAll('p').forEach(p => {
+    const m = p.textContent.trim().match(/^(\d+)[).]/);
+    if (!m) return;
+    const fn = parseInt(m[1]);
+    const cits = fns[fn];
+    if (!cits || !cits.length) return;
+    // Build source chips
+    const chips = cits
+      .filter(c => c.ref && !['other',''].includes(c.category||''))
+      .map(c => {
+        const url = citationUrl(c.category, c.ref, c.work);
+        const isLocal = url.startsWith('chazal.html');
+        const label = c.work || c.ref;
+        return `<a href="${url}" target="_blank" class="src-chip${isLocal?' local':''}" title="${(c.ref||'').replace(/"/g,'')}">${label.replace(/</g,'&lt;')}</a>`;
+      });
+    if (!chips.length) return;
+    const bar = document.createElement('div');
+    bar.className = 'fn-sources';
+    bar.innerHTML = chips.join('');
+    p.appendChild(bar);
+  });
+  return div.innerHTML;
+}
 
 const HE_NUMS = ['א','ב','ג','ד','ה','ו','ז','ח','ט','י',
   'יא','יב','יג','יד','טו','טז','יז','יח','יט','כ',
@@ -249,6 +353,7 @@ async function init() {
   TOC = await r.json();
   buildVolFilter();
   renderList();
+  loadCitations(); // load in background, non-blocking
 
   // Handle deep-link URL params: ?s=page_vol&fn=N
   const params = new URLSearchParams(window.location.search);
@@ -351,6 +456,8 @@ async function openSicha(vol, sicha, el) {
 
   let textData = null;
   try { textData = await loadText(vol, sicha.page); } catch(e) {}
+  // Ensure citations are loaded before rendering so source links appear
+  if (!citationsLoaded) await loadCitations();
   renderSicha(vol, sicha, textData, content);
 }
 
@@ -372,11 +479,27 @@ function renderSicha(vol, toc, data, container) {
   let fnHtml = '';
 
   if (data && data.mainText) {
+    const sichaId = `${toc.page}_${vol}`;
+    const fns = citLookup[sichaId] || {};
     mainHtml = data.mainText.replace(
       /<sup>(\d+)<\/sup>/g,
-      (_, n) => `<sup id="fn-ref-${n}" onclick="goFn(${n})" title="הערה ${n}">${n}</sup>`
+      (_, n) => {
+        const cits = fns[parseInt(n)] || [];
+        const linked = cits.filter(c => c.ref && !['other',''].includes(c.category||''));
+        if (linked.length === 1) {
+          // Single source: sup is a direct link
+          const url = citationUrl(linked[0].category, linked[0].ref, linked[0].work);
+          return `<sup id="fn-ref-${n}" class="has-src"><a href="${url}" target="_blank" title="${linked[0].work||linked[0].ref}">${n}</a><span class="sup-fn" onclick="goFn(${n})">↓</span></sup>`;
+        } else if (linked.length > 1) {
+          // Multiple sources: show scroll arrow; sources appear in footnote
+          return `<sup id="fn-ref-${n}" class="has-src multi" onclick="goFn(${n})" title="${linked.length} מקורות">${n}</sup>`;
+        }
+        return `<sup id="fn-ref-${n}" onclick="goFn(${n})" title="הערה ${n}">${n}</sup>`;
+      }
     );
-    fnHtml = data.footnotes || '';
+    fnHtml = data.footnotes
+      ? annotateFnContent(data.footnotes, sichaId)
+      : '';
   }
 
   container.innerHTML = `
