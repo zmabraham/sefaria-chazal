@@ -13,7 +13,7 @@ Each citation:
     "raw": "קידושין מ, ב",      # exact text span from footnote
     "work": "Kiddushin",        # normalized Sefaria book key
     "ref": "Kiddushin.40b",     # Sefaria ref
-    "category": "bavli"         # tanach|mishnah|bavli|yerushalmi|midrash|zohar|rambam|other
+    "category": "bavli"         # tanach|mishnah|bavli|yerushalmi|midrash|zohar|rambam|tanya|chassidus|other
   }
 """
 
@@ -48,23 +48,24 @@ Return ONLY a JSON array. Each element:
 {
   "fn": <footnote number as integer>,
   "raw": "<exact substring from footnote text that is the citation>",
-  "work": "<English Sefaria book name, e.g. Kiddushin, Genesis, Psalms, Zohar, Tanya>",
-  "ref": "<Sefaria-style ref, e.g. Kiddushin.40b, Genesis.1.1, Psalms.119.89, Zohar.2.161a, Tanya.2.2>",
-  "category": "<one of: tanach|mishnah|bavli|yerushalmi|midrash|zohar|rambam|tanya|other>"
+  "work": "<English Sefaria book name, e.g. Kiddushin, Genesis, Psalms, Zohar, Tanya, Torah Ohr, Likkutei Torah>",
+  "ref": "<Sefaria-style ref, e.g. Kiddushin.40b, Genesis.1.1, Zohar.2.161a, Tanya.2.2, Torah Ohr, Lech Lecha 11, Likkutei Torah, Vayikra 41>",
+  "category": "<one of: tanach|mishnah|bavli|yerushalmi|midrash|zohar|rambam|tanya|chassidus|other>"
 }
 
 RULES:
-- Include ONLY actual source citations (Tanach verses, Talmud pages, Mishnah, Zohar, Rambam, Tanya, etc.)
-- Do NOT include: maamorim (ספר המאמרים, לקוטי תורה), responsa (שו"ת), unpublished works, Likkutei Sichos itself, footnote cross-references
-- For Talmud Bavli: ref format = BookName.Xb (e.g. Kiddushin.40b, Berakhot.2a)
-- For Tanach: ref format = Book.chapter.verse (e.g. Genesis.1.1, Psalms.119.89, Exodus.20.2)
-- For Mishnah: ref format = Mishnah_BookName.chapter.mishnah (e.g. Mishnah_Avot.3.1)
-- For Zohar: זח"א = Zohar.1, זח"ב = Zohar.2, זח"ג = Zohar.3
-- For Tanya: ח"א = Tanya part 1, ח"ב = Tanya part 2 (Sha'ar HaYichud), תניא = Tanya
-- For ב"ר = Bereshit Rabbah, for תענית = Taanit (bavli unless specified ירושלמי)
+- Include: Tanach, Talmud, Mishnah, Zohar, Rambam, Tanya, Torah Ohr (תורה אור), Likkutei Torah (לקוטי תורה), Siddur
+- Exclude: ספר המאמרים, מאמרים, Likkutei Sichos itself, footnote cross-references (like "ראה הערה X"), responsa
+- For Talmud Bavli: ref = BookName.Xb (e.g. Kiddushin.40b, Berakhot.2a)
+- For Tanach: ref = Book.chapter.verse (e.g. Genesis.1.1, Psalms.119.89)
+- For Mishnah: ref = Mishnah_BookName.chapter.mishnah (e.g. Mishnah_Avot.3.1)
+- For Zohar: זח"א = Zohar.1, זח"ב = Zohar.2, זח"ג = Zohar.3; ref = Zohar.volume.page (e.g. Zohar.2.161a)
+- For Tanya: ח"א/ליקוטי אמרים = Tanya part 1; ref = Tanya.part.chapter (e.g. Tanya.1.3)
+- For Torah Ohr (ת"א/תורה אור): category=chassidus; ref = "Torah Ohr, Parsha PageNum" (e.g. "Torah Ohr, Lech Lecha 11")
+- For Likkutei Torah (לקו"ת/ל"ת): category=chassidus; ref = "Likkutei Torah, Parsha PageNum" (e.g. "Likkutei Torah, Vayikra 41")
+- For Rambam/Mishneh Torah: ref = "Mishneh Torah, Hilchot X.chapter.law"
 - "raw" must be the EXACT text span from the input that contains the citation
-- If a footnote has multiple citations, return one element per citation
-- Return [] if no citable sources found
+- Return one element per citation; return [] if none
 - Return ONLY the JSON array, no explanation"""
 
 def extract_citations_for_sicha(client, sicha):

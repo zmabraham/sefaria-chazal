@@ -244,7 +244,7 @@ const BAVLI_ORDER = [
   'Keritot','Meilah','Niddah'
 ];
 
-const CAT_ORDER = ['tanach','mishnah','bavli','yerushalmi','midrash','zohar','rambam','tanya','other'];
+const CAT_ORDER = ['tanach','mishnah','bavli','yerushalmi','midrash','zohar','rambam','tanya','chassidus','other'];
 const CAT_LABELS = {
   tanach: 'תנ"ך',
   mishnah: 'משנה',
@@ -254,6 +254,7 @@ const CAT_LABELS = {
   zohar: 'זוהר',
   rambam: 'רמב"ם',
   tanya: 'תניא',
+  chassidus: 'חסידות (תורה אור / ליקוטי תורה)',
   other: 'אחר',
 };
 
@@ -294,7 +295,18 @@ function buildGrouped() {
 }
 
 // ── Sort helpers ─────────────────────────────────────────────────────────────
+const CHASSIDUS_BOOK_ORDER = ['Torah Ohr', 'Likkutei Torah'];
+
 function sortWorks(cat, works) {
+  if (cat === 'chassidus') {
+    return works.sort((a, b) => {
+      const ia = CHASSIDUS_BOOK_ORDER.indexOf(a), ib = CHASSIDUS_BOOK_ORDER.indexOf(b);
+      if (ia >= 0 && ib >= 0) return ia - ib;
+      if (ia >= 0) return -1;
+      if (ib >= 0) return 1;
+      return a.localeCompare(b);
+    });
+  }
   if (cat === 'tanach') {
     return works.sort((a, b) => {
       const ia = TANACH_ORDER.indexOf(a), ib = TANACH_ORDER.indexOf(b);
