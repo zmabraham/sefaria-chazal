@@ -477,17 +477,17 @@
           "title_he": "מכילתא דרבי ישמעאל",
           "seder": "Mekhilta",
           "section_type": "nodes",
-          "total_sections": null,
-          "segment_count": 0,
-          "complete": false
+          "total_sections": 0,
+          "segment_count": 2043,
+          "complete": true
         },
         "Sifra": {
           "title_he": "ספרא",
           "seder": "Sifra",
           "section_type": "nodes",
-          "total_sections": null,
-          "segment_count": 0,
-          "complete": false
+          "total_sections": 0,
+          "segment_count": 2765,
+          "complete": true
         },
         "Sifrei_Bamidbar": {
           "title_he": "ספרי במדבר",
@@ -1470,5 +1470,5 @@
       }
     }
   },
-  "generated": "2026-05-08T19:51:19.127660Z"
+  "generated": "2026-05-10T02:45:12.482056Z"
 }
