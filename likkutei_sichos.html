@@ -282,7 +282,7 @@ let citationsLoaded = false;
 
 // ── Citation source URLs ─────────────────────────────────────────────────────
 // Categories we have in our local chazal.html DB
-const LOCAL_CATS = new Set(['bavli','mishnah','yerushalmi','midrash']);
+const LOCAL_CATS = new Set(['bavli','mishnah','yerushalmi','midrash','tanach','zohar','rambam','tanya','chassidus','halacha','kabbalah','commentary','targum','tosefta']);
 
 // Map Sefaria-style book names to our chazal book keys (camelCase/underscore)
 function sefToChazalKey(work) {
@@ -301,9 +301,20 @@ function citationUrl(cat, ref, work) {
     //               "Jerusalem Talmud Berakhot.1.1"
     let bookKey = work || ref.split('.')[0];
     bookKey = sefToChazalKey(bookKey);
-    const catKey = c === 'yerushalmi' ? 'yerushalmi'
+    const catKey = c === 'yerushalmi'  ? 'yerushalmi'
                  : c === 'mishnah'    ? 'mishnah'
-                 : c === 'midrash'    ? 'midrash' : 'bavli';
+                 : c === 'midrash'    ? 'midrash'
+                 : c === 'tanach'     ? 'tanach'
+                 : c === 'zohar'      ? 'zohar'
+                 : c === 'rambam'     ? 'rambam'
+                 : c === 'tanya'      ? 'tanya'
+                 : c === 'chassidus'  ? 'chassidus'
+                 : c === 'halacha'    ? 'halacha'
+                 : c === 'kabbalah'   ? 'kabbalah'
+                 : c === 'commentary' ? 'commentary'
+                 : c === 'targum'     ? 'targum'
+                 : c === 'tosefta'    ? 'tosefta'
+                 : 'bavli';
     return `chazal.html?cat=${catKey}&book=${encodeURIComponent(bookKey)}&ref=${encodeURIComponent(ref)}`;
   }
   // Sefaria fallback for everything else
