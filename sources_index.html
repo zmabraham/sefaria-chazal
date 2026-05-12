@@ -3,702 +3,786 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>מפתח מקורות — לקוטי שיחות</title>
+<title>מפתחות לקוטי שיחות</title>
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#f4f6fb;color:#1a1a2e;direction:rtl;min-height:100vh}
 
-body {
-  font-family: 'Segoe UI', Arial, sans-serif;
-  background: #f4f6fb;
-  color: #1a1a2e;
-  direction: rtl;
-  min-height: 100vh;
-}
+/* ── HEADER ─────────────────────────────────────────────────── */
+#hdr{position:sticky;top:0;z-index:200;background:#1a1a2e;color:#fff;padding:8px 16px 6px;box-shadow:0 2px 14px rgba(0,0,0,.35)}
+#hdr h1{font-size:1.2rem;font-weight:700;margin-bottom:6px}
+#hdr h1 em{color:#8ab4f8;font-size:.85rem;font-style:normal;margin-right:10px}
+#search-row{display:flex;gap:8px;align-items:center;margin-bottom:6px}
+#si{flex:1;padding:5px 12px;border-radius:18px;border:none;font-size:.9rem;direction:rtl;background:#2a2a4a;color:#fff;outline:none}
+#si::placeholder{color:#8888aa}
+#si:focus{background:#3a3a6a}
+#scount{font-size:.78rem;color:#8ab4f8;white-space:nowrap}
 
-/* HEADER */
-#header {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: #1a1a2e;
-  color: white;
-  padding: 10px 18px 6px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.3);
-}
-#header h1 {
-  font-size: 1.3rem;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  margin-bottom: 6px;
-}
-#header h1 span { color: #8ab4f8; font-size: 0.9rem; font-weight: 400; margin-right: 10px; }
+/* ── SECTION TABS ───────────────────────────────────────────── */
+#section-tabs{display:flex;gap:0;border-bottom:2px solid #dde3f0;background:#f4f6fb;position:sticky;top:60px;z-index:190}
+.sec-tab{padding:8px 22px;font-size:.9rem;font-weight:600;cursor:pointer;color:#5566aa;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .15s;white-space:nowrap}
+.sec-tab:hover{color:#2d3e8a;background:#eef2ff}
+.sec-tab.active{color:#2d3e8a;border-bottom-color:#2d3e8a;background:#fff}
 
-#search-bar {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  margin-bottom: 8px;
-}
-#search-input {
-  flex: 1;
-  padding: 6px 12px;
-  border-radius: 20px;
-  border: none;
-  font-size: 0.95rem;
-  direction: rtl;
-  background: #2a2a4a;
-  color: white;
-  outline: none;
-}
-#search-input::placeholder { color: #8888aa; }
-#search-input:focus { background: #3a3a6a; }
-#count-badge {
-  font-size: 0.8rem;
-  color: #8ab4f8;
-  white-space: nowrap;
-}
+/* ── SUB-TABS ───────────────────────────────────────────────── */
+#sub-tabs{display:flex;flex-wrap:wrap;gap:5px;padding:6px 16px 7px;background:#fff;border-bottom:1px solid #dde3f0;position:sticky;top:106px;z-index:180}
+.sub-tab{padding:3px 12px;border-radius:14px;border:1.5px solid #c5cfe8;background:#f8faff;cursor:pointer;font-size:.8rem;color:#3a4a7a;font-weight:500;transition:all .15s;white-space:nowrap}
+.sub-tab:hover{background:#e8eeff;border-color:#7a9ef8}
+.sub-tab.active{background:#2d3e8a;color:#fff;border-color:#2d3e8a}
+.sub-tab .cnt{font-size:.7rem;opacity:.75;margin-right:3px}
 
-/* CATEGORY TABS */
-#cat-tabs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-  padding: 6px 18px 8px;
-  background: #f4f6fb;
-  border-bottom: 1px solid #dde3f0;
-  position: sticky;
-  top: 82px;
-  z-index: 90;
-}
-.cat-tab {
-  padding: 4px 12px;
-  border-radius: 16px;
-  border: 1.5px solid #c5cfe8;
-  background: white;
-  cursor: pointer;
-  font-size: 0.82rem;
-  color: #3a4a7a;
-  font-weight: 500;
-  transition: all 0.15s;
-  white-space: nowrap;
-}
-.cat-tab:hover { background: #e8eeff; border-color: #7a9ef8; }
-.cat-tab.active {
-  background: #2d3e8a;
-  color: white;
-  border-color: #2d3e8a;
-}
-.cat-tab .cnt {
-  font-size: 0.72rem;
-  opacity: 0.75;
-  margin-right: 4px;
-}
+/* ── TOOLBAR ────────────────────────────────────────────────── */
+#toolbar{display:flex;gap:8px;align-items:center;padding:7px 16px;background:#f8faff;border-bottom:1px solid #eee}
+#toolbar button{padding:3px 12px;border-radius:12px;border:1.5px solid #c5cfe8;background:#fff;cursor:pointer;font-size:.78rem;color:#3a4a7a}
+#toolbar button:hover{background:#e8eeff}
+#tinfo{flex:1;font-size:.78rem;color:#8899bb}
 
-/* MAIN CONTENT */
-#content {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 16px 18px 40px;
-}
+/* ── CONTENT ────────────────────────────────────────────────── */
+#content{max-width:1150px;margin:0 auto;padding:14px 16px 50px}
+#loading{text-align:center;padding:60px;color:#7788bb;font-size:1.1rem}
+#empty{text-align:center;padding:40px;color:#9999bb}
 
-/* BOOK BLOCK */
-.book-block {
-  margin-bottom: 10px;
-  border-radius: 8px;
-  border: 1px solid #dde3f0;
-  background: white;
-  overflow: hidden;
-}
-.book-header {
-  display: flex;
-  align-items: center;
-  padding: 10px 16px;
-  cursor: pointer;
-  background: #f0f4ff;
-  border-bottom: 1px solid #dde3f0;
-  transition: background 0.15s;
-  user-select: none;
-}
-.book-header:hover { background: #e4eaff; }
-.book-title {
-  font-size: 1rem;
-  font-weight: 700;
-  color: #1a2a6a;
-  flex: 1;
-}
-.book-count {
-  font-size: 0.8rem;
-  color: #5566aa;
-  margin-left: 12px;
-  padding: 2px 8px;
-  background: #dde8ff;
-  border-radius: 10px;
-}
-.toggle-arrow {
-  font-size: 0.8rem;
-  color: #7788bb;
-  margin-right: 8px;
-  transition: transform 0.2s;
-}
-.book-block.open .toggle-arrow { transform: rotate(90deg); }
+/* ── GROUP BLOCK (Parsha / Seder / Section) ─────────────────── */
+.grp{margin-bottom:10px;border-radius:8px;border:1px solid #dde3f0;background:#fff;overflow:hidden}
+.grp-hdr{display:flex;align-items:center;padding:9px 14px;cursor:pointer;background:#eef2ff;border-bottom:1px solid #dde3f0;user-select:none;transition:background .15s}
+.grp-hdr:hover{background:#e0e8ff}
+.grp-hdr .arrow{font-size:.75rem;color:#8899cc;margin-right:7px;transition:transform .2s;display:inline-block}
+.grp.open .grp-hdr .arrow{transform:rotate(90deg)}
+.grp-hdr .gtitle{font-size:.95rem;font-weight:700;color:#1a2a6a;flex:1}
+.grp-hdr .gcount{font-size:.75rem;color:#5566aa;padding:2px 8px;background:#dde8ff;border-radius:10px}
 
-.citations-table {
-  display: none;
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.83rem;
-}
-.book-block.open .citations-table { display: table; }
+/* ── BOOK BLOCK (nested) ────────────────────────────────────── */
+.book{margin:8px 10px;border-radius:6px;border:1px solid #e5eaf8;background:#fafbff;overflow:hidden}
+.book-hdr{display:flex;align-items:center;padding:7px 12px;cursor:pointer;background:#f5f7ff;user-select:none;transition:background .15s}
+.book-hdr:hover{background:#eaefff}
+.book-hdr .arrow{font-size:.7rem;color:#aabbdd;margin-right:6px;transition:transform .2s;display:inline-block}
+.book.open .book-hdr .arrow{transform:rotate(90deg)}
+.book-hdr .btitle{font-size:.88rem;font-weight:700;color:#2a3a7a;flex:1}
+.book-hdr .bcount{font-size:.72rem;color:#7788bb;padding:1px 6px;background:#e0e8ff;border-radius:8px}
 
-.citations-table th {
-  padding: 6px 12px;
-  background: #f8f9ff;
-  color: #5566aa;
-  font-weight: 600;
-  text-align: right;
-  border-bottom: 1px solid #eee;
-  font-size: 0.78rem;
-}
-.citations-table td {
-  padding: 6px 12px;
-  border-bottom: 1px solid #f0f0f8;
-  vertical-align: top;
-}
-.citations-table tr:last-child td { border-bottom: none; }
-.citations-table tr:hover td { background: #f8f9ff; }
+/* ── CITATION TABLE ─────────────────────────────────────────── */
+.ct{display:none;width:100%;border-collapse:collapse;font-size:.81rem}
+.book.open .ct{display:table}
+.ct th{padding:5px 10px;background:#f3f5ff;color:#5566aa;font-weight:600;text-align:right;border-bottom:1px solid #e8eaf8;font-size:.75rem}
+.ct td{padding:5px 10px;border-bottom:1px solid #f0f0f8;vertical-align:top}
+.ct tr:last-child td{border-bottom:none}
+.ct tr:hover td{background:#f8f9ff}
 
-.ref-cell { font-weight: 600; color: #2a3a7a; max-width: 200px; }
-.sicha-link {
-  color: #3a5aaa;
-  text-decoration: none;
-  font-size: 0.82rem;
-}
-.sicha-link:hover { text-decoration: underline; color: #1a3a8a; }
-.vol-cell { color: #667799; font-size: 0.8rem; white-space: nowrap; }
-.fn-cell {
-  font-size: 0.78rem;
-  color: #8899bb;
-  text-align: center;
-}
-.raw-cell {
-  color: #444466;
-  font-size: 0.8rem;
-  max-width: 280px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.role-badge {
-  font-size: 0.7rem;
-  padding: 1px 6px;
-  border-radius: 8px;
-  white-space: nowrap;
-}
-.role-badge.primary { background: #fff0d0; color: #885500; border: 1px solid #ffcc66; }
-.role-badge.secondary { background: #eef5ff; color: #335588; border: 1px solid #aaccff; }
+.td-loc{font-weight:700;color:#2a3a7a;white-space:nowrap;font-size:.8rem;min-width:70px}
+.td-inc{color:#1a1a2e;font-size:.83rem;max-width:240px}
+.td-inc .rashi{color:#7a5a00;font-size:.78rem}
+.td-link a{color:#3a5aaa;text-decoration:none;font-size:.78rem}
+.td-link a:hover{text-decoration:underline;color:#1a3a8a}
+.td-raw{color:#666688;font-size:.75rem;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.td-vol{color:#9999bb;font-size:.73rem;white-space:nowrap}
+.role-p{font-size:.68rem;padding:1px 5px;border-radius:7px;white-space:nowrap;background:#fff0d0;color:#885500;border:1px solid #ffcc66}
+.role-s{font-size:.68rem;padding:1px 5px;border-radius:7px;white-space:nowrap;background:#eef5ff;color:#335588;border:1px solid #aaccff}
 
-/* LOADING / EMPTY */
-#loading { text-align: center; padding: 60px; color: #7788bb; font-size: 1.1rem; }
-#empty-msg { text-align: center; padding: 40px; color: #9999bb; }
-
-/* TOOLBAR */
-#toolbar {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  margin-bottom: 12px;
-}
-#toolbar button {
-  padding: 4px 14px;
-  border-radius: 14px;
-  border: 1.5px solid #c5cfe8;
-  background: white;
-  cursor: pointer;
-  font-size: 0.82rem;
-  color: #3a4a7a;
-}
-#toolbar button:hover { background: #e8eeff; }
-#toolbar .spacer { flex: 1; }
-#sort-label { font-size: 0.82rem; color: #7788bb; }
+/* ── Rashi indent ───────────────────────────────────────────── */
+.rashi-row td{background:#fffdf0 !important;padding-right:24px !important}
+.rashi-row:hover td{background:#fff8e0 !important}
 </style>
 </head>
 <body>
 
-<div id="header">
-  <h1>מפתח מקורות — לקוטי שיחות <span id="total-badge"></span></h1>
-  <div id="search-bar">
-    <input type="text" id="search-input" placeholder="חיפוש מקור, מסכת, פרק..." oninput="onSearch(this.value)">
-    <span id="count-badge"></span>
+<div id="hdr">
+  <h1>מפתחות לקוטי שיחות <em id="total-badge"></em></h1>
+  <div id="search-row">
+    <input id="si" type="text" placeholder="חיפוש…" oninput="onSearch(this.value)">
+    <span id="scount"></span>
   </div>
 </div>
 
-<div id="cat-tabs"></div>
+<div id="section-tabs">
+  <div class="sec-tab active" onclick="setSection('pesukim')">מפתח פסוקים</div>
+  <div class="sec-tab" onclick="setSection('chazal')">מפתח מאמרי חז"ל</div>
+  <div class="sec-tab" onclick="setSection('sefarim')">מפתח ספרים</div>
+</div>
+
+<div id="sub-tabs"></div>
+
+<div id="toolbar" style="display:none">
+  <button onclick="expandAll()">פתח הכל</button>
+  <button onclick="collapseAll()">סגור הכל</button>
+  <span id="tinfo"></span>
+</div>
 
 <div id="content">
-  <div id="loading">טוען מאגר מקורות…</div>
-  <div id="toolbar" style="display:none">
-    <button onclick="expandAll()">פתח הכל</button>
-    <button onclick="collapseAll()">סגור הכל</button>
-    <span class="spacer"></span>
-    <span id="sort-label"></span>
-  </div>
+  <div id="loading">טוען…</div>
+  <div id="empty" style="display:none">לא נמצאו תוצאות</div>
   <div id="books-container"></div>
-  <div id="empty-msg" style="display:none">לא נמצאו מקורות</div>
 </div>
 
 <script>
-// ─── Hebrew name map ──────────────────────────────────────────────────────────
+'use strict';
 
-const HEB_NAMES = {
-  // Torah
-  'Genesis':'בראשית','Exodus':'שמות','Leviticus':'ויקרא','Numbers':'במדבר','Deuteronomy':'דברים',
-  // Neviim Rishonim
-  'Joshua':'יהושע','Judges':'שופטים','Samuel I':'שמואל א','Samuel II':'שמואל ב',
-  'Kings I':'מלכים א','Kings II':'מלכים ב',
-  // Neviim Acharonim
-  'Isaiah':'ישעיה','Jeremiah':'ירמיה','Ezekiel':'יחזקאל','Hosea':'הושע','Joel':'יואל',
-  'Amos':'עמוס','Obadiah':'עובדיה','Jonah':'יונה','Micah':'מיכה','Nahum':'נחום',
-  'Habakkuk':'חבקוק','Zephaniah':'צפניה','Haggai':'חגי','Zechariah':'זכריה','Malachi':'מלאכי',
-  // Ketuvim
-  'Psalms':'תהלים','Proverbs':'משלי','Job':'איוב','Song of Songs':'שיר השירים',
-  'Ruth':'רות','Lamentations':'איכה','Ecclesiastes':'קהלת','Esther':'אסתר',
-  'Daniel':'דניאל','Ezra':'עזרא','Nehemiah':'נחמיה','Chronicles I':'דברי הימים א','Chronicles II':'דברי הימים ב',
-  // Talmud Bavli
-  'Berakhot':'ברכות','Shabbat':'שבת','Eruvin':'עירובין','Pesachim':'פסחים','Shekalim':'שקלים',
-  'Yoma':'יומא','Sukkah':'סוכה','Beitzah':'ביצה','Rosh Hashanah':'ראש השנה','Taanit':'תענית',
-  'Megillah':'מגילה','Moed Katan':'מועד קטן','Chagigah':'חגיגה','Yevamot':'יבמות',
-  'Ketubot':'כתובות','Nedarim':'נדרים','Nazir':'נזיר','Sotah':'סוטה','Gittin':'גיטין',
-  'Kiddushin':'קידושין','Bava Kamma':'בבא קמא','Bava Metzia':'בבא מציעא',
-  'Bava Batra':'בבא בתרא','Sanhedrin':'סנהדרין','Makkot':'מכות','Shevuot':'שבועות',
-  'Avodah Zarah':'עבודה זרה','Horayot':'הוריות','Zevachim':'זבחים','Menachot':'מנחות',
-  'Chullin':'חולין','Bekhorot':'בכורות','Arakhin':'ערכין','Temurah':'תמורה',
-  'Keritot':'כריתות','Meilah':'מעילה','Tamid':'תמיד','Middot':'מידות','Kinnim':'קינים','Niddah':'נידה',
-  // Mishnah
-  'Mishnah Berakhot':'משנה ברכות','Mishnah Peah':'משנה פאה','Mishnah Avot':'משנה אבות',
-  // Tanya
-  'Tanya, Likkutei Amarim':'תניא, ליקוטי אמרים',
-  'Tanya, Shaar HaYichud VehaEmunah':'תניא, שער היחוד והאמונה',
-  'Tanya, Iggeret HaTeshuvah':'תניא, אגרת התשובה',
-  'Tanya, Iggeret HaKodesh':'תניא, אגרת הקודש',
-  'Tanya, Kuntres Acharon':'תניא, קונטרס אחרון',
-  // Chassidus
-  'Torah Ohr':'תורה אור','Likkutei Torah':'לקוטי תורה',
-  'Maamarei Admur HaZaken':'מאמרי אדמו"ר הזקן',
-  'Maamarei Admur HaEmtzai':'מאמרי אדמו"ר האמצעי',
-  // Zohar
-  'Zohar':'זוהר','Tikkunei Zohar':'תיקוני זוהר','Zohar Chadash':'זוהר חדש',
-  // Midrash
-  'Bereishit Rabbah':'בראשית רבה','Shemot Rabbah':'שמות רבה',
-  'Vayikra Rabbah':'ויקרא רבה','Bamidbar Rabbah':'במדבר רבה','Devarim Rabbah':'דברים רבה',
-  'Shir HaShirim Rabbah':'שיר השירים רבה','Ruth Rabbah':'רות רבה','Eicha Rabbah':'איכה רבה',
-  'Kohelet Rabbah':'קהלת רבה','Esther Rabbah':'אסתר רבה',
-  'Tanchuma':'תנחומא','Tanchuma Buber':'תנחומא בובר',
-  'Pirkei DeRabbi Eliezer':'פרקי דרבי אליעזר','Midrash Tehillim':'מדרש תהלים',
-  'Yalkut Shimoni':'ילקוט שמעוני','Sifra':'ספרא','Sifre':'ספרי',
-  'Mechilta':'מכילתא','Mechilta DeRabbi Shimon bar Yochai':'מכילתא דרשב"י',
-  // Rambam (prefix match handles the rest)
-  'Mishneh Torah':'משנה תורה',
+// ═══════════════════════════════════════════════════════════
+//  CANONICAL DATA
+// ═══════════════════════════════════════════════════════════
+
+// ── Tanach ────────────────────────────────────────────────
+const TANACH_BOOKS = ['Genesis','Exodus','Leviticus','Numbers','Deuteronomy','Joshua','Judges','Samuel I','Samuel II','Kings I','Kings II','Isaiah','Jeremiah','Ezekiel','Hosea','Joel','Amos','Obadiah','Jonah','Micah','Nahum','Habakkuk','Zephaniah','Haggai','Zechariah','Malachi','Psalms','Proverbs','Job','Song of Songs','Ruth','Lamentations','Ecclesiastes','Esther','Daniel','Ezra','Nehemiah','Chronicles I','Chronicles II'];
+const TANACH_HEB = {Genesis:'בראשית',Exodus:'שמות',Leviticus:'ויקרא',Numbers:'במדבר',Deuteronomy:'דברים',Joshua:'יהושע',Judges:'שופטים','Samuel I':'שמואל א','Samuel II':'שמואל ב','Kings I':'מלכים א','Kings II':'מלכים ב',Isaiah:'ישעיה',Jeremiah:'ירמיה',Ezekiel:'יחזקאל',Hosea:'הושע',Joel:'יואל',Amos:'עמוס',Obadiah:'עובדיה',Jonah:'יונה',Micah:'מיכה',Nahum:'נחום',Habakkuk:'חבקוק',Zephaniah:'צפניה',Haggai:'חגי',Zechariah:'זכריה',Malachi:'מלאכי',Psalms:'תהלים',Proverbs:'משלי',Job:'איוב','Song of Songs':'שיר השירים',Ruth:'רות',Lamentations:'איכה',Ecclesiastes:'קהלת',Esther:'אסתר',Daniel:'דניאל',Ezra:'עזרא',Nehemiah:'נחמיה','Chronicles I':'דברי הימים א','Chronicles II':'דברי הימים ב'};
+
+// Parsha ranges [startChapter, endChapter inclusive] — 0-indexed start of each parsha
+const PARSHA_MAP = {
+  Genesis: [{n:'בראשית',s:1,e:6},{n:'נח',s:6,e:11},{n:'לך לך',s:12,e:17},{n:'וירא',s:18,e:22},{n:'חיי שרה',s:23,e:25},{n:'תולדות',s:25,e:28},{n:'ויצא',s:28,e:32},{n:'וישלח',s:32,e:36},{n:'וישב',s:37,e:40},{n:'מקץ',s:41,e:44},{n:'ויגש',s:44,e:47},{n:'ויחי',s:47,e:50}],
+  Exodus: [{n:'שמות',s:1,e:6},{n:'וארא',s:6,e:9},{n:'בא',s:10,e:13},{n:'בשלח',s:13,e:17},{n:'יתרו',s:18,e:20},{n:'משפטים',s:21,e:24},{n:'תרומה',s:25,e:27},{n:'תצוה',s:27,e:30},{n:'כי תשא',s:30,e:34},{n:'ויקהל',s:35,e:39},{n:'פקודי',s:38,e:40}],
+  Leviticus: [{n:'ויקרא',s:1,e:5},{n:'צו',s:6,e:8},{n:'שמיני',s:9,e:11},{n:'תזריע',s:12,e:13},{n:'מצורע',s:14,e:15},{n:'אחרי מות',s:16,e:18},{n:'קדושים',s:19,e:20},{n:'אמור',s:21,e:24},{n:'בהר',s:25,e:26},{n:'בחוקותי',s:26,e:27}],
+  Numbers: [{n:'במדבר',s:1,e:4},{n:'נשא',s:4,e:7},{n:'בהעלותך',s:8,e:12},{n:'שלח',s:13,e:15},{n:'קרח',s:16,e:18},{n:'חקת',s:19,e:21},{n:'בלק',s:22,e:25},{n:'פינחס',s:25,e:30},{n:'מטות',s:30,e:33},{n:'מסעי',s:33,e:36}],
+  Deuteronomy: [{n:'דברים',s:1,e:3},{n:'ואתחנן',s:3,e:7},{n:'עקב',s:7,e:11},{n:'ראה',s:11,e:16},{n:'שופטים',s:16,e:21},{n:'כי תצא',s:21,e:25},{n:'כי תבוא',s:26,e:29},{n:'נצבים',s:29,e:30},{n:'וילך',s:31,e:31},{n:'האזינו',s:32,e:32},{n:'וזאת הברכה',s:33,e:34}],
 };
 
-function hebName(work) {
-  if (!work) return '';
-  if (HEB_NAMES[work]) return HEB_NAMES[work];
-  // Prefix match for long names (Mishneh Torah hilchot, Sefer HaMaamarim 57XX, etc.)
-  for (const [eng, heb] of Object.entries(HEB_NAMES)) {
-    if (work.startsWith(eng + ',') || work.startsWith(eng + ' ')) {
-      return heb + work.slice(eng.length);
-    }
+function parshaForChapter(book, chapter) {
+  const list = PARSHA_MAP[book];
+  if (!list) return null;
+  const ch = parseInt(chapter) || 0;
+  let found = list[0];
+  for (const p of list) {
+    if (ch >= p.s) found = p;
+    else break;
   }
-  return work;
+  return found.n;
 }
 
-// ─── Canonical ordering ───────────────────────────────────────────────────────
-
-const TANACH_ORDER = [
-  'Genesis','Exodus','Leviticus','Numbers','Deuteronomy',
-  'Joshua','Judges','Samuel I','Samuel II','Kings I','Kings II',
-  'Isaiah','Jeremiah','Ezekiel',
-  'Hosea','Joel','Amos','Obadiah','Jonah','Micah','Nahum','Habakkuk','Zephaniah','Haggai','Zechariah','Malachi',
-  'Psalms','Proverbs','Job','Song of Songs','Ruth','Lamentations','Ecclesiastes','Esther',
-  'Daniel','Ezra','Nehemiah','Chronicles I','Chronicles II'
+// ── Talmud Sedarim ────────────────────────────────────────
+const BAVLI_SEDARIM = [
+  {n:'זרעים', tractates:['Berakhot']},
+  {n:'מועד', tractates:['Shabbat','Eruvin','Pesachim','Shekalim','Yoma','Sukkah','Beitzah','Rosh Hashanah','Taanit','Megillah','Moed Katan','Chagigah']},
+  {n:'נשים', tractates:['Yevamot','Ketubot','Nedarim','Nazir','Sotah','Gittin','Kiddushin']},
+  {n:'נזיקין', tractates:['Bava Kamma','Bava Metzia','Bava Batra','Sanhedrin','Makkot','Shevuot','Avodah Zarah','Horayot']},
+  {n:'קדשים', tractates:['Zevachim','Menachot','Chullin','Bekhorot','Arakhin','Temurah','Keritot','Meilah','Tamid','Middot','Kinnim']},
+  {n:'טהרות', tractates:['Niddah']},
 ];
+const BAVLI_TO_SEDER = {};
+BAVLI_SEDARIM.forEach((s,si)=>s.tractates.forEach((t,ti)=>{BAVLI_TO_SEDER[t]={seder:s.n,sederIdx:si,tractateIdx:ti}}));
 
-const BAVLI_ORDER = [
-  'Berakhot',
-  'Shabbat','Eruvin','Pesachim','Shekalim','Yoma','Sukkah','Beitzah','Rosh Hashanah','Taanit','Megillah','Moed Katan','Chagigah',
-  'Yevamot','Ketubot','Nedarim','Nazir','Sotah','Gittin','Kiddushin',
-  'Bava Kamma','Bava Metzia','Bava Batra','Sanhedrin','Makkot','Shevuot','Avodah Zarah','Horayot',
-  'Zevachim','Menachot','Chullin','Bekhorot','Arakhin','Temurah','Keritot','Meilah','Tamid','Middot','Kinnim',
-  'Niddah'
+const MASECHET_HEB = {Berakhot:'ברכות',Shabbat:'שבת',Eruvin:'עירובין',Pesachim:'פסחים',Shekalim:'שקלים',Yoma:'יומא',Sukkah:'סוכה',Beitzah:'ביצה','Rosh Hashanah':'ראש השנה',Taanit:'תענית',Megillah:'מגילה','Moed Katan':'מועד קטן',Chagigah:'חגיגה',Yevamot:'יבמות',Ketubot:'כתובות',Nedarim:'נדרים',Nazir:'נזיר',Sotah:'סוטה',Gittin:'גיטין',Kiddushin:'קידושין','Bava Kamma':'בבא קמא','Bava Metzia':'בבא מציעא','Bava Batra':'בבא בתרא',Sanhedrin:'סנהדרין',Makkot:'מכות',Shevuot:'שבועות','Avodah Zarah':'עבודה זרה',Horayot:'הוריות',Zevachim:'זבחים',Menachot:'מנחות',Chullin:'חולין',Bekhorot:'בכורות',Arakhin:'ערכין',Temurah:'תמורה',Keritot:'כריתות',Meilah:'מעילה',Tamid:'תמיד',Middot:'מידות',Kinnim:'קינים',Niddah:'נידה'};
+
+// ── Midrash groups ────────────────────────────────────────
+const MIDRASH_GROUPS = [
+  {n:'מדרש רבה', works:['Bereishit Rabbah','Shemot Rabbah','Vayikra Rabbah','Bamidbar Rabbah','Devarim Rabbah','Shir HaShirim Rabbah','Ruth Rabbah','Eicha Rabbah','Kohelet Rabbah','Esther Rabbah']},
+  {n:'תנחומא', works:['Tanchuma','Tanchuma Buber']},
+  {n:'מדרשים אחרים', works:['Pirkei DeRabbi Eliezer','Midrash Tehillim','Yalkut Shimoni','Sifra','Sifre','Mechilta','Mechilta DeRabbi Shimon bar Yochai']},
 ];
+const MIDRASH_TO_GROUP = {};
+MIDRASH_GROUPS.forEach((g,gi)=>g.works.forEach((w,wi)=>{MIDRASH_TO_GROUP[w]={group:g.n,groupIdx:gi,workIdx:wi}}));
 
-const MISHNAH_ORDER = [
-  'Mishnah Berakhot','Mishnah Peah','Mishnah Demai','Mishnah Kilayim','Mishnah Sheviit','Mishnah Terumot',
-  'Mishnah Maasrot','Mishnah Maaser Sheni','Mishnah Challah','Mishnah Orlah','Mishnah Bikkurim',
-  'Mishnah Shabbat','Mishnah Eruvin','Mishnah Pesachim','Mishnah Shekalim','Mishnah Yoma','Mishnah Sukkah',
-  'Mishnah Beitzah','Mishnah Rosh Hashanah','Mishnah Taanit','Mishnah Megillah','Mishnah Moed Katan','Mishnah Chagigah',
-  'Mishnah Yevamot','Mishnah Ketubot','Mishnah Nedarim','Mishnah Nazir','Mishnah Sotah','Mishnah Gittin','Mishnah Kiddushin',
-  'Mishnah Bava Kamma','Mishnah Bava Metzia','Mishnah Bava Batra','Mishnah Sanhedrin','Mishnah Makkot',
-  'Mishnah Shevuot','Mishnah Eduyot','Mishnah Avodah Zarah','Mishnah Avot','Mishnah Horayot',
-  'Mishnah Zevachim','Mishnah Menachot','Mishnah Chullin','Mishnah Bekhorot','Mishnah Arakhin',
-  'Mishnah Temurah','Mishnah Keritot','Mishnah Meilah','Mishnah Tamid','Mishnah Middot','Mishnah Kinnim',
-  'Mishnah Kelim','Mishnah Ohalot','Mishnah Negaim','Mishnah Parah','Mishnah Tohorot',
-  'Mishnah Mikvaot','Mishnah Niddah','Mishnah Makhshirin','Mishnah Zavim','Mishnah Tevul Yom','Mishnah Yadayim','Mishnah Oktzin'
+// ── Rambam Sefarim ────────────────────────────────────────
+const RAMBAM_SEFARIM = [
+  {n:'מדע', hil:['Hilchot Yesodei HaTorah','Hilchot Deot','Hilchot Talmud Torah','Hilchot Avodat Kokhavim','Hilchot Teshuvah']},
+  {n:'אהבה', hil:['Hilchot Keriat Shema','Hilchot Tefillah','Hilchot Tefillin','Hilchot Tzitzit','Hilchot Mezuzah','Hilchot Sefer Torah','Hilchot Tefillah uMusaf']},
+  {n:'זמנים', hil:['Hilchot Shabbat','Hilchot Eruvin','Hilchot Yom Tov','Hilchot Chametz uMatzah','Hilchot Shofar','Hilchot Sukkah','Hilchot Lulav','Hilchot Shekalim','Hilchot Kiddush HaChodesh','Hilchot Taaniot','Hilchot Megillah','Hilchot Chanukah']},
+  {n:'נשים', hil:['Hilchot Ishut','Hilchot Gerushin','Hilchot Yibum','Hilchot Sotah']},
+  {n:'קדושה', hil:['Hilchot Issurei Biah','Hilchot Maakhalot Assurot','Hilchot Shechitah']},
+  {n:'הפלאה', hil:['Hilchot Shevuot','Hilchot Nedarim','Hilchot Nazir','Hilchot Arachin']},
+  {n:'זרעים', hil:['Hilchot Kilayim','Hilchot Matnot Aniyim','Hilchot Terumot','Hilchot Maasrot','Hilchot Maaser Sheni','Hilchot Bikkurim','Hilchot Shemitah']},
+  {n:'עבודה', hil:['Hilchot Beit HaBechirah','Hilchot Keilei HaMikdash','Hilchot Biat HaMikdash','Hilchot Issurei Mizbeach','Hilchot Korbanot']},
+  {n:'קרבנות', hil:['Hilchot Temidin uMusafin','Hilchot Pesulei HaMukdashin']},
+  {n:'טהרה', hil:['Hilchot Tumat Meit','Hilchot Parah Adumah','Hilchot Tumat Tzaraat','Hilchot Metamei Mishkav','Hilchot Shaar Avot HaTumaot','Hilchot Tumat Okhalin','Hilchot Kelim','Hilchot Mikvaot']},
+  {n:'נזיקין', hil:['Hilchot Nizkei Mamon','Hilchot Geneivah','Hilchot Gezelah','Hilchot Chovel uMazik','Hilchot Rotzeach uShmirat Nefesh']},
+  {n:'קנין', hil:['Hilchot Mechirah','Hilchot Zechiyah uMattanah','Hilchot Shechenim','Hilchot Sheluchin','Hilchot Avadim']},
+  {n:'משפטים', hil:['Hilchot Sanhedrin','Hilchot Edut','Hilchot Mamrim','Hilchot Evel','Hilchot Melachim']},
+  {n:'שופטים', hil:['Hilchot Shechitah','Hilchot Temura']}, // catch-all
 ];
+const RAMBAM_HIL_TO_SEFER = {};
+RAMBAM_SEFARIM.forEach((s,si)=>s.hil.forEach((h,hi)=>{RAMBAM_HIL_TO_SEFER[h]={sefer:s.n,seferIdx:si,hilIdx:hi}}));
 
-const RAMBAM_ORDER = [
-  'Mishneh Torah, Hilchot Yesodei HaTorah',
-  'Mishneh Torah, Hilchot Deot',
-  'Mishneh Torah, Hilchot Talmud Torah',
-  'Mishneh Torah, Hilchot Avodat Kokhavim',
-  'Mishneh Torah, Hilchot Teshuvah',
-  'Mishneh Torah, Hilchot Keriat Shema',
-  'Mishneh Torah, Hilchot Tefillah',
-  'Mishneh Torah, Hilchot Tefillin',
-  'Mishneh Torah, Hilchot Tzitzit',
-  'Mishneh Torah, Hilchot Mezuzah',
-  'Mishneh Torah, Hilchot Shabbat',
-  'Mishneh Torah, Hilchot Yom Tov',
-  'Mishneh Torah, Hilchot Chametz uMatzah',
-  'Mishneh Torah, Hilchot Shofar',
-  'Mishneh Torah, Hilchot Sukkah',
-  'Mishneh Torah, Hilchot Chanukah',
-  'Mishneh Torah, Hilchot Ishut',
-  'Mishneh Torah, Hilchot Gerushin',
-  'Mishneh Torah, Hilchot Sanhedrin',
-  'Mishneh Torah, Hilchot Nizkei Mamon',
-  'Mishneh Torah, Hilchot Rotzeach uShmirat Nefesh',
-  'Mishneh Torah, Hilchot Mechirah',
-  'Mishneh Torah, Hilchot Zechiyah uMattanah',
-  'Mishneh Torah, Hilchot Shechitah',
-  'Mishneh Torah, Hilchot Maakhalot Assurot',
-  'Mishneh Torah, Hilchot Tumat Meit',
-  'Mishneh Torah, Hilchot Mikvaot',
-  'Mishneh Torah, Hilchot Beit HaBechirah',
-  'Mishneh Torah, Hilchot Keilei HaMikdash',
-  'Mishneh Torah, Hilchot Korbanot'
+// ── Chassidic Dynasties ───────────────────────────────────
+const DYNASTIES = [
+  {n:'אדמו"ר הזקן', works:['Tanya','Torah Ohr','Likkutei Torah','Maamarei Admur HaZaken','Shulchan Arukh HaRav']},
+  {n:'אדמו"ר האמצעי', works:['Maamarei Admur HaEmtzai','Torat Chayim']},
+  {n:'צמח צדק', works:['Derech Mitzvotecha','Or HaTorah','Tzemach Tzedek']},
+  {n:'מהר"ש', works:['Sefer HaMaamarim 5627','Sefer HaMaamarim 5626']},
+  {n:'רש"ב', works:['Hemshech Samech Vov','Hemshech 5666','Sefer HaMaamarim 5659','Sefer HaMaamarim 5660','Sefer HaMaamarim 5661','Sefer HaMaamarim 5662','Sefer HaMaamarim 5663','Sefer HaMaamarim 5664','Sefer HaMaamarim 5665','Sefer HaMaamarim 5679','Sefer HaMaamarim 5680','Sefer HaMaamarim 5681','Sefer HaMaamarim 5682','Sefer HaMaamarim 5683']},
+  {n:'ריי"צ', works:['Sefer HaMaamarim 5689','Sefer HaMaamarim 5700','Sefer HaMaamarim 5701','Sefer HaMaamarim 5702','Sefer HaMaamarim 5703','Sefer HaMaamarim 5704','Sefer HaMaamarim 5705','Sefer HaMaamarim 5706','Sefer HaMaamarim 5707','Sefer HaMaamarim 5708','Sefer HaMaamarim 5709','Sefer HaMaamarim 5710','Sefer HaMaamarim Melukat','Basi LeGani']},
+  {n:'שאר ספרי חסידות', works:[]}, // catch-all
 ];
+const WORK_TO_DYNASTY = {};
+DYNASTIES.forEach((d,di)=>d.works.forEach((w,wi)=>{WORK_TO_DYNASTY[w]={dynasty:d.n,dynastyIdx:di,workIdx:wi}}));
 
-const TANYA_ORDER = [
-  'Tanya, Likkutei Amarim',
-  'Tanya, Shaar HaYichud VehaEmunah',
-  'Tanya, Iggeret HaTeshuvah',
-  'Tanya, Iggeret HaKodesh',
-  'Tanya, Kuntres Acharon'
-];
+// Shulchan Aruch sections
+const SA_SECTIONS = ['Orach Chayim','Yoreh Deah','Even HaEzer','Choshen Mishpat'];
+const SA_HEB = {'Orach Chayim':'אורח חיים','Yoreh Deah':'יורה דעה','Even HaEzer':'אבן העזר','Choshen Mishpat':'חושן משפט'};
 
-const CHASSIDUS_ORDER = [
-  'Torah Ohr',
-  'Likkutei Torah',
-  'Maamarei Admur HaZaken',
-  'Maamarei Admur HaEmtzai',
-  'Hemshech Samech Vov',
-  'Sefer HaMaamarim 5679','Sefer HaMaamarim 5680','Sefer HaMaamarim 5681','Sefer HaMaamarim 5682',
-  'Sefer HaMaamarim 5683','Sefer HaMaamarim 5689','Sefer HaMaamarim 5700','Sefer HaMaamarim 5701',
-  'Sefer HaMaamarim 5702','Sefer HaMaamarim 5703','Sefer HaMaamarim 5704','Sefer HaMaamarim 5705',
-  'Sefer HaMaamarim 5706','Sefer HaMaamarim 5707','Sefer HaMaamarim 5708','Sefer HaMaamarim 5709',
-  'Sefer HaMaamarim 5710','Sefer HaMaamarim 5711','Sefer HaMaamarim 5712','Sefer HaMaamarim 5713',
-  'Sefer HaMaamarim 5714','Sefer HaMaamarim 5715','Sefer HaMaamarim 5716','Sefer HaMaamarim 5717',
-  'Sefer HaMaamarim 5718','Sefer HaMaamarim 5719','Sefer HaMaamarim 5720',
-  'Sefer HaMaamarim Melukat',
-  'Basi LeGani',
-  'Hemshech 5666'
-];
-
-const ZOHAR_ORDER = [
-  'Zohar.1','Zohar.2','Zohar.3',
-  'Tikkunei Zohar',
-  'Zohar Chadash'
-];
-
-const MIDRASH_ORDER = [
-  'Bereishit Rabbah','Shemot Rabbah','Vayikra Rabbah','Bamidbar Rabbah','Devarim Rabbah',
-  'Shir HaShirim Rabbah','Ruth Rabbah','Eicha Rabbah','Kohelet Rabbah','Esther Rabbah',
-  'Tanchuma','Tanchuma Buber',
-  'Pirkei DeRabbi Eliezer','Midrash Tehillim','Yalkut Shimoni','Sifra','Sifre',
-  'Mechilta','Mechilta DeRabbi Shimon bar Yochai'
-];
-
-// ─── Category metadata ────────────────────────────────────────────────────────
-
-const CAT_META = {
-  tanach:      { label: 'תנ"ך',         order: TANACH_ORDER   },
-  bavli:       { label: 'תלמוד בבלי',   order: BAVLI_ORDER    },
-  mishnah:     { label: 'משנה',          order: MISHNAH_ORDER  },
-  yerushalmi:  { label: 'ירושלמי',       order: null           },
-  midrash:     { label: 'מדרש',          order: MIDRASH_ORDER  },
-  zohar:       { label: 'זוהר',          order: ZOHAR_ORDER    },
-  rambam:      { label: 'רמב"ם',         order: RAMBAM_ORDER   },
-  tanya:       { label: 'תניא',          order: TANYA_ORDER    },
-  chassidus:   { label: 'חסידות',        order: CHASSIDUS_ORDER},
-  halacha:     { label: 'הלכה',          order: null           },
-  kabbalah:    { label: 'קבלה',          order: null           },
-  commentary:  { label: 'פרשנים',        order: null           },
-  targum:      { label: 'תרגום',         order: null           },
-  tosefta:     { label: 'תוספתא',        order: null           },
-  other:       { label: 'אחר',           order: null           }
+// ── General helpers ───────────────────────────────────────
+const HEB_NAMES = {
+  ...TANACH_HEB,...MASECHET_HEB,
+  'Tanya, Likkutei Amarim':'תניא, ליקוטי אמרים','Tanya, Shaar HaYichud VehaEmunah':'תניא, שער היחוד','Tanya, Iggeret HaTeshuvah':'תניא, אגרת התשובה','Tanya, Iggeret HaKodesh':'תניא, אגרת הקודש','Tanya, Kuntres Acharon':'תניא, קונטרס אחרון',
+  'Torah Ohr':'תורה אור','Likkutei Torah':'לקוטי תורה','Maamarei Admur HaZaken':'מאמרי אדמו"ר הזקן','Maamarei Admur HaEmtzai':'מאמרי אדמו"ר האמצעי','Hemshech Samech Vov':'המשך ס"ו','Hemshech 5666':'המשך תרס"ו',
+  'Bereishit Rabbah':'בראשית רבה','Shemot Rabbah':'שמות רבה','Vayikra Rabbah':'ויקרא רבה','Bamidbar Rabbah':'במדבר רבה','Devarim Rabbah':'דברים רבה','Shir HaShirim Rabbah':'שיר השירים רבה','Ruth Rabbah':'רות רבה','Eicha Rabbah':'איכה רבה','Kohelet Rabbah':'קהלת רבה','Esther Rabbah':'אסתר רבה','Tanchuma':'תנחומא','Tanchuma Buber':'תנחומא בובר','Pirkei DeRabbi Eliezer':'פרקי דר"א','Midrash Tehillim':'מדרש תהלים','Yalkut Shimoni':'ילקוט שמעוני','Sifra':'ספרא','Sifre':'ספרי','Mechilta':'מכילתא','Mechilta DeRabbi Shimon bar Yochai':'מכילתא דרשב"י',
+  'Zohar':'זוהר','Tikkunei Zohar':'תיקוני זוהר','Zohar Chadash':'זוהר חדש',
 };
 
-const CAT_ORDER = ['tanach','bavli','mishnah','yerushalmi','midrash','zohar','rambam','tanya','chassidus','halacha','kabbalah','commentary','targum','tosefta','other'];
+function hN(w){
+  if(!w)return'';
+  if(HEB_NAMES[w])return HEB_NAMES[w];
+  for(const[e,h]of Object.entries(HEB_NAMES)){if(w.startsWith(e+',')||w.startsWith(e+' '))return h+w.slice(e.length)}
+  return w;
+}
 
-// ─── State ────────────────────────────────────────────────────────────────────
+function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
 
-let allCitations = [];
-let activeCat = 'tanach';
-let searchQuery = '';
+function parseRefLoc(cat,work,ref){
+  if(!ref)return[999999,999999];
+  let b=ref;
+  if(work&&ref.startsWith(work))b=ref.slice(work.length).replace(/^[\s,._]+/,'');
+  if(cat==='bavli'||cat==='yerushalmi'){const m=b.match(/(\d+)([ab])/);if(m)return[+m[1],m[2]==='a'?0:1]}
+  const m2=b.match(/(\d+)[:\.](\d+)/);if(m2)return[+m2[1],+m2[2]];
+  const m3=b.match(/(\d+)/);if(m3)return[+m3[1],0];
+  return[999999,999999];
+}
+
+function sichaUrl(c){
+  const sid=c.sicha_id||(c.page+'_'+c.volume);
+  return'likkutei_sichos.html?s='+encodeURIComponent(sid)+'&fn='+(c.fn||'');
+}
+
+function dispRef(c){
+  const ref=c.ref||'';const w=c.work||'';
+  if(w&&ref.startsWith(w))return ref.slice(w.length).replace(/^[\s,._]+/,'')||ref;
+  return ref;
+}
+
+function roleBadge(c){
+  if(c.role==='מוסבר_ראשי')return'<span class="role-p" title="'+esc(c.synopsis||'')+'">ראשי</span>';
+  if(c.role==='מוסבר_טפל')return'<span class="role-s" title="'+esc(c.synopsis||'')+'">טפל</span>';
+  return'';
+}
+
+// ═══════════════════════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════════════════════
+let ALL = [];
+let activeSec = 'pesukim';
+let activeSub = '';
+let query = '';
 let catCounts = {};
 
-// ─── Helpers ─────────────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════
+//  SECTION DEFINITIONS
+// ═══════════════════════════════════════════════════════════
 
-function bookSortKey(cat, work) {
-  const meta = CAT_META[cat];
-  if (!meta || !meta.order) return work || '';
-  const idx = meta.order.findIndex(b => (work || '').startsWith(b));
-  if (idx >= 0) return String(idx).padStart(4, '0') + work;
-  return 'zzzz' + work;
+const SECTIONS = {
+  pesukim: {
+    label:'מפתח פסוקים',
+    cats: new Set(['tanach','commentary']),
+    subs: [
+      {key:'torah',   label:'תורה',    filter:c=>['Genesis','Exodus','Leviticus','Numbers','Deuteronomy'].includes(c.work)},
+      {key:'neviim',  label:'נביאים',  filter:c=>['Joshua','Judges','Samuel I','Samuel II','Kings I','Kings II','Isaiah','Jeremiah','Ezekiel','Hosea','Joel','Amos','Obadiah','Jonah','Micah','Nahum','Habakkuk','Zephaniah','Haggai','Zechariah','Malachi'].includes(c.work)},
+      {key:'ketuvim', label:'כתובים', filter:c=>['Psalms','Proverbs','Job','Song of Songs','Ruth','Lamentations','Ecclesiastes','Esther','Daniel','Ezra','Nehemiah','Chronicles I','Chronicles II'].includes(c.work)},
+      {key:'rashi',   label:'רש"י ופרשנים', filter:c=>c.category==='commentary'},
+    ],
+  },
+  chazal: {
+    label:'מפתח מאמרי חז"ל',
+    cats: new Set(['bavli','mishnah','yerushalmi','tosefta','midrash','zohar']),
+    subs: [
+      {key:'bavli',    label:'תלמוד בבלי',  filter:c=>c.category==='bavli'},
+      {key:'mishnah',  label:'משנה',         filter:c=>c.category==='mishnah'},
+      {key:'midrash',  label:'מדרש',         filter:c=>c.category==='midrash'},
+      {key:'zohar',    label:'זוהר',          filter:c=>c.category==='zohar'},
+      {key:'other_tl', label:'ירושלמי ותוספתא', filter:c=>c.category==='yerushalmi'||c.category==='tosefta'},
+    ],
+  },
+  sefarim: {
+    label:'מפתח ספרים',
+    cats: new Set(['rambam','tanya','chassidus','halacha','kabbalah','other']),
+    subs: [
+      {key:'rambam',   label:'רמב"ם',     filter:c=>c.category==='rambam'},
+      {key:'tanya',    label:'תניא',       filter:c=>c.category==='tanya'},
+      {key:'chassidus',label:'חסידות',    filter:c=>c.category==='chassidus'},
+      {key:'halacha',  label:'הלכה',       filter:c=>c.category==='halacha'},
+      {key:'other_sf', label:'קבלה ואחר', filter:c=>c.category==='kabbalah'||c.category==='other'},
+    ],
+  },
+};
+
+// ═══════════════════════════════════════════════════════════
+//  RENDER HELPERS — citation row
+// ═══════════════════════════════════════════════════════════
+
+function citRow(c, showLoc){
+  const ref  = showLoc ? esc(dispRef(c)) : '';
+  const inc  = c.incipit ? '<span>'+esc(c.incipit)+'</span>' : (c.raw?'<span class="td-raw">'+esc((c.raw||'').slice(0,60))+'</span>':'');
+  const syn  = c.synopsis ? '<br><small style="color:#667">'+esc(c.synopsis.slice(0,80))+'…</small>' : '';
+  const sicha= c.title||('כרך '+(c.volume||'?')+' עמ\' '+(c.page||'?'));
+  const vol  = 'כרך '+(c.volume||'?')+' עמ\' '+(c.page||'?');
+  return '<tr'+((c._rashi)?' class="rashi-row"':'')+'>'
+    +'<td class="td-loc">'+ref+'</td>'
+    +'<td class="td-inc">'+(c._rashi?'<span class="rashi">ברש"י </span>':'')+inc+syn+'</td>'
+    +'<td class="td-link"><a href="'+esc(sichaUrl(c))+'" target="_blank">'+esc(sicha)+'</a></td>'
+    +'<td class="td-vol">'+esc(vol)+'</td>'
+    +'<td>'+roleBadge(c)+'</td>'
+    +'</tr>';
 }
 
-// Parse a Sefaria ref into [chapter, verse] for canonical sorting.
-// Handles "Book Ch:V", "Book Ch.V", "Book Dafb" (Talmud amud), plain "Book N".
-function parseRefLoc(cat, work, ref) {
-  if (!ref) return [999999, 999999];
-  // Strip work prefix
-  let body = ref;
-  if (work && ref.startsWith(work)) body = ref.slice(work.length).replace(/^[\s,._]+/, '');
-  // Talmud amud: "2a" / "14b"
-  if (cat === 'bavli' || cat === 'yerushalmi') {
-    const m = body.match(/(\d+)([ab])/);
-    if (m) return [parseInt(m[1]), m[2] === 'a' ? 0 : 1];
+function buildTable(cits, showLoc){
+  return '<table class="ct"><thead><tr>'
+    +(showLoc?'<th>מקום</th>':'<th></th>')
+    +'<th>פתיחה / תוכן</th><th>שיחה</th><th>כרך/עמ\'</th><th>תפקיד</th></tr></thead>'
+    +'<tbody>'+cits.map(c=>citRow(c,showLoc)).join('')+'</tbody></table>';
+}
+
+function makeBook(bookKey, displayName, cits, showLoc){
+  const id='bk-'+bookKey.replace(/[^a-z0-9]/gi,'_');
+  return '<div class="book" id="'+id+'">'
+    +'<div class="book-hdr" onclick="toggleEl(\''+id+'\')">'
+    +'<span class="arrow">▶</span>'
+    +'<span class="btitle">'+esc(displayName)+'</span>'
+    +'<span class="bcount">'+cits.length+'</span>'
+    +'</div>'
+    +buildTable(cits, showLoc)
+    +'</div>';
+}
+
+function makeGroup(groupKey, groupName, innerHTML, count){
+  const id='grp-'+groupKey.replace(/[^a-z0-9]/gi,'_');
+  return '<div class="grp" id="'+id+'">'
+    +'<div class="grp-hdr" onclick="toggleEl(\''+id+'\')">'
+    +'<span class="arrow">▶</span>'
+    +'<span class="gtitle">'+esc(groupName)+'</span>'
+    +'<span class="gcount">'+count+'</span>'
+    +'</div>'
+    +'<div style="padding:6px 8px 8px">'+innerHTML+'</div>'
+    +'</div>';
+}
+
+// ═══════════════════════════════════════════════════════════
+//  SECTION RENDERERS
+// ═══════════════════════════════════════════════════════════
+
+// ── מפתח פסוקים ─────────────────────────────────────────
+function renderPesukim(cits){
+  // Group by book (tanach only), commentary separate
+  const isTanach = c => c.category === 'tanach';
+  const isComm   = c => c.category === 'commentary';
+
+  const bookGroups = {};
+  for(const c of cits){
+    if(isComm(c)){ c._rashi = true; }
+    const w = c.work||'(אחר)';
+    if(!bookGroups[w]) bookGroups[w]=[];
+    bookGroups[w].push(c);
   }
-  // ch:v or ch.v
-  const m2 = body.match(/(\d+)[:\.](\d+)/);
-  if (m2) return [parseInt(m2[1]), parseInt(m2[2])];
-  // plain number
-  const m3 = body.match(/(\d+)/);
-  if (m3) return [parseInt(m3[1]), 0];
-  return [999999, 999999];
-}
 
-function citKey(c) {
-  return ((c.category || '').split(';')[0].trim()) || 'other';
-}
-
-function escHtml(s) {
-  return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-
-function sichaLink(c) {
-  const sid = c.sicha_id || (c.page + '_' + c.volume);
-  const fn = c.fn || '';
-  return 'likkutei_sichos.html?s=' + encodeURIComponent(sid) + '&fn=' + fn;
-}
-
-// ─── Compute counts ───────────────────────────────────────────────────────────
-
-function computeCounts() {
-  catCounts = {};
-  for (const c of allCitations) {
-    const cat = citKey(c);
-    catCounts[cat] = (catCounts[cat] || 0) + 1;
-  }
-}
-
-// ─── Render tabs ─────────────────────────────────────────────────────────────
-
-function renderTabs() {
-  const container = document.getElementById('cat-tabs');
-  container.innerHTML = '';
-  for (const cat of CAT_ORDER) {
-    const cnt = catCounts[cat] || 0;
-    if (cnt === 0) continue;
-    const meta = CAT_META[cat] || { label: cat };
-    const div = document.createElement('div');
-    div.className = 'cat-tab' + (cat === activeCat ? ' active' : '');
-    div.onclick = () => setCat(cat);
-    div.innerHTML = escHtml(meta.label) + ' <span class="cnt">' + cnt.toLocaleString() + '</span>';
-    container.appendChild(div);
-  }
-}
-
-// ─── Render books ─────────────────────────────────────────────────────────────
-
-function renderBooks() {
-  const container = document.getElementById('books-container');
-  const toolbar = document.getElementById('toolbar');
-  const emptyMsg = document.getElementById('empty-msg');
-
-  // Filter by category + search
-  const catTotal = catCounts[activeCat] || 0;
-  let filtered = allCitations.filter(c => {
-    if (citKey(c) !== activeCat) return false;
-    if (!searchQuery) return true;
-    const q = searchQuery.toLowerCase();
-    return (c.work || '').toLowerCase().includes(q) ||
-           hebName(c.work || '').includes(searchQuery) ||
-           (c.ref || '').toLowerCase().includes(q) ||
-           (c.raw || '').includes(searchQuery) ||
-           (c.title || '').toLowerCase().includes(q);
+  // Sort books in canonical order
+  const sortedBooks = Object.keys(bookGroups).sort((a,b)=>{
+    const ia = TANACH_BOOKS.indexOf(a);
+    const ib = TANACH_BOOKS.indexOf(b);
+    if(ia>=0&&ib>=0) return ia-ib;
+    if(ia>=0) return -1; if(ib>=0) return 1;
+    return a.localeCompare(b);
   });
 
-  const badge = document.getElementById('count-badge');
-  badge.textContent = (searchQuery && filtered.length !== catTotal)
-    ? filtered.length.toLocaleString() + ' מתוך ' + catTotal.toLocaleString()
-    : '';
+  let html=''; let totalShown=0;
+  for(const book of sortedBooks){
+    let bCits = bookGroups[book];
+    // Apply search
+    if(query){
+      bCits=bCits.filter(c=>matchSearch(c));
+    }
+    if(!bCits.length) continue;
 
-  if (filtered.length === 0) {
-    container.innerHTML = '';
-    emptyMsg.style.display = '';
-    toolbar.style.display = 'none';
-    return;
-  }
-  emptyMsg.style.display = 'none';
-  toolbar.style.display = 'flex';
-
-  // Group by work (English key used internally; Hebrew shown in UI)
-  const books = {};
-  for (const c of filtered) {
-    const book = c.work || '(ללא שם)';
-    if (!books[book]) books[book] = [];
-    books[book].push(c);
-  }
-
-  // Sort books canonically
-  const sortedBooks = Object.keys(books).sort((a, b) => {
-    return bookSortKey(activeCat, a).localeCompare(bookSortKey(activeCat, b));
-  });
-
-  document.getElementById('sort-label').textContent =
-    sortedBooks.length + ' ספרים, ' + filtered.length.toLocaleString() + ' ציטוטים';
-
-  container.innerHTML = '';
-
-  for (const book of sortedBooks) {
-    // Sort citations within book: chapter → verse (from ref), then volume → page → fn
-    const cits = books[book].sort((a, b) => {
-      const [ac, av] = parseRefLoc(activeCat, book, a.ref);
-      const [bc, bv] = parseRefLoc(activeCat, book, b.ref);
-      if (ac !== bc) return ac - bc;
-      if (av !== bv) return av - bv;
-      const vd = (parseInt(a.volume)||0) - (parseInt(b.volume)||0);
-      if (vd !== 0) return vd;
-      return (parseInt(a.page)||0) - (parseInt(b.page)||0);
+    // Sort by chapter:verse
+    bCits.sort((a,b)=>{
+      const [ac,av]=parseRefLoc(a.category,a.work,a.ref);
+      const [bc,bv]=parseRefLoc(b.category,b.work,b.ref);
+      if(ac!==bc)return ac-bc;
+      return av-bv;
     });
 
-    const blockId = 'bb-' + book.replace(/[^a-z0-9]/gi, '_');
-    const block = document.createElement('div');
-    block.className = 'book-block';
-    block.id = blockId;
-
-    // Display Hebrew name; fall back to English
-    const displayName = hebName(book);
-
-    let rowsHtml = '';
-    for (const c of cits) {
-      const role = c.role || '';
-      let roleBadge = '';
-      if (role === 'מוסבר_ראשי') {
-        roleBadge = '<span class="role-badge primary" title="' + escHtml(c.synopsis||'') + '">מוסבר ראשי</span>';
-      } else if (role === 'מוסבר_טפל') {
-        roleBadge = '<span class="role-badge secondary" title="' + escHtml(c.synopsis||'') + '">מוסבר טפל</span>';
+    // Group by parsha (for Torah books only)
+    let inner='';
+    if(PARSHA_MAP[book]){
+      const byParsha={};
+      for(const c of bCits){
+        const [ch]=parseRefLoc(c.category,c.work,c.ref);
+        const p=parshaForChapter(book,ch)||'—';
+        if(!byParsha[p])byParsha[p]=[];
+        byParsha[p].push(c);
       }
+      // Keep parsha order
+      const parshaOrder=PARSHA_MAP[book].map(p=>p.n);
+      const sortedParshas=[...new Set(bCits.map(c=>{
+        const [ch]=parseRefLoc(c.category,c.work,c.ref);
+        return parshaForChapter(book,ch)||'—';
+      }))].sort((a,b)=>parshaOrder.indexOf(a)-parshaOrder.indexOf(b));
 
-      // Show ref with chapter:verse extracted from Sefaria ref
-      const ref = c.ref || c.raw || '';
-      // Build a short display ref: strip book prefix, show just location
-      let dispRef = ref;
-      if (c.work && ref.startsWith(c.work)) {
-        dispRef = ref.slice(c.work.length).replace(/^[\s,._]+/, '');
+      for(const p of sortedParshas){
+        const pc=byParsha[p]||[];
+        if(!pc.length) continue;
+        inner+=makeBook('p_'+book+'_'+p, p, pc, true);
       }
-
-      const title = c.title || ('כרך ' + c.volume + ' עמ\' ' + c.page);
-      const sLink = sichaLink(c);
-      const raw = (c.raw || '').substring(0, 80);
-
-      rowsHtml += '<tr>' +
-        '<td class="ref-cell" title="' + escHtml(ref) + '">' + escHtml(dispRef || ref) + '</td>' +
-        '<td><a class="sicha-link" href="' + escHtml(sLink) + '" target="_blank">' + escHtml(title) + '</a></td>' +
-        '<td class="vol-cell">כרך ' + (c.volume||'?') + ' עמ\' ' + (c.page||'?') + '</td>' +
-        '<td class="fn-cell">' + (c.fn||'') + '</td>' +
-        '<td class="raw-cell" dir="rtl" title="' + escHtml(c.raw||'') + '">' + escHtml(raw) + '</td>' +
-        '<td>' + roleBadge + '</td>' +
-        '</tr>';
+    } else {
+      inner=buildTable(bCits, true);
     }
 
-    block.innerHTML =
-      '<div class="book-header" onclick="toggleBook(\'' + escHtml(blockId) + '\')">' +
-        '<span class="toggle-arrow">▶</span>' +
-        '<span class="book-title">' + escHtml(displayName) + '</span>' +
-        '<span class="book-count">' + cits.length + '</span>' +
-      '</div>' +
-      '<table class="citations-table">' +
-        '<thead><tr>' +
-          '<th>מקום</th>' +
-          '<th>שיחה</th>' +
-          '<th>כרך / עמוד</th>' +
-          '<th>הערה</th>' +
-          '<th>טקסט מקורי</th>' +
-          '<th>תפקיד</th>' +
-        '</tr></thead>' +
-        '<tbody>' + rowsHtml + '</tbody>' +
-      '</table>';
-
-    container.appendChild(block);
+    const displayName = TANACH_HEB[book] || hN(book) || book;
+    html+=makeGroup('tanach_'+book, displayName, inner, bCits.length);
+    totalShown+=bCits.length;
   }
+  return{html,total:totalShown};
 }
 
-// ─── Controls ─────────────────────────────────────────────────────────────────
+// ── מפתח מאמרי חז"ל ─────────────────────────────────────
+function renderChazal(cits, subKey){
+  let html=''; let totalShown=0;
 
-function setCat(cat) {
-  activeCat = cat;
-  renderTabs();
-  renderBooks();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if(subKey==='bavli'){
+    // Group by Seder → Masechet
+    const byMasechet={};
+    for(const c of cits){
+      if(!byMasechet[c.work]) byMasechet[c.work]=[];
+      byMasechet[c.work].push(c);
+    }
+    for(const seder of BAVLI_SEDARIM){
+      let sederHtml=''; let sederCount=0;
+      for(const tract of seder.tractates){
+        let tc=byMasechet[tract]||[];
+        if(query) tc=tc.filter(c=>matchSearch(c));
+        if(!tc.length) continue;
+        tc.sort((a,b)=>{
+          const[ac,av]=parseRefLoc('bavli',a.work,a.ref);
+          const[bc,bv]=parseRefLoc('bavli',b.work,b.ref);
+          if(ac!==bc)return ac-bc; return av-bv;
+        });
+        sederHtml+=makeBook('bavli_'+tract, (MASECHET_HEB[tract]||tract), tc, true);
+        sederCount+=tc.length;
+      }
+      if(!sederHtml) continue;
+      html+=makeGroup('seder_'+seder.n, 'סדר '+seder.n, sederHtml, sederCount);
+      totalShown+=sederCount;
+    }
+
+  } else if(subKey==='midrash'){
+    const byWork={};
+    for(const c of cits){ if(!byWork[c.work])byWork[c.work]=[]; byWork[c.work].push(c); }
+    for(const grp of MIDRASH_GROUPS){
+      let grpHtml=''; let grpCount=0;
+      for(const w of grp.works){
+        let wc=byWork[w]||[];
+        if(query) wc=wc.filter(c=>matchSearch(c));
+        if(!wc.length) continue;
+        wc.sort((a,b)=>{const[ac,av]=parseRefLoc('midrash',a.work,a.ref);const[bc,bv]=parseRefLoc('midrash',b.work,b.ref);if(ac!==bc)return ac-bc;return av-bv;});
+        grpHtml+=makeBook('midrash_'+w, (HEB_NAMES[w]||w), wc, true);
+        grpCount+=wc.length;
+      }
+      // leftover works not in any group
+      const knownWorks=new Set(MIDRASH_GROUPS.flatMap(g=>g.works));
+      if(grp===MIDRASH_GROUPS[MIDRASH_GROUPS.length-1]){
+        for(const[w,wc] of Object.entries(byWork)){
+          if(knownWorks.has(w)) continue;
+          let fc=wc; if(query) fc=fc.filter(c=>matchSearch(c)); if(!fc.length) continue;
+          grpHtml+=makeBook('midrash_'+w, (HEB_NAMES[w]||w), fc, true);
+          grpCount+=fc.length;
+        }
+      }
+      if(!grpHtml) continue;
+      html+=makeGroup('midrashgrp_'+grp.n, grp.n, grpHtml, grpCount);
+      totalShown+=grpCount;
+    }
+
+  } else if(subKey==='zohar'){
+    // Group by volume
+    const byVol={1:[],2:[],3:[],0:[]};
+    for(const c of cits){
+      let v=0;
+      if(c.work==='Zohar'||c.work.match(/Zohar\.([123])/)){
+        const m=(c.work+' '+(c.ref||'')).match(/Zohar[\. ]([123])/);
+        v=m?+m[1]:0;
+      }
+      byVol[v]=byVol[v]||[];
+      byVol[v].push(c);
+    }
+    const volNames={1:'זוהר חלק א',2:'זוהר חלק ב',3:'זוהר חלק ג',0:'תיקוני זוהר / זוהר חדש'};
+    for(const v of [1,2,3,0]){
+      let vc=byVol[v]||[]; if(query) vc=vc.filter(c=>matchSearch(c)); if(!vc.length) continue;
+      vc.sort((a,b)=>{const[ac,av]=parseRefLoc('zohar',a.work,a.ref);const[bc,bv]=parseRefLoc('zohar',b.work,b.ref);if(ac!==bc)return ac-bc;return av-bv;});
+      html+=makeGroup('zohar_'+v, volNames[v], makeBook('zv_'+v,volNames[v],vc,true), vc.length);
+      totalShown+=vc.length;
+    }
+
+  } else {
+    // mishnah, other_tl — simple by work
+    const byWork={};
+    for(const c of cits){ if(!byWork[c.work])byWork[c.work]=[]; byWork[c.work].push(c); }
+    const sortedWks=Object.keys(byWork).sort((a,b)=>a.localeCompare(b));
+    for(const w of sortedWks){
+      let wc=byWork[w]; if(query) wc=wc.filter(c=>matchSearch(c)); if(!wc.length) continue;
+      wc.sort((a,b)=>{const[ac,av]=parseRefLoc('mishnah',a.work,a.ref);const[bc,bv]=parseRefLoc('mishnah',b.work,b.ref);if(ac!==bc)return ac-bc;return av-bv;});
+      html+=makeBook('ms_'+w, (HEB_NAMES[w]||hN(w)||w), wc, true);
+      totalShown+=wc.length;
+    }
+  }
+  return{html,total:totalShown};
 }
 
-function onSearch(val) {
-  searchQuery = val.trim();
-  renderBooks();
+// ── מפתח ספרים ───────────────────────────────────────────
+function renderSefarim(cits, subKey){
+  let html=''; let totalShown=0;
+
+  if(subKey==='rambam'){
+    // Group by Sefer → Hilchot
+    const byHil={};
+    for(const c of cits){
+      const hilKey=(c.work||'').replace('Mishneh Torah, ','');
+      if(!byHil[hilKey])byHil[hilKey]=[];
+      byHil[hilKey].push(c);
+    }
+    // Group hilchot by Sefer
+    const bySeferGroup={};
+    for(const[h,hc] of Object.entries(byHil)){
+      const info=RAMBAM_HIL_TO_SEFER[h]||{sefer:'שאר',seferIdx:99};
+      if(!bySeferGroup[info.sefer])bySeferGroup[info.sefer]={idx:info.seferIdx,hils:{}};
+      bySeferGroup[info.sefer].hils[h]={idx:info.hilIdx||99,cits:hc};
+    }
+    const sortedSefarim=Object.entries(bySeferGroup).sort((a,b)=>a[1].idx-b[1].idx);
+    for(const[seferName,sData] of sortedSefarim){
+      let sHtml=''; let sCount=0;
+      const sortedHils=Object.entries(sData.hils).sort((a,b)=>a[1].idx-b[1].idx);
+      for(const[hil,hData] of sortedHils){
+        let hc=hData.cits; if(query) hc=hc.filter(c=>matchSearch(c)); if(!hc.length) continue;
+        hc.sort((a,b)=>{const[ac,av]=parseRefLoc('rambam',a.work,a.ref);const[bc,bv]=parseRefLoc('rambam',b.work,b.ref);if(ac!==bc)return ac-bc;return av-bv;});
+        const hilHeb=hil.replace('Hilchot ','הלכות ');
+        sHtml+=makeBook('rambam_'+hil, hilHeb, hc, true);
+        sCount+=hc.length;
+      }
+      if(!sHtml) continue;
+      html+=makeGroup('rsefer_'+seferName,'ספר '+seferName,sHtml,sCount);
+      totalShown+=sCount;
+    }
+
+  } else if(subKey==='tanya'){
+    const TANYA_PARTS=['Tanya, Likkutei Amarim','Tanya, Shaar HaYichud VehaEmunah','Tanya, Iggeret HaTeshuvah','Tanya, Iggeret HaKodesh','Tanya, Kuntres Acharon'];
+    const byPart={};
+    for(const c of cits){ if(!byPart[c.work])byPart[c.work]=[]; byPart[c.work].push(c); }
+    const sortedParts=[...TANYA_PARTS,...Object.keys(byPart).filter(k=>!TANYA_PARTS.includes(k))];
+    for(const part of sortedParts){
+      let pc=byPart[part]||[]; if(query) pc=pc.filter(c=>matchSearch(c)); if(!pc.length) continue;
+      pc.sort((a,b)=>{const[ac,av]=parseRefLoc('tanya',a.work,a.ref);const[bc,bv]=parseRefLoc('tanya',b.work,b.ref);if(ac!==bc)return ac-bc;return av-bv;});
+      html+=makeBook('tanya_'+part, (HEB_NAMES[part]||hN(part)||part), pc, true);
+      totalShown+=pc.length;
+    }
+
+  } else if(subKey==='chassidus'){
+    // Group by dynasty
+    const byDynasty={};
+    for(const c of cits){
+      const w=c.work||'';
+      let dynastyName='שאר ספרי חסידות'; let dynastyIdx=DYNASTIES.length-1;
+      const info=WORK_TO_DYNASTY[w];
+      if(info){dynastyName=info.dynasty; dynastyIdx=info.dynastyIdx;}
+      else{
+        // prefix match
+        for(const d of DYNASTIES){
+          if(d.works.some(dw=>w.startsWith(dw))){dynastyName=d.n;dynastyIdx=DYNASTIES.indexOf(d);break;}
+        }
+      }
+      if(!byDynasty[dynastyName])byDynasty[dynastyName]={idx:dynastyIdx,works:{}};
+      if(!byDynasty[dynastyName].works[w])byDynasty[dynastyName].works[w]=[];
+      byDynasty[dynastyName].works[w].push(c);
+    }
+    const sortedDyn=Object.entries(byDynasty).sort((a,b)=>a[1].idx-b[1].idx);
+    for(const[dName,dData] of sortedDyn){
+      let dHtml=''; let dCount=0;
+      for(const[w,wc] of Object.entries(dData.works)){
+        let fc=wc; if(query) fc=fc.filter(c=>matchSearch(c)); if(!fc.length) continue;
+        fc.sort((a,b)=>{const[ac,av]=parseRefLoc('chassidus',a.work,a.ref);const[bc,bv]=parseRefLoc('chassidus',b.work,b.ref);if(ac!==bc)return ac-bc;return av-bv;});
+        dHtml+=makeBook('chas_'+w,(HEB_NAMES[w]||hN(w)||w),fc,true);
+        dCount+=fc.length;
+      }
+      if(!dHtml) continue;
+      html+=makeGroup('dyn_'+dName,dName,dHtml,dCount);
+      totalShown+=dCount;
+    }
+
+  } else if(subKey==='halacha'){
+    // Shulchan Aruch by 4 sections, then others alphabetically
+    const bySASection={'OC':[],'YD':[],'EH':[],'CM':[],'other':[]};
+    for(const c of cits){
+      const w=c.work||'';
+      if(w.includes('Orach Chayim')||w.includes('Orach Chaim'))bySASection['OC'].push(c);
+      else if(w.includes('Yoreh Deah'))bySASection['YD'].push(c);
+      else if(w.includes('Even HaEzer'))bySASection['EH'].push(c);
+      else if(w.includes('Choshen Mishpat'))bySASection['CM'].push(c);
+      else bySASection['other'].push(c);
+    }
+    const secLabels={'OC':'אורח חיים','YD':'יורה דעה','EH':'אבן העזר','CM':'חושן משפט','other':'שאר ספרי הלכה'};
+    for(const[sk,sc] of Object.entries(bySASection)){
+      let fc=sc; if(query) fc=fc.filter(c=>matchSearch(c)); if(!fc.length) continue;
+      fc.sort((a,b)=>{const[ac,av]=parseRefLoc('halacha',a.work,a.ref);const[bc,bv]=parseRefLoc('halacha',b.work,b.ref);if(ac!==bc)return ac-bc;return av-bv;});
+      // Group by work within section
+      const byWork={};
+      for(const c of fc){ if(!byWork[c.work])byWork[c.work]=[]; byWork[c.work].push(c); }
+      let sHtml='';
+      for(const[w,wc] of Object.entries(byWork).sort((a,b)=>a[0].localeCompare(b[0]))){
+        sHtml+=makeBook('hal_'+w,(HEB_NAMES[w]||hN(w)||w),wc,true);
+      }
+      html+=makeGroup('ha_'+sk,secLabels[sk],sHtml,fc.length);
+      totalShown+=fc.length;
+    }
+
+  } else {
+    // other_sf: kabbalah + other alphabetical
+    const byWork={};
+    for(const c of cits){ if(!byWork[c.work])byWork[c.work]=[]; byWork[c.work].push(c); }
+    for(const[w,wc] of Object.entries(byWork).sort((a,b)=>a[0].localeCompare(b[0]))){
+      let fc=wc; if(query) fc=fc.filter(c=>matchSearch(c)); if(!fc.length) continue;
+      fc.sort((a,b)=>{const[ac,av]=parseRefLoc(c.category,a.work,a.ref);const[bc,bv]=parseRefLoc(c.category,b.work,b.ref);if(ac!==bc)return ac-bc;return av-bv;});
+      html+=makeBook('oth_'+w,(HEB_NAMES[w]||hN(w)||w),fc,true);
+      totalShown+=fc.length;
+    }
+  }
+  return{html,total:totalShown};
 }
 
-function toggleBook(id) {
-  const block = document.getElementById(id);
-  if (block) block.classList.toggle('open');
+// ═══════════════════════════════════════════════════════════
+//  SEARCH
+// ═══════════════════════════════════════════════════════════
+function matchSearch(c){
+  if(!query)return true;
+  const q=query.toLowerCase();
+  return(c.work||'').toLowerCase().includes(q)
+    ||(hN(c.work||'')).includes(query)
+    ||(c.ref||'').toLowerCase().includes(q)
+    ||(c.raw||'').includes(query)
+    ||(c.incipit||'').includes(query)
+    ||(c.synopsis||'').toLowerCase().includes(q)
+    ||(c.title||'').toLowerCase().includes(q);
 }
 
-function expandAll() {
-  document.querySelectorAll('.book-block').forEach(b => b.classList.add('open'));
-}
+// ═══════════════════════════════════════════════════════════
+//  MAIN RENDER
+// ═══════════════════════════════════════════════════════════
 
-function collapseAll() {
-  document.querySelectorAll('.book-block').forEach(b => b.classList.remove('open'));
-}
+function render(){
+  const container = document.getElementById('books-container');
+  const toolbar   = document.getElementById('toolbar');
+  const emptyEl   = document.getElementById('empty');
 
-// ─── Init ─────────────────────────────────────────────────────────────────────
+  const secDef = SECTIONS[activeSec];
+  if(!secDef){container.innerHTML='';return;}
 
-async function init() {
-  try {
-    // Prefer classified data (has role + synopsis), fall back to base citations
-    let resp = await fetch('citations_classified.json');
-    if (!resp.ok) resp = await fetch('citations.json');
-    if (!resp.ok) throw new Error('Failed to load citations');
-    allCitations = await resp.json();
-  } catch (e) {
-    document.getElementById('loading').textContent = 'שגיאה בטעינת המאגר: ' + e.message;
+  // Find matching sub
+  const sub = secDef.subs.find(s=>s.key===activeSub)||secDef.subs[0];
+  if(!activeSub||!secDef.subs.find(s=>s.key===activeSub)){
+    activeSub = secDef.subs[0].key;
+  }
+
+  // Filter by sub
+  let cits = ALL.filter(c=>secDef.cats.has(c.category||'other')&&(sub.filter?sub.filter(c):true));
+
+  // Render
+  let result;
+  if(activeSec==='pesukim')      result=renderPesukim(cits);
+  else if(activeSec==='chazal')  result=renderChazal(cits, activeSub);
+  else                            result=renderSefarim(cits, activeSub);
+
+  if(!result.html || result.total===0){
+    container.innerHTML='';
+    emptyEl.style.display='';
+    toolbar.style.display='none';
     return;
   }
+  emptyEl.style.display='none';
+  toolbar.style.display='flex';
+  container.innerHTML=result.html;
 
-  document.getElementById('loading').style.display = 'none';
-  document.getElementById('total-badge').textContent = allCitations.length.toLocaleString() + ' ציטוטים';
+  const total=cits.length;
+  document.getElementById('tinfo').textContent=
+    result.total!==total?result.total.toLocaleString()+' מתוך '+total.toLocaleString():result.total.toLocaleString()+' ציטוטים';
+  document.getElementById('scount').textContent=query&&result.total!==total?result.total.toLocaleString()+' תוצאות':'';
+}
 
-  computeCounts();
-
-  // Choose first non-empty category
-  for (const cat of CAT_ORDER) {
-    if (catCounts[cat] > 0) { activeCat = cat; break; }
+function renderSubTabs(){
+  const secDef=SECTIONS[activeSec];
+  const container=document.getElementById('sub-tabs');
+  container.innerHTML='';
+  if(!secDef)return;
+  for(const sub of secDef.subs){
+    const cnt=catCounts[activeSec+'_'+sub.key]||0;
+    if(!cnt) continue;
+    const d=document.createElement('div');
+    d.className='sub-tab'+(sub.key===activeSub?' active':'');
+    d.onclick=()=>setSubTab(sub.key);
+    d.innerHTML=esc(sub.label)+'<span class="cnt">'+cnt.toLocaleString()+'</span>';
+    container.appendChild(d);
   }
+}
 
-  renderTabs();
-  renderBooks();
+function renderSectionTabs(){
+  document.querySelectorAll('.sec-tab').forEach((t,i)=>{
+    const keys=['pesukim','chazal','sefarim'];
+    t.classList.toggle('active',keys[i]===activeSec);
+  });
+}
+
+// ═══════════════════════════════════════════════════════════
+//  CONTROLS
+// ═══════════════════════════════════════════════════════════
+function setSection(sec){
+  activeSec=sec;
+  activeSub=SECTIONS[sec].subs[0].key;
+  renderSectionTabs();
+  renderSubTabs();
+  render();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function setSubTab(sub){
+  activeSub=sub;
+  document.querySelectorAll('.sub-tab').forEach(t=>t.classList.remove('active'));
+  event.target.closest('.sub-tab').classList.add('active');
+  render();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function onSearch(val){
+  query=val.trim();
+  render();
+}
+
+function toggleEl(id){
+  const el=document.getElementById(id);
+  if(el)el.classList.toggle('open');
+}
+
+function expandAll(){document.querySelectorAll('.grp,.book').forEach(b=>b.classList.add('open'))}
+function collapseAll(){document.querySelectorAll('.grp,.book').forEach(b=>b.classList.remove('open'))}
+
+// ═══════════════════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════════════════
+function computeCounts(){
+  catCounts={};
+  for(const sec of Object.keys(SECTIONS)){
+    const secDef=SECTIONS[sec];
+    for(const sub of secDef.subs){
+      const n=ALL.filter(c=>secDef.cats.has(c.category||'other')&&(sub.filter?sub.filter(c):true)).length;
+      catCounts[sec+'_'+sub.key]=n;
+    }
+  }
+}
+
+async function init(){
+  try{
+    let resp=await fetch('citations_with_incipits.json');
+    if(!resp.ok) resp=await fetch('citations_classified.json');
+    if(!resp.ok) resp=await fetch('citations.json');
+    if(!resp.ok) throw new Error('Failed to load');
+    ALL=await resp.json();
+  } catch(e){
+    document.getElementById('loading').textContent='שגיאה: '+e.message;
+    return;
+  }
+  document.getElementById('loading').style.display='none';
+  document.getElementById('total-badge').textContent=ALL.length.toLocaleString()+' ציטוטים';
+  computeCounts();
+  activeSub=SECTIONS[activeSec].subs[0].key;
+  renderSectionTabs();
+  renderSubTabs();
+  render();
 }
 
 init();
