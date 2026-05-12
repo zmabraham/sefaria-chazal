@@ -247,6 +247,71 @@ body {
 </div>
 
 <script>
+// ─── Hebrew name map ──────────────────────────────────────────────────────────
+
+const HEB_NAMES = {
+  // Torah
+  'Genesis':'בראשית','Exodus':'שמות','Leviticus':'ויקרא','Numbers':'במדבר','Deuteronomy':'דברים',
+  // Neviim Rishonim
+  'Joshua':'יהושע','Judges':'שופטים','Samuel I':'שמואל א','Samuel II':'שמואל ב',
+  'Kings I':'מלכים א','Kings II':'מלכים ב',
+  // Neviim Acharonim
+  'Isaiah':'ישעיה','Jeremiah':'ירמיה','Ezekiel':'יחזקאל','Hosea':'הושע','Joel':'יואל',
+  'Amos':'עמוס','Obadiah':'עובדיה','Jonah':'יונה','Micah':'מיכה','Nahum':'נחום',
+  'Habakkuk':'חבקוק','Zephaniah':'צפניה','Haggai':'חגי','Zechariah':'זכריה','Malachi':'מלאכי',
+  // Ketuvim
+  'Psalms':'תהלים','Proverbs':'משלי','Job':'איוב','Song of Songs':'שיר השירים',
+  'Ruth':'רות','Lamentations':'איכה','Ecclesiastes':'קהלת','Esther':'אסתר',
+  'Daniel':'דניאל','Ezra':'עזרא','Nehemiah':'נחמיה','Chronicles I':'דברי הימים א','Chronicles II':'דברי הימים ב',
+  // Talmud Bavli
+  'Berakhot':'ברכות','Shabbat':'שבת','Eruvin':'עירובין','Pesachim':'פסחים','Shekalim':'שקלים',
+  'Yoma':'יומא','Sukkah':'סוכה','Beitzah':'ביצה','Rosh Hashanah':'ראש השנה','Taanit':'תענית',
+  'Megillah':'מגילה','Moed Katan':'מועד קטן','Chagigah':'חגיגה','Yevamot':'יבמות',
+  'Ketubot':'כתובות','Nedarim':'נדרים','Nazir':'נזיר','Sotah':'סוטה','Gittin':'גיטין',
+  'Kiddushin':'קידושין','Bava Kamma':'בבא קמא','Bava Metzia':'בבא מציעא',
+  'Bava Batra':'בבא בתרא','Sanhedrin':'סנהדרין','Makkot':'מכות','Shevuot':'שבועות',
+  'Avodah Zarah':'עבודה זרה','Horayot':'הוריות','Zevachim':'זבחים','Menachot':'מנחות',
+  'Chullin':'חולין','Bekhorot':'בכורות','Arakhin':'ערכין','Temurah':'תמורה',
+  'Keritot':'כריתות','Meilah':'מעילה','Tamid':'תמיד','Middot':'מידות','Kinnim':'קינים','Niddah':'נידה',
+  // Mishnah
+  'Mishnah Berakhot':'משנה ברכות','Mishnah Peah':'משנה פאה','Mishnah Avot':'משנה אבות',
+  // Tanya
+  'Tanya, Likkutei Amarim':'תניא, ליקוטי אמרים',
+  'Tanya, Shaar HaYichud VehaEmunah':'תניא, שער היחוד והאמונה',
+  'Tanya, Iggeret HaTeshuvah':'תניא, אגרת התשובה',
+  'Tanya, Iggeret HaKodesh':'תניא, אגרת הקודש',
+  'Tanya, Kuntres Acharon':'תניא, קונטרס אחרון',
+  // Chassidus
+  'Torah Ohr':'תורה אור','Likkutei Torah':'לקוטי תורה',
+  'Maamarei Admur HaZaken':'מאמרי אדמו"ר הזקן',
+  'Maamarei Admur HaEmtzai':'מאמרי אדמו"ר האמצעי',
+  // Zohar
+  'Zohar':'זוהר','Tikkunei Zohar':'תיקוני זוהר','Zohar Chadash':'זוהר חדש',
+  // Midrash
+  'Bereishit Rabbah':'בראשית רבה','Shemot Rabbah':'שמות רבה',
+  'Vayikra Rabbah':'ויקרא רבה','Bamidbar Rabbah':'במדבר רבה','Devarim Rabbah':'דברים רבה',
+  'Shir HaShirim Rabbah':'שיר השירים רבה','Ruth Rabbah':'רות רבה','Eicha Rabbah':'איכה רבה',
+  'Kohelet Rabbah':'קהלת רבה','Esther Rabbah':'אסתר רבה',
+  'Tanchuma':'תנחומא','Tanchuma Buber':'תנחומא בובר',
+  'Pirkei DeRabbi Eliezer':'פרקי דרבי אליעזר','Midrash Tehillim':'מדרש תהלים',
+  'Yalkut Shimoni':'ילקוט שמעוני','Sifra':'ספרא','Sifre':'ספרי',
+  'Mechilta':'מכילתא','Mechilta DeRabbi Shimon bar Yochai':'מכילתא דרשב"י',
+  // Rambam (prefix match handles the rest)
+  'Mishneh Torah':'משנה תורה',
+};
+
+function hebName(work) {
+  if (!work) return '';
+  if (HEB_NAMES[work]) return HEB_NAMES[work];
+  // Prefix match for long names (Mishneh Torah hilchot, Sefer HaMaamarim 57XX, etc.)
+  for (const [eng, heb] of Object.entries(HEB_NAMES)) {
+    if (work.startsWith(eng + ',') || work.startsWith(eng + ' ')) {
+      return heb + work.slice(eng.length);
+    }
+  }
+  return work;
+}
+
 // ─── Canonical ordering ───────────────────────────────────────────────────────
 
 const TANACH_ORDER = [
@@ -393,8 +458,25 @@ function bookSortKey(cat, work) {
   return 'zzzz' + work;
 }
 
-function refSortKey(ref) {
-  return (ref || '').replace(/(\d+)/g, n => n.padStart(6,'0'));
+// Parse a Sefaria ref into [chapter, verse] for canonical sorting.
+// Handles "Book Ch:V", "Book Ch.V", "Book Dafb" (Talmud amud), plain "Book N".
+function parseRefLoc(cat, work, ref) {
+  if (!ref) return [999999, 999999];
+  // Strip work prefix
+  let body = ref;
+  if (work && ref.startsWith(work)) body = ref.slice(work.length).replace(/^[\s,._]+/, '');
+  // Talmud amud: "2a" / "14b"
+  if (cat === 'bavli' || cat === 'yerushalmi') {
+    const m = body.match(/(\d+)([ab])/);
+    if (m) return [parseInt(m[1]), m[2] === 'a' ? 0 : 1];
+  }
+  // ch:v or ch.v
+  const m2 = body.match(/(\d+)[:\.](\d+)/);
+  if (m2) return [parseInt(m2[1]), parseInt(m2[2])];
+  // plain number
+  const m3 = body.match(/(\d+)/);
+  if (m3) return [parseInt(m3[1]), 0];
+  return [999999, 999999];
 }
 
 function citKey(c) {
@@ -452,6 +534,7 @@ function renderBooks() {
     if (!searchQuery) return true;
     const q = searchQuery.toLowerCase();
     return (c.work || '').toLowerCase().includes(q) ||
+           hebName(c.work || '').includes(searchQuery) ||
            (c.ref || '').toLowerCase().includes(q) ||
            (c.raw || '').includes(searchQuery) ||
            (c.title || '').toLowerCase().includes(q);
@@ -471,7 +554,7 @@ function renderBooks() {
   emptyMsg.style.display = 'none';
   toolbar.style.display = 'flex';
 
-  // Group by work
+  // Group by work (English key used internally; Hebrew shown in UI)
   const books = {};
   for (const c of filtered) {
     const book = c.work || '(ללא שם)';
@@ -490,18 +573,24 @@ function renderBooks() {
   container.innerHTML = '';
 
   for (const book of sortedBooks) {
+    // Sort citations within book: chapter → verse (from ref), then volume → page → fn
     const cits = books[book].sort((a, b) => {
-      const vd = (a.volume || 0) - (b.volume || 0);
+      const [ac, av] = parseRefLoc(activeCat, book, a.ref);
+      const [bc, bv] = parseRefLoc(activeCat, book, b.ref);
+      if (ac !== bc) return ac - bc;
+      if (av !== bv) return av - bv;
+      const vd = (parseInt(a.volume)||0) - (parseInt(b.volume)||0);
       if (vd !== 0) return vd;
-      const pd = (a.page || 0) - (b.page || 0);
-      if (pd !== 0) return pd;
-      return refSortKey(a.ref).localeCompare(refSortKey(b.ref));
+      return (parseInt(a.page)||0) - (parseInt(b.page)||0);
     });
 
     const blockId = 'bb-' + book.replace(/[^a-z0-9]/gi, '_');
     const block = document.createElement('div');
     block.className = 'book-block';
     block.id = blockId;
+
+    // Display Hebrew name; fall back to English
+    const displayName = hebName(book);
 
     let rowsHtml = '';
     for (const c of cits) {
@@ -513,13 +602,20 @@ function renderBooks() {
         roleBadge = '<span class="role-badge secondary" title="' + escHtml(c.synopsis||'') + '">מוסבר טפל</span>';
       }
 
+      // Show ref with chapter:verse extracted from Sefaria ref
       const ref = c.ref || c.raw || '';
+      // Build a short display ref: strip book prefix, show just location
+      let dispRef = ref;
+      if (c.work && ref.startsWith(c.work)) {
+        dispRef = ref.slice(c.work.length).replace(/^[\s,._]+/, '');
+      }
+
       const title = c.title || ('כרך ' + c.volume + ' עמ\' ' + c.page);
       const sLink = sichaLink(c);
       const raw = (c.raw || '').substring(0, 80);
 
       rowsHtml += '<tr>' +
-        '<td class="ref-cell">' + escHtml(ref) + '</td>' +
+        '<td class="ref-cell" title="' + escHtml(ref) + '">' + escHtml(dispRef || ref) + '</td>' +
         '<td><a class="sicha-link" href="' + escHtml(sLink) + '" target="_blank">' + escHtml(title) + '</a></td>' +
         '<td class="vol-cell">כרך ' + (c.volume||'?') + ' עמ\' ' + (c.page||'?') + '</td>' +
         '<td class="fn-cell">' + (c.fn||'') + '</td>' +
@@ -531,12 +627,12 @@ function renderBooks() {
     block.innerHTML =
       '<div class="book-header" onclick="toggleBook(\'' + escHtml(blockId) + '\')">' +
         '<span class="toggle-arrow">▶</span>' +
-        '<span class="book-title">' + escHtml(book) + '</span>' +
+        '<span class="book-title">' + escHtml(displayName) + '</span>' +
         '<span class="book-count">' + cits.length + '</span>' +
       '</div>' +
       '<table class="citations-table">' +
         '<thead><tr>' +
-          '<th>מקור</th>' +
+          '<th>מקום</th>' +
           '<th>שיחה</th>' +
           '<th>כרך / עמוד</th>' +
           '<th>הערה</th>' +
