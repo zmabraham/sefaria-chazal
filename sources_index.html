@@ -81,6 +81,16 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#f4f6fb;color:#1a1a2e;di
 /* ── Rashi indent ───────────────────────────────────────────── */
 .rashi-row td{background:#fffdf0 !important;padding-right:24px !important}
 .rashi-row:hover td{background:#fff8e0 !important}
+
+/* ── מוסבר filter ───────────────────────────────────────────── */
+#musvar-btn{padding:3px 14px;border-radius:14px;border:1.5px solid #e8b44a;background:#fff8e8;cursor:pointer;font-size:.8rem;color:#7a5000;font-weight:600;transition:all .15s}
+#musvar-btn:hover{background:#fff0cc}
+#musvar-btn.active{background:#f5a623;color:#fff;border-color:#d4860a;box-shadow:0 0 0 2px #ffe0a0}
+#musvar-count{font-size:.75rem;color:#b07000;margin-right:6px;white-space:nowrap}
+.syn-row td{background:#fffbf0 !important;padding-top:2px !important;padding-bottom:6px !important}
+.syn-text{display:block;margin-top:3px;color:#5a4000;font-size:.78rem;line-height:1.45;font-style:italic;max-width:380px}
+.role-p-lg{display:inline-block;font-size:.72rem;padding:2px 7px;border-radius:8px;background:#fff0d0;color:#885500;border:1px solid #ffcc66;margin-left:5px;white-space:nowrap}
+.role-s-lg{display:inline-block;font-size:.72rem;padding:2px 7px;border-radius:8px;background:#eef5ff;color:#335588;border:1px solid #aaccff;margin-left:5px;white-space:nowrap}
 </style>
 </head>
 <body>
@@ -104,6 +114,8 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#f4f6fb;color:#1a1a2e;di
 <div id="toolbar" style="display:none">
   <button onclick="expandAll()">פתח הכל</button>
   <button onclick="collapseAll()">סגור הכל</button>
+  <button id="musvar-btn" onclick="toggleMusar()">מוסבר בלבד</button>
+  <span id="musvar-count"></span>
   <span id="tinfo"></span>
 </div>
 
@@ -258,6 +270,7 @@ let activeSec = 'pesukim';
 let activeSub = '';
 let query = '';
 let catCounts = {};
+let showMusarOnly = false;
 
 // ═══════════════════════════════════════════════════════════
 //  SECTION DEFINITIONS
@@ -305,15 +318,24 @@ const SECTIONS = {
 function citRow(c, showLoc){
   const ref  = showLoc ? esc(dispRef(c)) : '';
   const inc  = c.incipit ? '<span>'+esc(c.incipit)+'</span>' : (c.raw?'<span class="td-raw">'+esc((c.raw||'').slice(0,60))+'</span>':'');
-  const syn  = c.synopsis ? '<br><small style="color:#667">'+esc(c.synopsis.slice(0,80))+'…</small>' : '';
   const sicha= c.title||('כרך '+(c.volume||'?')+' עמ\' '+(c.page||'?'));
   const vol  = 'כרך '+(c.volume||'?')+' עמ\' '+(c.page||'?');
-  return '<tr'+((c._rashi)?' class="rashi-row"':'')+'>'
+  const isMusar = c.role==='מוסבר_ראשי'||c.role==='מוסבר_טפל';
+  const roleLabel = c.role==='מוסבר_ראשי' ? '<span class="role-p-lg">ראשי</span>' : c.role==='מוסבר_טפל' ? '<span class="role-s-lg">טפל</span>' : '';
+  // Synopsis: always full text in musvar mode; tooltip-only otherwise
+  let synHtml = '';
+  if(showMusarOnly && c.synopsis){
+    synHtml = '<span class="syn-text">'+esc(c.synopsis)+'</span>';
+  } else if(c.synopsis && !showMusarOnly){
+    synHtml = '<br><small style="color:#667">'+esc(c.synopsis.slice(0,80))+(c.synopsis.length>80?'…':'')+'</small>';
+  }
+  const rowClass = (c._rashi?'rashi-row':'') + (showMusarOnly&&isMusar?' syn-row':'');
+  return '<tr'+(rowClass?' class="'+rowClass.trim()+'"':'')+'>'
     +'<td class="td-loc">'+ref+'</td>'
-    +'<td class="td-inc">'+(c._rashi?'<span class="rashi">ברש"י </span>':'')+inc+syn+'</td>'
+    +'<td class="td-inc">'+(c._rashi?'<span class="rashi">ברש"י </span>':'')+inc+synHtml+'</td>'
     +'<td class="td-link"><a href="'+esc(sichaUrl(c))+'" target="_blank">'+esc(sicha)+'</a></td>'
     +'<td class="td-vol">'+esc(vol)+'</td>'
-    +'<td>'+roleBadge(c)+'</td>'
+    +'<td>'+(showMusarOnly?roleLabel:roleBadge(c))+'</td>'
     +'</tr>';
 }
 
@@ -673,6 +695,14 @@ function render(){
   // Filter by sub
   let cits = ALL.filter(c=>secDef.cats.has(c.category||'other')&&(sub.filter?sub.filter(c):true));
 
+  // מוסבר filter
+  if(showMusarOnly) cits = cits.filter(c=>c.role==='מוסבר_ראשי'||c.role==='מוסבר_טפל');
+
+  // Update musvar count badge
+  const musarTotal = ALL.filter(c=>secDef.cats.has(c.category||'other')&&(sub.filter?sub.filter(c):true)&&(c.role==='מוסבר_ראשי'||c.role==='מוסבר_טפל')).length;
+  const musvarCountEl = document.getElementById('musvar-count');
+  if(musvarCountEl) musvarCountEl.textContent = showMusarOnly ? '' : musarTotal.toLocaleString()+' מוסבר';
+
   // Render
   let result;
   if(activeSec==='pesukim')      result=renderPesukim(cits);
@@ -750,6 +780,14 @@ function toggleEl(id){
 
 function expandAll(){document.querySelectorAll('.grp,.book').forEach(b=>b.classList.add('open'))}
 function collapseAll(){document.querySelectorAll('.grp,.book').forEach(b=>b.classList.remove('open'))}
+
+function toggleMusar(){
+  showMusarOnly=!showMusarOnly;
+  const btn=document.getElementById('musvar-btn');
+  if(btn)btn.classList.toggle('active',showMusarOnly);
+  render();
+  if(showMusarOnly) expandAll();
+}
 
 // ═══════════════════════════════════════════════════════════
 //  INIT
