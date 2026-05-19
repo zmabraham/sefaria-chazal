@@ -91,6 +91,8 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#f4f6fb;color:#1a1a2e;di
 .syn-text{display:block;margin-top:3px;color:#5a4000;font-size:.78rem;line-height:1.45;font-style:italic;max-width:380px}
 .role-p-lg{display:inline-block;font-size:.72rem;padding:2px 7px;border-radius:8px;background:#fff0d0;color:#885500;border:1px solid #ffcc66;margin-left:5px;white-space:nowrap}
 .role-s-lg{display:inline-block;font-size:.72rem;padding:2px 7px;border-radius:8px;background:#eef5ff;color:#335588;border:1px solid #aaccff;margin-left:5px;white-space:nowrap}
+.syn-short{color:#667;font-size:.78rem;cursor:help;border-bottom:1px dotted #aab}
+#syn-tip{display:none;position:fixed;background:#1a1f3a;color:#e8eaf6;padding:10px 14px;border-radius:10px;max-width:420px;font-size:.84rem;line-height:1.6;direction:rtl;text-align:right;white-space:normal;word-break:break-word;box-shadow:0 4px 20px rgba(0,0,0,.4);z-index:9999;pointer-events:none;border:1px solid #3a4a8a}
 </style>
 </head>
 <body>
@@ -322,12 +324,13 @@ function citRow(c, showLoc){
   const vol  = 'כרך '+(c.volume||'?')+' עמ\' '+(c.page||'?');
   const isMusar = c.role==='מוסבר_ראשי'||c.role==='מוסבר_טפל';
   const roleLabel = c.role==='מוסבר_ראשי' ? '<span class="role-p-lg">ראשי</span>' : c.role==='מוסבר_טפל' ? '<span class="role-s-lg">טפל</span>' : '';
-  // Synopsis: always full text in musvar mode; tooltip-only otherwise
+  // Synopsis: full text in musvar mode; truncated + hover tooltip otherwise
   let synHtml = '';
   if(showMusarOnly && c.synopsis){
     synHtml = '<span class="syn-text">'+esc(c.synopsis)+'</span>';
   } else if(c.synopsis && !showMusarOnly){
-    synHtml = '<br><small style="color:#667">'+esc(c.synopsis.slice(0,80))+(c.synopsis.length>80?'…':'')+'</small>';
+    const short = c.synopsis.length>80 ? c.synopsis.slice(0,80)+'…' : c.synopsis;
+    synHtml = '<br><small class="syn-short" data-full="'+esc(c.synopsis)+'">'+esc(short)+'</small>';
   }
   const rowClass = (c._rashi?'rashi-row':'') + (showMusarOnly&&isMusar?' syn-row':'');
   return '<tr'+(rowClass?' class="'+rowClass.trim()+'"':'')+'>'
@@ -825,5 +828,31 @@ async function init(){
 
 init();
 </script>
+<div id="syn-tip"></div>
+<script>
+(function(){
+  const tip = document.getElementById('syn-tip');
+  let pad = 12;
+  document.addEventListener('mouseover', function(e){
+    const el = e.target.closest('.syn-short');
+    if(!el) return;
+    tip.textContent = el.dataset.full || '';
+    tip.style.display = 'block';
+  });
+  document.addEventListener('mouseout', function(e){
+    if(!e.target.closest('.syn-short')) return;
+    tip.style.display = 'none';
+  });
+  document.addEventListener('mousemove', function(e){
+    if(tip.style.display==='none') return;
+    let x = e.clientX + pad, y = e.clientY - tip.offsetHeight - pad;
+    if(x + tip.offsetWidth > window.innerWidth - 8) x = e.clientX - tip.offsetWidth - pad;
+    if(y < 8) y = e.clientY + pad;
+    tip.style.left = x + 'px';
+    tip.style.top  = y + 'px';
+  });
+})();
+</script>
 </body>
 </html>
+
