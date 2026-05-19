@@ -63,6 +63,9 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#f4f6fb;color:#1a1a2e;di
 /* ── CITATION TABLE ─────────────────────────────────────────── */
 .ct{display:none;width:100%;border-collapse:collapse;font-size:.81rem}
 .book.open .ct{display:table}
+.grp-body{display:none;padding:6px 8px 8px}
+.grp.open .grp-body{display:block}
+.grp.open .grp-body .ct{display:table}
 .ct th{padding:5px 10px;background:#f3f5ff;color:#5566aa;font-weight:600;text-align:right;border-bottom:1px solid #e8eaf8;font-size:.75rem}
 .ct td{padding:5px 10px;border-bottom:1px solid #f0f0f8;vertical-align:top}
 .ct tr:last-child td{border-bottom:none}
@@ -371,7 +374,7 @@ function makeGroup(groupKey, groupName, innerHTML, count){
     +'<span class="gtitle">'+esc(groupName)+'</span>'
     +'<span class="gcount">'+count+'</span>'
     +'</div>'
-    +'<div style="padding:6px 8px 8px">'+innerHTML+'</div>'
+    +'<div class="grp-body">'+innerHTML+'</div>'
     +'</div>';
 }
 
