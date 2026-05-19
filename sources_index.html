@@ -349,8 +349,10 @@ function buildTable(cits, showLoc){
     +'<tbody>'+cits.map(c=>citRow(c,showLoc)).join('')+'</tbody></table>';
 }
 
+let _eid=0; // unique element counter, reset each render
+
 function makeBook(bookKey, displayName, cits, showLoc){
-  const id='bk-'+bookKey.replace(/[^a-z0-9]/gi,'_');
+  const id='bk-'+(++_eid);
   return '<div class="book" id="'+id+'">'
     +'<div class="book-hdr" onclick="toggleEl(\''+id+'\')">'
     +'<span class="arrow">▶</span>'
@@ -362,7 +364,7 @@ function makeBook(bookKey, displayName, cits, showLoc){
 }
 
 function makeGroup(groupKey, groupName, innerHTML, count){
-  const id='grp-'+groupKey.replace(/[^a-z0-9]/gi,'_');
+  const id='grp-'+(++_eid);
   return '<div class="grp" id="'+id+'">'
     +'<div class="grp-hdr" onclick="toggleEl(\''+id+'\')">'
     +'<span class="arrow">▶</span>'
@@ -682,6 +684,7 @@ function matchSearch(c){
 // ═══════════════════════════════════════════════════════════
 
 function render(){
+  _eid = 0; // reset ID counter for each render
   const container = document.getElementById('books-container');
   const toolbar   = document.getElementById('toolbar');
   const emptyEl   = document.getElementById('empty');
@@ -855,4 +858,5 @@ init();
 </script>
 </body>
 </html>
+
 
