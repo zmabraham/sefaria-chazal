@@ -338,7 +338,7 @@ function citRow(c, showLoc){
   const rowClass = (c._rashi?'rashi-row':'') + (showMusarOnly&&isMusar?' syn-row':'');
   return '<tr'+(rowClass?' class="'+rowClass.trim()+'"':'')+'>'
     +'<td class="td-loc">'+ref+'</td>'
-    +'<td class="td-inc">'+(c._rashi?'<span class="rashi">ברש"י </span>':'')+inc+synHtml+'</td>'
+    +'<td class="td-inc">'+(c._rashi?'<span class="rashi">'+esc(c.commentator||'רש"י')+' </span>':'')+inc+synHtml+'</td>'
     +'<td class="td-link"><a href="'+esc(sichaUrl(c))+'" target="_blank">'+esc(sicha)+'</a></td>'
     +'<td class="td-vol">'+esc(vol)+'</td>'
     +'<td>'+(showMusarOnly?roleLabel:roleBadge(c))+'</td>'
@@ -391,7 +391,8 @@ function renderPesukim(cits){
   const bookGroups = {};
   for(const c of cits){
     if(isComm(c)){ c._rashi = true; }
-    const w = c.work||'(אחר)';
+    // Kehos nesting: list commentaries under the base text they comment on
+    const w = (isComm(c) && c.base_work) ? c.base_work : (c.work||'(אחר)');
     if(!bookGroups[w]) bookGroups[w]=[];
     bookGroups[w].push(c);
   }
